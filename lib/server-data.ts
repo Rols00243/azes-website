@@ -1,10 +1,34 @@
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs'
+import { readFileSync, existsSync, mkdirSync, writeFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { zones as staticZones } from './data/zones'
 
-const DATA_DIR = join(process.cwd(), 'data')
+// ── Répertoire de données ──────────────────────────────────────────────────
+// Sur Vercel : /tmp/azes-data (accessible en écriture)
+// En local   : ./data (fichiers sources)
+const IS_VERCEL  = !!process.env.VERCEL
+const SOURCE_DIR = join(process.cwd(), 'data')   // bundled — lecture seule sur Vercel
+const DATA_DIR   = IS_VERCEL ? '/tmp/azes-data' : SOURCE_DIR
+
+/**
+ * Initialise /tmp/azes-data au premier appel sur Vercel :
+ * copie tous les JSON sources dans le répertoire temporaire inscriptible.
+ */
+function initDataDir(): void {
+  if (!IS_VERCEL) return
+  if (existsSync(DATA_DIR)) return            // déjà initialisé dans cette instance
+  mkdirSync(DATA_DIR, { recursive: true })
+  try {
+    const files = readdirSync(SOURCE_DIR).filter(f => f.endsWith('.json'))
+    for (const f of files) {
+      writeFileSync(join(DATA_DIR, f), readFileSync(join(SOURCE_DIR, f)))
+    }
+  } catch {
+    // En cas d'erreur de lecture source, on continue avec des fallbacks
+  }
+}
 
 function readJSON<T>(filename: string, fallback: T): T {
+  initDataDir()
   const filePath = join(DATA_DIR, filename)
   try {
     if (!existsSync(filePath)) return fallback
@@ -15,6 +39,7 @@ function readJSON<T>(filename: string, fallback: T): T {
 }
 
 export function writeJSON(filename: string, data: unknown): void {
+  initDataDir()
   if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true })
   writeFileSync(join(DATA_DIR, filename), JSON.stringify(data, null, 2), 'utf-8')
 }
