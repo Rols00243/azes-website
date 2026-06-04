@@ -1,0 +1,163 @@
+{
+  "zes-maluku": {
+    "foncier": {
+      "superficieTotale": 885,
+      "superficieIndustrielle": 350,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Industrie légère", "Industrie lourde", "Logistique", "Agroalimentaire"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 0,
+      "energieMW": 50,
+      "updatedAt": "2025-01-15"
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  },
+  "zes-kin-malebo": {
+    "foncier": {
+      "superficieTotale": 450,
+      "superficieIndustrielle": 120,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Commerce international", "Logistique", "Finance", "Services portuaires"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 0,
+      "energieMW": 0,
+      "updatedAt": ""
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  },
+  "zes-kinsevere": {
+    "foncier": {
+      "superficieTotale": 1200,
+      "superficieIndustrielle": 0,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Mines", "Métallurgie", "Raffinage cuivre", "Formation minière"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 0,
+      "energieMW": 120,
+      "updatedAt": "2025-01-15"
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  },
+  "zes-kiswishi": {
+    "foncier": {
+      "superficieTotale": 820,
+      "superficieIndustrielle": 200,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Transformation minière", "Services miniers", "Mécanique industrielle", "Logistique"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 0,
+      "energieMW": 0,
+      "updatedAt": ""
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  },
+  "zes-musompo": {
+    "foncier": {
+      "superficieTotale": 650,
+      "superficieIndustrielle": 30,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Cobalt", "Cuivre", "Négoce minier", "Certification & Traçabilité"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 0,
+      "energieMW": 0,
+      "updatedAt": ""
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  },
+  "zes-nganda-jika": {
+    "foncier": {
+      "superficieTotale": 2800,
+      "superficieIndustrielle": 0,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Agro-industrie", "Transformation agricole", "Export agricole", "Irrigation"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 2400000,
+      "energieMW": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  },
+  "zes-kalamba-mbuji": {
+    "foncier": {
+      "superficieTotale": 1100,
+      "superficieIndustrielle": 0,
+      "superficieEmprises": 0,
+      "updatedAt": "2025-01-15"
+    },
+    "activite": {
+      "secteurs": ["Diamants", "Gemmologie", "Agro-industrie", "Transformation manioc"],
+      "nbIndustries": 0,
+      "updatedAt": ""
+    },
+    "infrastructures": {
+      "lineaireRoutier": 0,
+      "energieMW": 0,
+      "updatedAt": ""
+    },
+    "impact": {
+      "emplois": 0,
+      "investissement": "$0",
+      "updatedAt": ""
+    }
+  }
+}

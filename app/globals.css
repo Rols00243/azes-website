@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-azes-blue: #1B4F8C;
+  --color-azes-blue-dark: #0A2342;
+  --color-azes-blue-medium: #1a3a6b;
+  --color-azes-blue-light: #2d6bc4;
+  --color-azes-brown: #C4894A;
+  --color-azes-brown-dark: #8B5E3C;
+  --color-azes-brown-light: #d4a06a;
+  --color-azes-green: #2A7A4B;
+  --color-azes-green-light: #3a9a60;
+  --color-azes-green-dark: #1d5535;
+  --color-azes-cream: #FAFAF8;
+
+  /* Fonts */
+  --font-poppins: "Poppins", sans-serif;
+
+  /* Background images */
+  --background-image-hero-gradient: linear-gradient(135deg, #0A2342 0%, #1B4F8C 100%);
+  --background-image-cta-gradient: linear-gradient(135deg, #0A2342 0%, #8B5E3C 100%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background-color: #FAFAF8;
+    color: #1f2937;
+    font-family: "Poppins", sans-serif;
+  }
+
+  :focus-visible {
+    outline: 2px solid #C4894A;
+    outline-offset: 2px;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #C4894A;
+  color: white;
+  padding: 8px 16px;
+  z-index: 9999;
+  border-radius: 0 0 4px 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}

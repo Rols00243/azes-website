@@ -1,0 +1,15 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { isAuthenticated } from '@/lib/admin-auth'
+import { getZonesStats, writeJSON } from '@/lib/server-data'
+
+export async function GET() {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  return NextResponse.json(getZonesStats())
+}
+
+export async function PUT(req: NextRequest) {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  const data = await req.json()
+  writeJSON('zones-stats.json', data)
+  return NextResponse.json({ ok: true })
+}

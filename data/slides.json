@@ -1,0 +1,62 @@
+[
+  {
+    "id": "slide-1",
+    "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=85",
+    "tag": "ZES de Maluku · Kinshasa",
+    "headline": "Investissez au cœur",
+    "accent": "de l'Afrique Centrale",
+    "description": "L'AZES ouvre les portes d'un marché de 100 millions de consommateurs. Infrastructure prête. Avantages fiscaux garantis.",
+    "ctaLabel": "Explorer les zones",
+    "ctaHref": "/zones",
+    "ctaSecondLabel": "Investir maintenant",
+    "ctaSecondHref": "/demarches"
+  },
+  {
+    "id": "slide-2",
+    "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=85",
+    "tag": "Infrastructure · Classe mondiale",
+    "headline": "Des infrastructures",
+    "accent": "prêtes pour votre projet",
+    "description": "Parcs industriels clé-en-main, énergie dédiée 50 MW, fibre optique, accès portuaire. Tout est là.",
+    "ctaLabel": "Voir les projets",
+    "ctaHref": "/projets-opportunites/projets-en-cours",
+    "ctaSecondLabel": "Appels d'offres",
+    "ctaSecondHref": "/projets-opportunites/appels-offres"
+  },
+  {
+    "id": "slide-3",
+    "image": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1920&q=85",
+    "tag": "ZESTA Nganda-Jika · Kasaï Central",
+    "headline": "L'agro-industrie",
+    "accent": "au cœur du Kasaï",
+    "description": "2 800 ha de terres parmi les plus fertiles d'Afrique. 500 000 tonnes transformées par an. 6 500 emplois directs.",
+    "ctaLabel": "Découvrir la ZESTA",
+    "ctaHref": "/zones/zes-nganda-jika",
+    "ctaSecondLabel": "Investir",
+    "ctaSecondHref": "/demarches"
+  },
+  {
+    "id": "slide-4",
+    "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1920&q=85",
+    "tag": "ZES de Kinsevere · Haut-Katanga",
+    "headline": "Mines & Métallurgie",
+    "accent": "au Katanga",
+    "description": "70% des réserves mondiales de cobalt à portée. Un écosystème minier unique, structuré et certifié.",
+    "ctaLabel": "Découvrir Kinsevere",
+    "ctaHref": "/zones/zes-kinsevere",
+    "ctaSecondLabel": "Opportunités",
+    "ctaSecondHref": "/projets-opportunites/opportunites-investissement"
+  },
+  {
+    "id": "slide-5",
+    "image": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1920&q=85",
+    "tag": "ZES de Kin-Malebo · Pool Malebo",
+    "headline": "Le hub commercial",
+    "accent": "entre les deux Congo",
+    "description": "Terminal fluvial moderne face à Brazzaville. Zone franche commerciale. Accès direct aux marchés CEEAC.",
+    "ctaLabel": "Découvrir Kin-Malebo",
+    "ctaHref": "/zones/zes-kin-malebo",
+    "ctaSecondLabel": "Nous contacter",
+    "ctaSecondHref": "/contact"
+  }
+]
