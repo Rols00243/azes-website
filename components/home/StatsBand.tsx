@@ -14,9 +14,48 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
   ]
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50" aria-label="Chiffres clés">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #e8f0fe 0%, #ffffff 40%, #f0f7f4 100%)' }} aria-label="Chiffres clés">
 
+      {/* Atmospheric image overlay — aerial industrial zone */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&w=1920&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.05 }}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Animated orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -25, 0], opacity: [0.2, 0.35, 0.2] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-32 -left-24 w-96 h-96 rounded-full blur-3xl"
+          style={{ backgroundColor: '#1B4F8C' }}
+        />
+        <motion.div
+          animate={{ y: [0, 20, 0], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute top-1/3 -right-24 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: '#2A7A4B' }}
+        />
+        <motion.div
+          animate={{ y: [0, -18, 0], opacity: [0.15, 0.28, 0.15] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          className="absolute -bottom-24 left-1/2 w-72 h-72 rounded-full blur-3xl"
+          style={{ backgroundColor: '#C4894A' }}
+        />
+      </div>
+
+      {/* Dot-grid decorative pattern */}
+      <div className="absolute inset-0 opacity-[0.025]" style={{
+        backgroundImage: 'radial-gradient(#1B4F8C 1px, transparent 1px)',
+        backgroundSize: '32px 32px',
+      }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,14 +86,18 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="relative group"
             >
-              <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-8 text-center hover:border-gray-300 hover:shadow-md transition-all overflow-hidden">
+              <div className="relative bg-white/90 backdrop-blur-sm border border-white/80 rounded-2xl px-6 py-8 text-center hover:border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all overflow-hidden"
+                style={{ boxShadow: `0 4px 24px ${stat.color}0d` }}>
                 <div className="absolute top-0 left-8 right-8 h-0.5 rounded-full"
-                  style={{ backgroundColor: stat.color, opacity: 0.7 }} />
+                  style={{ backgroundColor: stat.color, opacity: 0.8 }} />
+                {/* Card glow on hover */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: `radial-gradient(ellipse at center top, ${stat.color}08 0%, transparent 60%)` }} />
 
                 <div className="relative">
                   <div className="flex justify-center mb-4">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                      style={{ backgroundColor: `${stat.color}15`, border: `1px solid ${stat.color}25` }}>
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"
+                      style={{ backgroundColor: `${stat.color}15`, border: `1px solid ${stat.color}30` }}>
                       <stat.icon className="w-7 h-7" style={{ color: stat.color }} />
                     </div>
                   </div>

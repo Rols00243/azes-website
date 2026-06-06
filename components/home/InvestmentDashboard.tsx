@@ -66,8 +66,8 @@ function Ring({ pct, color, label }: { pct: number; color: string; label: string
           transition={{ duration: 1.1, ease: 'easeOut' }}
         />
       </svg>
-      <div className="text-xs font-bold text-white -mt-1">{pct}%</div>
-      <div className="text-[10px] text-white/60">{label}</div>
+      <div className="text-xs font-bold text-white -mt-1 drop-shadow">{pct}%</div>
+      <div className="text-[10px] text-white/80 drop-shadow">{label}</div>
     </div>
   )
 }
@@ -111,8 +111,45 @@ export default function InvestmentDashboard({ zones }: { zones: Zone[] }) {
   const maxEntreprises = Math.max(...zones.map((z) => z.entreprises || 1), 1)
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50" aria-label="Synthèse des investissements">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #f8f9ff 0%, #ffffff 50%, #f0f8f4 100%)' }} aria-label="Synthèse des investissements">
+
+      {/* Atmospheric image — data / finance / charts */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&w=1920&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.04 }}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Animated orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -20, 0], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-24 -right-24 w-[450px] h-[450px] rounded-full blur-3xl"
+          style={{ backgroundColor: '#C4894A' }}
+        />
+        <motion.div
+          animate={{ y: [0, 18, 0], opacity: [0.1, 0.18, 0.1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          className="absolute bottom-0 -left-20 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: '#1B4F8C' }}
+        />
+      </div>
+
+      {/* Fine data-grid pattern */}
+      <div className="absolute inset-0 opacity-[0.025]" style={{
+        backgroundImage: `
+          linear-gradient(rgba(196,137,74,0.4) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(196,137,74,0.4) 1px, transparent 1px)
+        `,
+        backgroundSize: '40px 40px',
+      }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── Section header ── */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">

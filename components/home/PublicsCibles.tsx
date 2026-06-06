@@ -36,8 +36,44 @@ const publics = [
 
 export default function PublicsCibles() {
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white" aria-label="Publics cibles">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #f3eeff 0%, #ffffff 50%, #e8f4fd 100%)' }} aria-label="Publics cibles">
+
+      {/* Atmospheric image — network / connectivity */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&w=1920&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.05 }}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Animated orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -20, 0], x: [0, 12, 0], opacity: [0.18, 0.3, 0.18] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-0 -left-20 w-96 h-96 rounded-full blur-3xl"
+          style={{ backgroundColor: '#6B48A0' }}
+        />
+        <motion.div
+          animate={{ y: [0, 25, 0], opacity: [0.12, 0.22, 0.12] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: '#1E7A9E' }}
+        />
+      </div>
+
+      {/* Concentric circles decorative */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        {[400, 600, 800].map((size) => (
+          <div key={size} className="absolute rounded-full border opacity-[0.025]"
+            style={{ width: size, height: size, top: -size/2, left: -size/2, borderColor: '#6B48A0' }} />
+        ))}
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Nos publics"
           title="À qui s'adresse l'AZES ?"
@@ -55,10 +91,11 @@ export default function PublicsCibles() {
             >
               <Link
                 href={p.href}
-                className="flex flex-col items-center gap-3 p-4 rounded-2xl bg-white border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all group text-center"
+                className="flex flex-col items-center gap-3 p-4 rounded-2xl bg-white/90 backdrop-blur-sm border border-white/80 hover:border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all group text-center"
+                style={{ boxShadow: `0 2px 12px ${p.color}08` }}
               >
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"
-                  style={{ backgroundColor: `${p.color}12`, border: `1px solid ${p.color}20` }}>
+                  style={{ backgroundColor: `${p.color}15`, border: `1px solid ${p.color}25` }}>
                   <p.icon className="w-6 h-6" style={{ color: p.color }} />
                 </div>
                 <span className="text-xs font-semibold text-gray-600 group-hover:text-[#0A2342] leading-tight transition-colors">{p.label}</span>

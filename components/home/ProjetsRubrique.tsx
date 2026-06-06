@@ -15,8 +15,48 @@ const META = [
 
 export default function ProjetsRubrique({ counts }: { counts: ProjetsCount }) {
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50" aria-label="Projets et opportunités">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fdf7ed 0%, #ffffff 50%, #fef3e2 100%)' }} aria-label="Projets et opportunités">
+
+      {/* Atmospheric image — industrial construction / infrastructure */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&w=1920&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.07 }}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Animated orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -30, 0], x: [0, 15, 0], opacity: [0.2, 0.35, 0.2] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-24 -right-20 w-[450px] h-[450px] rounded-full blur-3xl"
+          style={{ backgroundColor: '#C4894A' }}
+        />
+        <motion.div
+          animate={{ y: [0, 22, 0], opacity: [0.15, 0.25, 0.15] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
+          className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: '#1B4F8C' }}
+        />
+        <motion.div
+          animate={{ y: [0, -12, 0], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          className="absolute top-1/2 left-1/4 w-56 h-56 rounded-full blur-3xl"
+          style={{ backgroundColor: '#6B48A0' }}
+        />
+      </div>
+
+      {/* Diagonal lines pattern */}
+      <div className="absolute inset-0 opacity-[0.018]" style={{
+        backgroundImage: 'repeating-linear-gradient(45deg, #C4894A 0, #C4894A 1px, transparent 0, transparent 50%)',
+        backgroundSize: '20px 20px',
+      }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Rubrique"
           title="Projets & Opportunités"
@@ -28,11 +68,17 @@ export default function ProjetsRubrique({ counts }: { counts: ProjetsCount }) {
             <motion.div key={item.href} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
               <Link href={item.href}
-                className="block h-full group relative overflow-hidden rounded-2xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(90deg, ${item.color}, transparent)` }} />
-                <div className="p-6">
+                className="block h-full group relative overflow-hidden rounded-2xl border border-white/80 bg-white/90 backdrop-blur-sm hover:border-gray-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                style={{ boxShadow: `0 4px 20px ${item.color}0a` }}>
+                {/* Top gradient bar */}
+                <div className="absolute top-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, ${item.color}, ${item.color}66, transparent)` }} />
+                {/* Hover inner glow */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: `radial-gradient(ellipse at top left, ${item.color}08, transparent 60%)` }} />
+
+                <div className="p-6 relative">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
-                    style={{ backgroundColor: `${item.color}15`, border: `1px solid ${item.color}25` }}>
+                    style={{ backgroundColor: `${item.color}15`, border: `1px solid ${item.color}30` }}>
                     <item.icon className="w-6 h-6" style={{ color: item.color }} />
                   </div>
                   <div className="text-3xl font-bold text-[#0A2342] mb-1">{counts[item.descKey]}</div>

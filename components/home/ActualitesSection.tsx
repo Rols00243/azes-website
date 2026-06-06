@@ -12,8 +12,36 @@ export default function ActualitesSection({ items }: { items: Actualite[] }) {
   if (items.length === 0) return null
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50" aria-label="Actualités">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fffbf5 0%, #ffffff 45%, #f5f9ff 100%)' }} aria-label="Actualités">
+
+      {/* Atmospheric image — press / media */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.05 }}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Animated orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -22, 0], opacity: [0.15, 0.28, 0.15] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-20 right-1/4 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: '#C4894A' }}
+        />
+        <motion.div
+          animate={{ y: [0, 18, 0], opacity: [0.1, 0.18, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute bottom-0 left-0 w-72 h-72 rounded-full blur-3xl"
+          style={{ backgroundColor: '#1B4F8C' }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
           <SectionHeader eyebrow="Actualités" title="Dernières nouvelles de l'AZES" />
           <Link href="#" className="flex-shrink-0 flex items-center gap-2 text-sm font-semibold text-[#C4894A] hover:text-[#a87540] transition-colors">
@@ -31,16 +59,19 @@ export default function ActualitesSection({ items }: { items: Actualite[] }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                className="group bg-white/90 backdrop-blur-sm border border-white/80 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                style={{ boxShadow: `0 2px 16px ${accent}08` }}
               >
                 {/* Image area */}
-                <div className="h-36 relative overflow-hidden flex items-center justify-center"
-                  style={{ background: `linear-gradient(135deg, ${accent}22 0%, ${accent}08 100%)`, borderBottom: `1px solid ${accent}20` }}>
-                  <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }} />
-                  <NewspaperIcon className="w-10 h-10 opacity-20" style={{ color: accent }} />
+                <div className="h-40 relative overflow-hidden flex items-center justify-center"
+                  style={{ background: `linear-gradient(135deg, ${accent}20 0%, ${accent}08 100%)`, borderBottom: `1px solid ${accent}20` }}>
+                  <div className="absolute top-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, ${accent}, ${accent}55, transparent)` }} />
+                  {/* Subtle background image in card */}
+                  <div className="absolute inset-0 opacity-10" style={{ background: `radial-gradient(ellipse at center, ${accent} 0%, transparent 70%)` }} />
+                  <NewspaperIcon className="w-12 h-12 opacity-25 relative z-10" style={{ color: accent }} />
                   <div className="absolute bottom-3 left-4">
                     <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
-                      style={{ color: accent, backgroundColor: `${accent}15`, border: `1px solid ${accent}30` }}>
+                      style={{ color: accent, backgroundColor: `${accent}18`, border: `1px solid ${accent}30` }}>
                       {actu.categorie}
                     </span>
                   </div>

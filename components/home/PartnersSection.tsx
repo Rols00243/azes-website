@@ -28,8 +28,44 @@ const categoryColors: Record<string, string> = {
 
 export default function PartnersSection() {
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white" aria-label="Partenaires">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #e8f0fe 0%, #ffffff 50%, #f0f7f4 100%)' }} aria-label="Partenaires">
+
+      {/* Atmospheric image — world map / global network */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&w=1920&q=60"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.05 }}
+          loading="lazy"
+        />
+      </div>
+
+      {/* Animated orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{ y: [0, -25, 0], x: [0, -15, 0], opacity: [0.15, 0.26, 0.15] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-20 left-1/4 w-[450px] h-[450px] rounded-full blur-3xl"
+          style={{ backgroundColor: '#1B4F8C' }}
+        />
+        <motion.div
+          animate={{ y: [0, 18, 0], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
+          className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full blur-3xl"
+          style={{ backgroundColor: '#2A7A4B' }}
+        />
+      </div>
+
+      {/* Globe meridian pattern */}
+      <div className="absolute inset-0 opacity-[0.025]" style={{
+        backgroundImage: `
+          radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgba(27,79,140,0.3) 41%, transparent 42%),
+          radial-gradient(ellipse 50% 60% at 50% 50%, transparent 40%, rgba(27,79,140,0.3) 41%, transparent 42%)
+        `,
+      }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,9 +94,10 @@ export default function PartnersSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group relative bg-white border border-gray-200 rounded-2xl p-4 hover:border-gray-300 hover:shadow-md transition-all cursor-default text-center overflow-hidden"
+              className="group relative bg-white/90 backdrop-blur-sm border border-white/80 rounded-2xl p-4 hover:border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all cursor-default text-center overflow-hidden"
+              style={{ boxShadow: `0 2px 12px ${p.color}06` }}
             >
-              {/* Corner accent on hover */}
+              {/* Top accent on hover */}
               <div className="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
                 style={{ background: `linear-gradient(90deg, transparent, ${p.color}, transparent)` }} />
 
