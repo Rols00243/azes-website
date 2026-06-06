@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { WrenchScrewdriverIcon, ClockIcon, LightBulbIcon, DocumentMagnifyingGlassIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import DarkPageHero from '@/components/ui/DarkPageHero'
 
+const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.55 } }
+
 const subPages = [
   {
     href: '/projets-opportunites/projets-en-cours',
@@ -42,7 +44,7 @@ const subPages = [
 
 export default function ProjetsOpportunitesPage() {
   return (
-    <div className="bg-[#040810] min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <DarkPageHero
         eyebrow="Hub"
         title="Projets &"
@@ -52,19 +54,16 @@ export default function ProjetsOpportunitesPage() {
         accentColor="#6B48A0"
       />
 
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[#040810]" />
-        <div className="absolute inset-0 opacity-[0.09]"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=50')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-[500px] h-[400px]"
-            style={{ background: 'radial-gradient(ellipse at left top, rgba(107,72,160,0.12) 0%, transparent 65%)' }} />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[300px]"
-            style={{ background: 'radial-gradient(ellipse at right bottom, rgba(42,122,75,0.10) 0%, transparent 65%)' }} />
-        </div>
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeUp} className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 text-[#6B48A0] text-xs font-bold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-[#6B48A0]/60" /> Explorer <span className="w-6 h-px bg-[#6B48A0]/60" />
+            </div>
+            <h2 className="text-3xl font-bold text-[#0A2342]">Choisissez votre domaine</h2>
+            <p className="text-gray-500 mt-3 text-sm max-w-xl mx-auto">Projets en cours, planifiés, opportunités d'investissement et appels d'offres — tout est ici.</p>
+          </motion.div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {subPages.map((page, i) => (
               <motion.div
@@ -76,23 +75,20 @@ export default function ProjetsOpportunitesPage() {
               >
                 <Link
                   href={page.href}
-                  className="group block h-full relative bg-white/[0.04] border border-white/[0.08] rounded-2xl overflow-hidden hover:border-white/20 hover:bg-white/[0.07] hover:-translate-y-1 transition-all duration-300"
+                  className="group block h-full relative bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                 >
                   {/* Top accent */}
                   <div className="absolute top-0 left-0 right-0 h-0.5"
                     style={{ background: `linear-gradient(90deg, ${page.color}, transparent)` }} />
-                  {/* Corner glow on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"
-                    style={{ background: `radial-gradient(circle at 0% 0%, ${page.color}15 0%, transparent 50%)` }} />
 
                   <div className="relative p-8">
                     <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
-                      style={{ backgroundColor: `${page.color}20`, border: `1px solid ${page.color}30` }}>
+                      style={{ backgroundColor: `${page.color}15`, border: `1px solid ${page.color}25` }}>
                       <page.icon className="w-7 h-7" style={{ color: page.color }} />
                     </div>
                     <div className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: page.color }}>{page.count}</div>
-                    <h2 className="text-xl font-bold text-white mb-3 group-hover:text-white/90 transition-colors">{page.title}</h2>
-                    <p className="text-white/45 leading-relaxed mb-6 text-sm">{page.desc}</p>
+                    <h2 className="text-xl font-bold text-[#0A2342] mb-3 group-hover:text-[#1B4F8C] transition-colors">{page.title}</h2>
+                    <p className="text-gray-600 leading-relaxed mb-6 text-sm">{page.desc}</p>
                     <div className="flex items-center gap-2 font-semibold text-sm group-hover:gap-3 transition-all"
                       style={{ color: page.color }}>
                       Explorer <ArrowRightIcon className="w-4 h-4" />

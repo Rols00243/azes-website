@@ -30,28 +30,9 @@
   }
 
   body {
-    background-color: #020508;
+    background-color: #f8fafc;
     color: #1f2937;
     font-family: "Poppins", sans-serif;
-  }
-
-  /* ── Lueur ambiante globale ── très subtile, comme un contre-jour de studio */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 100% 0%,   rgba(42, 122, 75,  0.055) 0%, transparent 65%),
-      radial-gradient(ellipse 55% 45% at 0%   100%,  rgba(196,137, 74,  0.045) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 35% at 50%  100%,  rgba(27,  79, 140, 0.040) 0%, transparent 55%);
-  }
-
-  /* Assure que le contenu reste au-dessus de la lueur */
-  body > * {
-    position: relative;
-    z-index: 1;
   }
 
   :focus-visible {

@@ -34,16 +34,14 @@ export default function DocumentsPage() {
 
   const countByCategory = useMemo(() => {
     const counts: Partial<Record<DocCategory, number>> = {}
-    documents.forEach(d => {
-      counts[d.categorie] = (counts[d.categorie] ?? 0) + 1
-    })
+    documents.forEach(d => { counts[d.categorie] = (counts[d.categorie] ?? 0) + 1 })
     return counts
   }, [])
 
   const hasFilters = selectedCat !== 'Toutes' || selectedZone !== 'Toutes' || search !== ''
 
   return (
-    <div className="bg-[#040810] min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       {/* Hero */}
       <DarkPageHero
         eyebrow="Ressources officielles"
@@ -71,64 +69,72 @@ export default function DocumentsPage() {
       </DarkPageHero>
 
       {/* Category cards */}
-      <section className="py-10 bg-[#0a1628] border-b border-white/[0.06]">
+      <section className="py-10 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-5">Parcourir par catégorie</h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-5"
+          >
+            Parcourir par catégorie
+          </motion.h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {/* All */}
-            <button
+            <motion.button
+              initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
               onClick={() => { setSelectedCat('Toutes'); setSelectedZone('Toutes') }}
               className={`flex flex-col items-start gap-2 p-4 rounded-2xl border text-left transition-all ${
                 selectedCat === 'Toutes' && selectedZone === 'Toutes'
-                  ? 'border-[#8B5E3C] bg-[#8B5E3C]/20 text-white'
-                  : 'border-white/[0.07] bg-white/[0.03] hover:border-white/15 text-white/70'
+                  ? 'border-[#8B5E3C] bg-[#8B5E3C]/10 text-[#8B5E3C]'
+                  : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
               }`}
             >
               <span className="text-xl">🗂️</span>
               <div>
                 <div className="font-semibold text-sm">Toutes</div>
-                <div className="text-xs opacity-60 mt-0.5">{documents.length} documents</div>
+                <div className="text-xs text-gray-400 mt-0.5">{documents.length} documents</div>
               </div>
-            </button>
+            </motion.button>
 
-            {categories.map((cat) => {
+            {categories.map((cat, ci) => {
               const cfg = categoryConfig[cat]
               const count = countByCategory[cat] ?? 0
               const active = selectedCat === cat
               return (
-                <button
+                <motion.button
                   key={cat}
+                  initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: (ci + 1) * 0.05 }}
                   onClick={() => { setSelectedCat(cat); setSelectedZone('Toutes') }}
                   className={`flex flex-col items-start gap-2 p-4 rounded-2xl border text-left transition-all ${
-                    active ? 'text-white' : 'border-white/[0.07] bg-white/[0.03] hover:border-white/15 text-white/60'
+                    active ? 'text-white' : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
                   }`}
-                  style={active ? { borderColor: `${cfg.color}60`, backgroundColor: `${cfg.color}20` } : {}}
+                  style={active ? { borderColor: cfg.color, backgroundColor: cfg.color } : {}}
                 >
                   <span className="text-xl">{cfg.icon}</span>
                   <div>
                     <div className="font-semibold text-xs leading-tight">{cat}</div>
-                    <div className="text-xs opacity-60 mt-0.5">{count} document{count !== 1 ? 's' : ''}</div>
+                    <div className={`text-xs mt-0.5 ${active ? 'text-white/70' : 'text-gray-400'}`}>{count} document{count !== 1 ? 's' : ''}</div>
                   </div>
-                </button>
+                </motion.button>
               )
             })}
           </div>
         </div>
       </section>
 
-      {/* Active filters + results */}
-      <section className="py-10 bg-[#040810]">
+      {/* Filters + results */}
+      <section className="py-10 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Filter bar */}
-          <div className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5 mb-6 flex flex-wrap gap-4 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            className="bg-white border border-gray-200 rounded-2xl p-5 mb-6 flex flex-wrap gap-4 items-center"
+          >
             {selectedCat !== 'Toutes' && (
               <div className="flex items-center gap-2 text-sm font-medium">
-                <span className="text-white/40">Catégorie :</span>
+                <span className="text-gray-500">Catégorie :</span>
                 <span
                   className="px-3 py-1 rounded-full text-white text-xs font-semibold flex items-center gap-1.5"
-                  style={{ backgroundColor: `${categoryConfig[selectedCat as DocCategory]?.color ?? '#8B5E3C'}30`,
-                    color: categoryConfig[selectedCat as DocCategory]?.color ?? '#8B5E3C',
-                    border: `1px solid ${categoryConfig[selectedCat as DocCategory]?.color ?? '#8B5E3C'}50` }}
+                  style={{ backgroundColor: categoryConfig[selectedCat as DocCategory]?.color ?? '#8B5E3C' }}
                 >
                   {selectedCat}
                   <button onClick={() => setSelectedCat('Toutes')} className="hover:opacity-75">
@@ -138,83 +144,54 @@ export default function DocumentsPage() {
               </div>
             )}
             <div>
-              <select
-                value={selectedZone}
-                onChange={e => setSelectedZone(e.target.value)}
-                className="text-sm bg-white/[0.06] border border-white/10 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-white/30"
-              >
-                {zoneList.map(z => <option key={z} className="bg-[#0a1628]">{z}</option>)}
+              <select value={selectedZone} onChange={e => setSelectedZone(e.target.value)}
+                className="text-sm bg-gray-50 border border-gray-300 text-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-[#1B4F8C]">
+                {zoneList.map(z => <option key={z}>{z}</option>)}
               </select>
             </div>
             <div>
-              <select
-                value={sortDate}
-                onChange={e => setSortDate(e.target.value as 'desc' | 'asc')}
-                className="text-sm bg-white/[0.06] border border-white/10 text-white rounded-lg px-3 py-2 focus:outline-none focus:border-white/30"
-              >
-                <option value="desc" className="bg-[#0a1628]">Plus récent d&apos;abord</option>
-                <option value="asc" className="bg-[#0a1628]">Plus ancien d&apos;abord</option>
+              <select value={sortDate} onChange={e => setSortDate(e.target.value as 'desc' | 'asc')}
+                className="text-sm bg-gray-50 border border-gray-300 text-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-[#1B4F8C]">
+                <option value="desc">Plus récent d&apos;abord</option>
+                <option value="asc">Plus ancien d&apos;abord</option>
               </select>
             </div>
             <div className="ml-auto flex items-center gap-3">
-              <span className="text-sm text-white/30 font-medium">
+              <span className="text-sm text-gray-400 font-medium">
                 {filtered.length} résultat{filtered.length !== 1 ? 's' : ''}
               </span>
-              <div className="flex border border-white/10 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setView('grid')}
-                  className={`p-2 transition-colors ${view === 'grid' ? 'bg-[#8B5E3C] text-white' : 'bg-transparent text-white/40 hover:bg-white/[0.05]'}`}
-                  aria-label="Vue grille"
-                >
-                  <Squares2X2Icon className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setView('list')}
-                  className={`p-2 transition-colors ${view === 'list' ? 'bg-[#8B5E3C] text-white' : 'bg-transparent text-white/40 hover:bg-white/[0.05]'}`}
-                  aria-label="Vue liste"
-                >
-                  <ListBulletIcon className="w-4 h-4" />
-                </button>
+              <div className="flex border border-gray-200 rounded-lg overflow-hidden">
+                <button onClick={() => setView('grid')}
+                  className={`p-2 transition-colors ${view === 'grid' ? 'bg-[#8B5E3C] text-white' : 'bg-white text-gray-400 hover:bg-gray-50'}`}
+                  aria-label="Vue grille"><Squares2X2Icon className="w-4 h-4" /></button>
+                <button onClick={() => setView('list')}
+                  className={`p-2 transition-colors ${view === 'list' ? 'bg-[#8B5E3C] text-white' : 'bg-white text-gray-400 hover:bg-gray-50'}`}
+                  aria-label="Vue liste"><ListBulletIcon className="w-4 h-4" /></button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Results */}
           <AnimatePresence mode="wait">
             {filtered.length === 0 ? (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-24 text-white/30"
-              >
-                <MagnifyingGlassIcon className="w-12 h-12 mx-auto mb-4 opacity-30" />
-                <p className="font-semibold">Aucun document trouvé</p>
-                <p className="text-sm mt-1 opacity-70">Modifiez vos filtres ou votre recherche</p>
+              <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                className="text-center py-24 text-gray-400">
+                <MagnifyingGlassIcon className="w-12 h-12 mx-auto mb-4 opacity-40" />
+                <p className="font-semibold text-gray-600">Aucun document trouvé</p>
+                <p className="text-sm mt-1">Modifiez vos filtres ou votre recherche</p>
                 {hasFilters && (
-                  <button
-                    onClick={() => { setSearch(''); setSelectedCat('Toutes'); setSelectedZone('Toutes') }}
-                    className="mt-4 px-4 py-2 text-sm text-[#8B5E3C] border border-[#8B5E3C]/50 rounded-lg hover:bg-[#8B5E3C]/20 transition-colors"
-                  >
+                  <button onClick={() => { setSearch(''); setSelectedCat('Toutes'); setSelectedZone('Toutes') }}
+                    className="mt-4 px-4 py-2 text-sm text-[#8B5E3C] border border-[#8B5E3C]/50 rounded-lg hover:bg-[#8B5E3C]/10 transition-colors">
                     Réinitialiser les filtres
                   </button>
                 )}
               </motion.div>
             ) : view === 'grid' ? (
-              <motion.div
-                key="grid"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-              >
+              <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filtered.map((doc, i) => (
-                  <motion.div
-                    key={doc.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.03 }}
-                  >
+                  <motion.div key={doc.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.03 }}>
                     <DocumentCard doc={doc} view="grid" />
                   </motion.div>
                 ))}
@@ -222,13 +199,8 @@ export default function DocumentsPage() {
             ) : (
               <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
                 {filtered.map((doc, i) => (
-                  <motion.div
-                    key={doc.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.02 }}
-                  >
+                  <motion.div key={doc.id} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.02 }}>
                     <DocumentCard doc={doc} view="list" />
                   </motion.div>
                 ))}
