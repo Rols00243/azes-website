@@ -52,7 +52,7 @@ const advantages = [
 
 export default function WhyInvest() {
   return (
-    <section className="py-24 bg-gray-50" aria-labelledby="pourquoi-investir">
+    <section className="py-24 bg-gradient-to-b from-gray-50 to-white" aria-labelledby="pourquoi-investir">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Pourquoi choisir les ZES RDC"

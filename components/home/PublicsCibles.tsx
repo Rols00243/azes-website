@@ -36,7 +36,7 @@ const publics = [
 
 export default function PublicsCibles() {
   return (
-    <section className="py-20 bg-gray-50" aria-label="Publics cibles">
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white" aria-label="Publics cibles">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Nos publics"

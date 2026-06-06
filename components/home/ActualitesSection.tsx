@@ -12,7 +12,7 @@ export default function ActualitesSection({ items }: { items: Actualite[] }) {
   if (items.length === 0) return null
 
   return (
-    <section className="py-20 bg-white" aria-label="Actualités">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50" aria-label="Actualités">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
           <SectionHeader eyebrow="Actualités" title="Dernières nouvelles de l'AZES" />

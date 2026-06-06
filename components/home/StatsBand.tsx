@@ -14,7 +14,7 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
   ]
 
   return (
-    <section className="py-20 bg-white" aria-label="Chiffres clés">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50" aria-label="Chiffres clés">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div

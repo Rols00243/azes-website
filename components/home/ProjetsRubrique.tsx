@@ -15,7 +15,7 @@ const META = [
 
 export default function ProjetsRubrique({ counts }: { counts: ProjetsCount }) {
   return (
-    <section className="py-20 bg-white" aria-label="Projets et opportunités">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50" aria-label="Projets et opportunités">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Rubrique"

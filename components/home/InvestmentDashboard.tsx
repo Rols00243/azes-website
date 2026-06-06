@@ -111,7 +111,7 @@ export default function InvestmentDashboard({ zones }: { zones: Zone[] }) {
   const maxEntreprises = Math.max(...zones.map((z) => z.entreprises || 1), 1)
 
   return (
-    <section className="py-24 bg-gray-50" aria-label="Synthèse des investissements">
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50" aria-label="Synthèse des investissements">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── Section header ── */}
