@@ -7,6 +7,7 @@ import {
   HomeIcon, ChartBarIcon, MapIcon, BriefcaseIcon,
   NewspaperIcon, UserGroupIcon, PhotoIcon,
   DocumentTextIcon, MegaphoneIcon, InboxIcon,
+  EnvelopeIcon,
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline'
 
@@ -21,6 +22,7 @@ const nav = [
   { href: '/admin/documents',     label: 'Documents',       icon: DocumentTextIcon },
   { href: '/admin/emplois',       label: 'Emplois',         icon: UserGroupIcon },
   { href: '/admin/messages',      label: 'Messages',        icon: InboxIcon, badge: true },
+  { href: '/admin/emails',        label: 'Emails agents',   icon: EnvelopeIcon },
 ]
 
 export default function AdminNav() {

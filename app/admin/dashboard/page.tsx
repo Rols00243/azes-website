@@ -1,9 +1,9 @@
 import { requireAuth } from '@/lib/admin-auth'
-import { getStats, getProjetsCount, getActualites, getEmplois, getSlides, getDocumentsAdmin, getAppelsOffresAdmin, getMessages } from '@/lib/server-data'
+import { getStats, getProjetsCount, getActualites, getEmplois, getSlides, getDocumentsAdmin, getAppelsOffresAdmin, getMessages, getCompteEmails } from '@/lib/server-data'
 import Link from 'next/link'
 import {
   ChartBarIcon, MapIcon, BriefcaseIcon, NewspaperIcon,
-  UserGroupIcon, PhotoIcon, DocumentTextIcon, MegaphoneIcon, InboxIcon, ArrowRightIcon,
+  UserGroupIcon, PhotoIcon, DocumentTextIcon, MegaphoneIcon, InboxIcon, EnvelopeIcon, ArrowRightIcon,
 } from '@heroicons/react/24/outline'
 
 export default async function DashboardPage() {
@@ -17,6 +17,7 @@ export default async function DashboardPage() {
   const appels     = getAppelsOffresAdmin()
   const messages   = getMessages()
   const unread     = messages.filter(m => !m.lu).length
+  const emails     = getCompteEmails()
 
   const sections = [
     {
@@ -91,6 +92,16 @@ export default async function DashboardPage() {
       color: 'bg-sky-50 text-sky-700',
       badge: unread > 0 ? `${unread} non lu(s) · ${messages.length} total` : `${messages.length} message(s)`,
       highlight: unread > 0,
+    },
+    {
+      href: '/admin/emails',
+      icon: EnvelopeIcon,
+      label: 'Messagerie professionnelle',
+      desc: 'Comptes email @azes.cd pour agents et cadres',
+      color: 'bg-violet-50 text-violet-700',
+      badge: emails.length > 0
+        ? `${emails.filter(e => e.actif).length} actif(s) · ${emails.length} total`
+        : 'Aucun compte créé',
     },
   ]
 

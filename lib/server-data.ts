@@ -240,6 +240,24 @@ export function getUnreadCount(): number {
   return getMessages().filter((m) => !m.lu).length
 }
 
+// ─── Comptes email professionnels ─────────────────────────────────────────────
+
+export interface CompteEmail {
+  id: string
+  prenom: string
+  nom: string
+  role: 'Agent' | 'Cadre' | 'Directeur' | 'Consultant'
+  departement: string
+  adresse: string      // ex: prenom.nom@azes.cd
+  motDePasse: string   // temporaire — à changer au premier login
+  actif: boolean
+  dateCreation: string // ISO date
+}
+
+export function getCompteEmails(): CompteEmail[] {
+  return readJSON('emails.json', [])
+}
+
 // ─── Zone merging ─────────────────────────────────────────────────────────────
 
 export function getMergedZones() {
