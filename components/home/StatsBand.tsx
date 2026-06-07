@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import AnimatedCounter from '@/components/AnimatedCounter'
 import { BuildingOffice2Icon, BriefcaseIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import type { SiteStats } from '@/lib/server-data'
-import InfraVideoBg from '@/components/ui/InfraVideoBg'
+
+const IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60'
 
 export default function StatsBand({ stats }: { stats: SiteStats }) {
   const items = [
@@ -15,9 +16,35 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
   ]
 
   return (
-    <InfraVideoBg accentColor="#1B4F8C" dimAmount={0.70} aria-label="Chiffres clés">
-      <section className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden bg-gray-50" aria-label="Chiffres clés">
+
+      {/* Atmospheric infrastructure image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('${IMG}')`, opacity: 0.055 }}
+        />
+      </div>
+
+      {/* Directional vignette */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.65) 0%, transparent 60%, rgba(255,255,255,0.45) 100%)' }} />
+
+      {/* Ambient orbs */}
+      <motion.div aria-hidden
+        className="absolute -top-28 -right-28 w-[440px] h-[440px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(27,79,140,0.05) 0%, transparent 70%)' }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div aria-hidden
+        className="absolute -bottom-20 -left-20 w-[360px] h-[360px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(196,137,74,0.04) 0%, transparent 70%)' }}
+        animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.9, 0.5] }}
+        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -30,10 +57,10 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
             Performances 2025
             <span className="w-8 h-px bg-[#C4894A]/60" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0A2342]">
             Les ZES de la RDC en chiffres
           </h2>
-          <p className="text-white/55 mt-2 text-sm max-w-xl mx-auto">
+          <p className="text-gray-500 mt-2 text-sm max-w-xl mx-auto">
             Indicateurs consolidés sur l'ensemble du réseau des Zones Économiques Spéciales.
           </p>
         </motion.div>
@@ -48,11 +75,10 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="relative group"
             >
-              <div className="relative bg-white/90 backdrop-blur-sm border border-white/80 rounded-2xl px-6 py-8 text-center hover:border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all overflow-hidden"
+              <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-8 text-center hover:border-gray-300 hover:shadow-md hover:-translate-y-1 transition-all overflow-hidden"
                 style={{ boxShadow: `0 4px 24px ${stat.color}0d` }}>
                 <div className="absolute top-0 left-8 right-8 h-0.5 rounded-full"
                   style={{ backgroundColor: stat.color, opacity: 0.8 }} />
-                {/* Card glow on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
                   style={{ background: `radial-gradient(ellipse at center top, ${stat.color}08 0%, transparent 60%)` }} />
 
@@ -75,7 +101,6 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
           ))}
         </div>
       </div>
-      </section>
-    </InfraVideoBg>
+    </section>
   )
 }
