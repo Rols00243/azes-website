@@ -9,9 +9,15 @@ import {
 
 const ROLES: CompteEmail['role'][] = ['Agent', 'Cadre', 'Directeur', 'Consultant']
 const DEPARTEMENTS = [
-  'Direction Générale', 'Direction Technique', 'Direction Financière',
-  'Direction Juridique', 'Direction Commerciale', 'Ressources Humaines',
-  'Informatique & Systèmes', 'Communication', 'Zones Économiques', 'Guichet Unique',
+  'Direction Générale',
+  'Direction Juridique',
+  'Direction Administrative et Financière',
+  'Direction Technique',
+  'Cellule Informatique (Direction Technique)',
+  'Guichet Unique de Maluku',
+  'Guichet Unique de Lubumbashi',
+  'Guichet Unique de Matadi',
+  'Guichet Unique du Kasaï',
 ]
 
 const ROLE_COLORS: Record<CompteEmail['role'], string> = {

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ShieldCheckIcon, EyeIcon, RocketLaunchIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightSection from '@/components/ui/LightSection'
 
 const missions = [
   { icon: RocketLaunchIcon, title: 'Développer', desc: "Piloter le développement des ZES conformément à la stratégie nationale de croissance économique.", color: '#2A7A4B' },
@@ -15,7 +16,7 @@ const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0
 
 export default function AProposPage() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
 
       <DarkPageHero
         eyebrow="À propos"
@@ -27,7 +28,7 @@ export default function AProposPage() {
       />
 
       {/* ── PRÉSENTATION ── */}
-      <section className="py-24 bg-white">
+      <LightSection className="py-24" image="infra">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeUp}>
@@ -65,10 +66,10 @@ export default function AProposPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* ── MISSIONS ── */}
-      <section className="py-24 bg-gray-50">
+      <LightSection className="py-24" alt image="aerial">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 text-[#2A7A4B] text-xs font-bold uppercase tracking-widest mb-3">
@@ -95,10 +96,10 @@ export default function AProposPage() {
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* ── GOUVERNANCE ── */}
-      <section className="py-24 bg-white">
+      <LightSection className="py-24" image="infra">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 text-[#2A7A4B] text-xs font-bold uppercase tracking-widest mb-3">
@@ -130,7 +131,7 @@ export default function AProposPage() {
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
     </div>
   )
 }

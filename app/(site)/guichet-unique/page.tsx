@@ -10,6 +10,7 @@ import {
   CalendarDaysIcon, CheckCircleIcon, ChevronDownIcon,
 } from '@heroicons/react/24/outline'
 import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightSection from '@/components/ui/LightSection'
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.55 } }
 
@@ -38,7 +39,7 @@ export default function GuichetUniquePage() {
   const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>()
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       <DarkPageHero
         eyebrow="Service prioritaire"
         title="Le Guichet"
@@ -58,7 +59,7 @@ export default function GuichetUniquePage() {
       </DarkPageHero>
 
       {/* ── Coordonnées ── */}
-      <section className="py-14 bg-white">
+      <LightSection className="py-14" image="aerial">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
@@ -82,10 +83,10 @@ export default function GuichetUniquePage() {
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* ── Processus en 4 étapes ── */}
-      <section className="py-20 bg-gray-50">
+      <LightSection className="py-20" alt image="infra">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 text-[#8B5E3C] text-xs font-bold uppercase tracking-widest mb-3">
@@ -118,10 +119,10 @@ export default function GuichetUniquePage() {
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* ── FAQ + Formulaire ── */}
-      <section className="py-20 bg-white">
+      <LightSection className="py-20" image="aerial">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
@@ -202,7 +203,7 @@ export default function GuichetUniquePage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </LightSection>
     </div>
   )
 }

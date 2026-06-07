@@ -240,6 +240,28 @@ export function getUnreadCount(): number {
   return getMessages().filter((m) => !m.lu).length
 }
 
+// ─── Bureaux de contact ───────────────────────────────────────────────────────
+
+export interface BureauContact {
+  id: string
+  ville: string
+  adresse: string
+  tel: string
+  email: string
+  horaires: string
+  color: string
+}
+
+const DEFAULT_BUREAUX: BureauContact[] = [
+  { id: 'bureau-1', ville: 'Kinshasa (Siège)', adresse: 'Boulevard du 30 Juin, Immeuble AZES, Gombe', tel: '+243 81 234 5678', email: 'info@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#1B4F8C' },
+  { id: 'bureau-2', ville: 'Matadi', adresse: "Avenue de l'Indépendance, Zone Franche", tel: '+243 81 234 5679', email: 'matadi@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#2A7A4B' },
+  { id: 'bureau-3', ville: 'Lubumbashi', adresse: 'Boulevard Moïse Tshombe, Zone Minière', tel: '+243 81 234 5680', email: 'lubumbashi@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#C4894A' },
+]
+
+export function getBureaux(): BureauContact[] {
+  return readJSON('bureaux.json', DEFAULT_BUREAUX)
+}
+
 // ─── Projets détaillés ───────────────────────────────────────────────────────
 
 export interface ProjetItem {

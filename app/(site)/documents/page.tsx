@@ -6,6 +6,7 @@ import { documents, categories, categoryConfig, type DocCategory } from '@/lib/d
 import DocumentCard from '@/components/DocumentCard'
 import { MagnifyingGlassIcon, Squares2X2Icon, ListBulletIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightSection from '@/components/ui/LightSection'
 
 const zoneList = ['Toutes', ...Array.from(new Set(documents.filter(d => d.zone).map(d => d.zone!)))]
 
@@ -41,7 +42,7 @@ export default function DocumentsPage() {
   const hasFilters = selectedCat !== 'Toutes' || selectedZone !== 'Toutes' || search !== ''
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       {/* Hero */}
       <DarkPageHero
         eyebrow="Ressources officielles"
@@ -69,7 +70,7 @@ export default function DocumentsPage() {
       </DarkPageHero>
 
       {/* Category cards */}
-      <section className="py-10 bg-white border-b border-gray-200">
+      <LightSection className="py-10 border-b border-gray-200" image="infra">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
@@ -119,10 +120,10 @@ export default function DocumentsPage() {
             })}
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* Filters + results */}
-      <section className="py-10 bg-gray-50">
+      <LightSection className="py-10" alt image="aerial">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Filter bar */}
           <motion.div
@@ -208,7 +209,7 @@ export default function DocumentsPage() {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </LightSection>
     </div>
   )
 }
