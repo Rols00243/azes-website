@@ -240,6 +240,65 @@ export function getUnreadCount(): number {
   return getMessages().filter((m) => !m.lu).length
 }
 
+// ─── Projets détaillés ───────────────────────────────────────────────────────
+
+export interface ProjetItem {
+  id: string
+  nom: string
+  zone: string
+  statut: 'En cours' | 'Planifié' | 'Terminé' | 'Suspendu'
+  secteur: string
+  description: string
+  investissement: string
+  dateDebut: string
+}
+
+export function getProjetsItems(): ProjetItem[] {
+  return readJSON('projets-items.json', [])
+}
+
+// ─── Projets par zone (suivi de statut) ──────────────────────────────────────
+
+export interface ZoneProjet {
+  id: string
+  zoneSlug: string
+  nom: string
+  niveau: 'Préfaisabilité' | 'Faisabilité' | 'Études' | 'En cours' | 'Réalisé'
+  superficie: string        // ex: "450 ha"
+  investissements: string   // ex: "$120 M"
+  partenaires: string       // free-text, séparés par virgule
+  secteursVises: string[]
+  dateCreation: string
+}
+
+export function getZoneProjets(): ZoneProjet[] {
+  return readJSON('zone-projets.json', [])
+}
+
+export function getZoneProjetsForSlug(slug: string): ZoneProjet[] {
+  return getZoneProjets().filter(p => p.zoneSlug === slug)
+}
+
+// ─── Zones dynamiques (créées via admin) ─────────────────────────────────────
+
+export interface CustomZone {
+  slug: string
+  name: string
+  region: string
+  color: string
+  emplois: number
+  entreprises: number
+  investissement: string
+}
+
+export function getCustomZones(): CustomZone[] {
+  return readJSON('custom-zones.json', [])
+}
+
+export function writeCustomZones(zones: CustomZone[]): void {
+  writeJSON('custom-zones.json', zones)
+}
+
 // ─── Comptes email professionnels ─────────────────────────────────────────────
 
 export interface CompteEmail {

@@ -10,16 +10,19 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  const item: Omit<CompteEmail, 'id' | 'adresse' | 'motDePasse' | 'dateCreation'> = await req.json()
+  const body = await req.json()
+  const item: Omit<CompteEmail, 'id' | 'adresse' | 'dateCreation'> & { motDePasse?: string } = body
 
   // Générer l'adresse email
   const prenomSlug = item.prenom.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '.')
   const nomSlug = item.nom.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '.')
   const adresse = `${prenomSlug}.${nomSlug}@azes.cd`
 
-  // Générer un mot de passe temporaire sécurisé
+  // Utiliser le mot de passe fourni, ou en générer un automatiquement
   const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789@#!'
-  const motDePasse = Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
+  const motDePasse = (item.motDePasse && item.motDePasse.trim())
+    ? item.motDePasse.trim()
+    : Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
 
   const all = getCompteEmails()
   const newItem: CompteEmail = {

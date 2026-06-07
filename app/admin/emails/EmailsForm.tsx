@@ -24,7 +24,7 @@ const ROLE_COLORS: Record<CompteEmail['role'], string> = {
 export default function EmailsForm({ initialItems }: { initialItems: CompteEmail[] }) {
   const emptyForm = {
     prenom: '', nom: '', role: 'Agent' as CompteEmail['role'],
-    departement: DEPARTEMENTS[0], actif: true,
+    departement: DEPARTEMENTS[0], actif: true, motDePasse: '',
   }
 
   const [items, setItems] = useState(initialItems)
@@ -143,10 +143,10 @@ export default function EmailsForm({ initialItems }: { initialItems: CompteEmail
             <EnvelopeIcon className="w-5 h-5 text-[#1B4F8C]" />
             Nouveau compte @azes.cd
           </h2>
-          <EmailFields form={form} setField={setField as (k: string, v: string | boolean) => void} />
+          <EmailFields form={form} setField={setField as (k: string, v: string | boolean) => void} showPassword />
           <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 text-sm text-blue-700">
             L'adresse sera générée automatiquement : <strong>prenom.nom@azes.cd</strong>
-            <br/>Un mot de passe temporaire sécurisé sera également généré.
+            {!form.motDePasse && <><br/>Si le mot de passe est laissé vide, un mot de passe sécurisé sera généré automatiquement.</>}
           </div>
           <div className="flex gap-3 pt-1">
             <button onClick={create} disabled={saving || !form.prenom || !form.nom}
@@ -290,12 +290,14 @@ export default function EmailsForm({ initialItems }: { initialItems: CompteEmail
 }
 
 function EmailFields({
-  form, setField, editMode = false,
+  form, setField, editMode = false, showPassword = false,
 }: {
-  form: { prenom: string; nom: string; role: CompteEmail['role']; departement: string; actif: boolean }
+  form: { prenom: string; nom: string; role: CompteEmail['role']; departement: string; actif: boolean; motDePasse?: string }
   setField: (k: string, v: string | boolean) => void
   editMode?: boolean
+  showPassword?: boolean
 }) {
+  const [showPwd, setShowPwd] = useState(false)
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3">
@@ -324,6 +326,27 @@ function EmailFields({
           </select>
         </div>
       </div>
+      {showPassword && (
+        <div>
+          <label className={LABEL}>Mot de passe <span className="font-normal text-gray-400">(laisser vide pour générer automatiquement)</span></label>
+          <div className="relative">
+            <input
+              type={showPwd ? 'text' : 'password'}
+              value={form.motDePasse ?? ''}
+              onChange={e => setField('motDePasse', e.target.value)}
+              className={INPUT + ' pr-20'}
+              placeholder="Entrez un mot de passe ou laissez vide"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPwd(v => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 font-medium"
+            >
+              {showPwd ? 'Masquer' : 'Afficher'}
+            </button>
+          </div>
+        </div>
+      )}
       {editMode && (
         <div className="flex items-center gap-3">
           <input type="checkbox" id="actif-check" checked={form.actif}
