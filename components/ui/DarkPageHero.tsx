@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import InfraVideoBg from '@/components/ui/InfraVideoBg'
 
 /**
  * DarkPageHero — cinematic dark hero for all interior pages.
@@ -331,7 +332,7 @@ export function DarkSection({
   children,
   className = '',
   alt = false,
-  image,
+  image: _image,
   accentColor = '#1B4F8C',
 }: {
   children: React.ReactNode
@@ -340,49 +341,13 @@ export function DarkSection({
   image?: string
   accentColor?: string
 }) {
-  // alt = slightly different shade for alternation
-  const bg = alt
-    ? 'linear-gradient(135deg, #111f31 0%, #192d45 50%, #0e1c2c 100%)'
-    : 'linear-gradient(135deg, #0c1a2a 0%, #142033 50%, #0a1724 100%)'
-
-  const imgSrc = image ?? (alt
-    ? 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60'
-    : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=1920&q=60')
-
   return (
-    <section className={`py-20 relative overflow-hidden ${className}`} style={{ background: bg }}>
-      {/* Atmospheric image overlay */}
-      <div className="absolute inset-0 pointer-events-none">
-        <img
-          src={imgSrc}
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: alt ? 0.09 : 0.07 }}
-          loading="lazy"
-        />
-      </div>
-
-      {/* Gradient vignette */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.3) 100%)' }} />
-
-      {/* Ambient colored glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-64 pointer-events-none rounded-full blur-3xl"
-        style={{ background: `radial-gradient(ellipse, ${accentColor}18 0%, transparent 70%)` }} />
-
-      {/* Subtle dot pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.04]" style={{
-        backgroundImage: 'radial-gradient(rgba(255,255,255,0.7) 1px, transparent 1px)',
-        backgroundSize: '28px 28px',
-      }} />
-
-      {/* Top separator line */}
-      <div className="absolute top-0 inset-x-0 h-px"
-        style={{ background: `linear-gradient(90deg, transparent, ${accentColor}40, transparent)` }} />
-
-      <div className="relative z-10">
-        {children}
-      </div>
-    </section>
+    <InfraVideoBg
+      accentColor={accentColor}
+      dimAmount={alt ? 0.74 : 0.70}
+      className={`py-20 ${className}`}
+    >
+      {children}
+    </InfraVideoBg>
   )
 }
