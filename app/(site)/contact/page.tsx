@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import DarkPageHero from '@/components/ui/DarkPageHero'
 import LightSection from '@/components/ui/LightSection'

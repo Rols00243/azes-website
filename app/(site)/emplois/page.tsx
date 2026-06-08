@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { MapPinIcon, CalendarIcon, ArrowRightIcon, BriefcaseIcon, AcademicCapIcon } from '@heroicons/react/24/outline'

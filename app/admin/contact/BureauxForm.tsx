@@ -94,7 +94,7 @@ export default function BureauxForm({ initialItems }: { initialItems: BureauCont
             {editId === b.id && editForm ? (
               <div className="p-5 space-y-4">
                 <h3 className="font-semibold text-gray-900">Modifier le bureau</h3>
-                <BureauFields form={editForm} set={(k, v) => setE(k as keyof BureauContact, v)} />
+                <BureauFields form={editForm} set={(k, v) => setE(k, v)} />
                 <div className="flex gap-3">
                   <button onClick={saveEdit} disabled={saving}
                     className="flex-1 bg-[#0A2342] text-white rounded-xl py-2.5 font-semibold hover:bg-[#1B4F8C] flex items-center justify-center gap-2">
@@ -135,7 +135,7 @@ function BureauFields({
   form, set,
 }: {
   form: Omit<BureauContact, 'id'> | BureauContact
-  set: (k: string, v: string) => void
+  set: (k: keyof Omit<BureauContact, 'id'>, v: string) => void
 }) {
   return (
     <div className="space-y-4">
