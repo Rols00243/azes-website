@@ -61,25 +61,6 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
         <source src="/videos/infra-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* Background image carousel — semi-transparent so video bleeds through */}
-      <AnimatePresence mode="sync">
-        <motion.div
-          key={slide.id}
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 0.45, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
-          className="absolute inset-0"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={slide.image}
-            alt={slide.tag}
-            className="w-full h-full object-cover object-center"
-          />
-        </motion.div>
-      </AnimatePresence>
-
       {/* Layered overlays for cinematic depth */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
