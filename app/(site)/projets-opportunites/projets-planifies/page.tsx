@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { MapPinIcon, CalendarIcon, CurrencyDollarIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightPageHero from '@/components/ui/LightPageHero'
+import LightSection from '@/components/ui/LightSection'
 
 const nouvellesZones = [
   {
@@ -56,10 +57,17 @@ const ppp = [
   },
 ]
 
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.55 },
+}
+
 export default function ProjetsPlanifiesPage() {
   return (
-    <div className="bg-[#040810] min-h-screen">
-      <DarkPageHero
+    <div className="bg-white min-h-screen">
+      <LightPageHero
         eyebrow="Projets & Opportunités"
         title="Projets Planifiés"
         subtitle="Notre vision à l'horizon 2030 : nouvelles zones, infrastructures structurantes et partenariats public-privé."
@@ -70,16 +78,11 @@ export default function ProjetsPlanifiesPage() {
       />
 
       {/* Nouvelles zones */}
-      <section className="py-20 bg-[#040810]">
+      <LightSection className="py-20" image="aerial">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-10"
-          >
+          <motion.div {...fadeUp} className="mb-10">
             <div className="text-[#6B48A0] text-xs font-semibold uppercase tracking-widest mb-2">Expansion du réseau</div>
-            <h2 className="text-2xl font-bold text-white">Nouvelles Zones à Créer</h2>
+            <h2 className="text-2xl font-bold text-[#0A2342]">Nouvelles Zones à Créer</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {nouvellesZones.map((zone, i) => (
@@ -89,40 +92,35 @@ export default function ProjetsPlanifiesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/[0.03] border border-white/[0.07] rounded-2xl overflow-hidden hover:border-white/15 transition-all"
+                className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 hover:shadow-md transition-all"
               >
                 <div className="h-1" style={{ backgroundColor: zone.couleur }} />
                 <div className="p-6">
-                  <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full mb-4 inline-block" style={{ color: zone.couleur, backgroundColor: `${zone.couleur}20`, border: `1px solid ${zone.couleur}40` }}>
+                  <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full mb-4 inline-block" style={{ color: zone.couleur, backgroundColor: `${zone.couleur}15`, border: `1px solid ${zone.couleur}30` }}>
                     {zone.secteur}
                   </span>
-                  <h3 className="font-bold text-white text-base mb-2">{zone.nom}</h3>
-                  <div className="flex items-center gap-1.5 text-sm text-white/50 mb-2">
+                  <h3 className="font-bold text-[#0A2342] text-base mb-2">{zone.nom}</h3>
+                  <div className="flex items-center gap-1.5 text-sm text-gray-500 mb-2">
                     <MapPinIcon className="w-4 h-4" /> {zone.region}
                   </div>
-                  <div className="flex items-center gap-1.5 text-sm text-white/50 mb-4">
+                  <div className="flex items-center gap-1.5 text-sm text-gray-500 mb-4">
                     <CalendarIcon className="w-4 h-4" /> Timeline : {zone.timeline}
                   </div>
-                  <p className="text-sm text-white/40 leading-relaxed">{zone.description}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">{zone.description}</p>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* Opportunités PPP */}
-      <section className="py-20 bg-[#0a1628]">
+      <LightSection className="py-20" alt image="infra">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-10"
-          >
+          <motion.div {...fadeUp} className="mb-10">
             <div className="text-[#6B48A0] text-xs font-semibold uppercase tracking-widest mb-2">Financement</div>
-            <h2 className="text-2xl font-bold text-white">Opportunités PPP</h2>
-            <p className="text-white/40 mt-2 max-w-2xl text-sm">Partenariats public-privé pour le financement et la gestion des infrastructures structurantes.</p>
+            <h2 className="text-2xl font-bold text-[#0A2342]">Opportunités PPP</h2>
+            <p className="text-gray-500 mt-2 max-w-2xl text-sm">Partenariats public-privé pour le financement et la gestion des infrastructures structurantes.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {ppp.map((p, i) => (
@@ -132,40 +130,35 @@ export default function ProjetsPlanifiesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-6 hover:border-white/15 transition-all"
+                className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-gray-300 hover:shadow-md transition-all"
               >
-                <div className="w-10 h-10 bg-[#6B48A0]/20 rounded-xl flex items-center justify-center mb-4">
+                <div className="w-10 h-10 bg-[#6B48A0]/10 rounded-xl flex items-center justify-center mb-4">
                   <CurrencyDollarIcon className="w-5 h-5 text-[#6B48A0]" />
                 </div>
-                <div className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-2">{p.type}</div>
-                <h3 className="font-bold text-white mb-2">{p.titre}</h3>
-                <p className="text-sm text-white/40 mb-5 leading-relaxed">{p.desc}</p>
-                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/[0.06]">
+                <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-2">{p.type}</div>
+                <h3 className="font-bold text-[#0A2342] mb-2">{p.titre}</h3>
+                <p className="text-sm text-gray-600 mb-5 leading-relaxed">{p.desc}</p>
+                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-gray-100">
                   <div className="text-center">
-                    <div className="font-bold text-white">{p.budget}</div>
-                    <div className="text-xs text-white/30 mt-0.5">Budget</div>
+                    <div className="font-bold text-[#0A2342]">{p.budget}</div>
+                    <div className="text-xs text-gray-400 mt-0.5">Budget</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-bold text-white">{p.retour}</div>
-                    <div className="text-xs text-white/30 mt-0.5">Retour sur invest.</div>
+                    <div className="font-bold text-[#0A2342]">{p.retour}</div>
+                    <div className="text-xs text-gray-400 mt-0.5">Retour sur invest.</div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
 
       {/* CTA Aménageurs */}
-      <section className="py-20 bg-[#040810]">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto px-4 text-center"
-        >
-          <h2 className="text-3xl font-bold text-white mb-4">Vous êtes aménageur ?</h2>
-          <p className="text-white/50 mb-8 text-lg">L'AZES recherche des partenaires qualifiés pour développer les futures zones économiques spéciales.</p>
+      <LightSection className="py-20" image="aerial">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-[#0A2342] mb-4">Vous êtes aménageur ?</h2>
+          <p className="text-gray-500 mb-8 text-lg">L'AZES recherche des partenaires qualifiés pour développer les futures zones économiques spéciales.</p>
           <Link
             href="/demarches"
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#6B48A0] text-white font-semibold rounded-xl hover:bg-[#5a3b8a] transition-all hover:scale-105 active:scale-95"
@@ -173,7 +166,7 @@ export default function ProjetsPlanifiesPage() {
             Déposer ma candidature <ArrowRightIcon className="w-5 h-5" />
           </Link>
         </motion.div>
-      </section>
+      </LightSection>
     </div>
   )
 }

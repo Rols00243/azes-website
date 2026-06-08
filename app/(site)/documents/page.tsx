@@ -1,11 +1,11 @@
-'use client'
+﻿'use client'
 
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { documents, categories, categoryConfig, type DocCategory } from '@/lib/data/documents'
 import DocumentCard from '@/components/DocumentCard'
 import { MagnifyingGlassIcon, Squares2X2Icon, ListBulletIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightPageHero from '@/components/ui/LightPageHero'
 import LightSection from '@/components/ui/LightSection'
 
 const zoneList = ['Toutes', ...Array.from(new Set(documents.filter(d => d.zone).map(d => d.zone!)))]
@@ -44,7 +44,7 @@ export default function DocumentsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <DarkPageHero
+      <LightPageHero
         eyebrow="Ressources officielles"
         title="Centre Documentaire"
         subtitle="Lois, décrets, arrêtés, statuts, rapports et formulaires officiels de l'AZES — classés et téléchargeables."
@@ -52,22 +52,22 @@ export default function DocumentsPage() {
         accentColor="#8B5E3C"
       >
         <div className="relative max-w-xl">
-          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="search"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Rechercher par titre, référence, description..."
-            className="w-full pl-12 pr-4 py-3.5 rounded-xl text-white text-sm focus:outline-none bg-white/[0.08] border border-white/10 focus:border-white/30 placeholder:text-white/30"
+            className="w-full pl-12 pr-4 py-3.5 rounded-xl text-gray-800 text-sm focus:outline-none bg-white border border-gray-200 focus:border-[#8B5E3C] shadow-sm placeholder:text-gray-400"
             aria-label="Rechercher dans les documents"
           />
           {search && (
-            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70">
+            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
               <XMarkIcon className="w-4 h-4" />
             </button>
           )}
         </div>
-      </DarkPageHero>
+      </LightPageHero>
 
       {/* Category cards */}
       <LightSection className="py-10 border-b border-gray-200" image="infra">

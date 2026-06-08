@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
@@ -9,7 +9,7 @@ import {
   CheckBadgeIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon,
   CalendarDaysIcon, CheckCircleIcon, ChevronDownIcon,
 } from '@heroicons/react/24/outline'
-import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightPageHero from '@/components/ui/LightPageHero'
 import LightSection from '@/components/ui/LightSection'
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.55 } }
@@ -40,7 +40,7 @@ export default function GuichetUniquePage() {
 
   return (
     <div className="min-h-screen">
-      <DarkPageHero
+      <LightPageHero
         eyebrow="Service prioritaire"
         title="Le Guichet"
         titleAccent="Unique"
@@ -52,11 +52,11 @@ export default function GuichetUniquePage() {
           <Link href="/demarches#rdv" className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-[#8B5E3C] text-white font-semibold rounded-xl hover:bg-[#7a5133] transition-all hover:scale-105 active:scale-95">
             <CalendarDaysIcon className="w-5 h-5" /> Prendre RDV
           </Link>
-          <Link href="/demarches#interet" className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white/10 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all hover:scale-105">
+          <Link href="/demarches#interet" className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white border border-gray-200 text-[#8B5E3C] font-semibold rounded-xl hover:border-[#8B5E3C]/40 hover:shadow-sm transition-all hover:scale-105">
             Manifester mon intérêt
           </Link>
         </div>
-      </DarkPageHero>
+      </LightPageHero>
 
       {/* ── Coordonnées ── */}
       <LightSection className="py-14" image="aerial">
