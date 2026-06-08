@@ -46,7 +46,7 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-black">
 
-      {/* ── Cinematic video loop — base layer (always visible) ── */}
+      {/* ── Cinematic video loop — base layer ── */}
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         autoPlay
@@ -54,12 +54,31 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.55 }}
+        style={{ opacity: 0.25 }}
         onLoadedData={(e) => { (e.target as HTMLVideoElement).playbackRate = 0.55 }}
       >
         <source src="/videos/zone-bg.mp4" type="video/mp4" />
         <source src="/videos/infra-bg.mp4" type="video/mp4" />
       </video>
+
+      {/* ── Slide image carousel — main visual layer ── */}
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={slide.id}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 0.75, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: 'easeInOut' }}
+          className="absolute inset-0"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={slide.image}
+            alt={slide.tag}
+            className="w-full h-full object-cover object-center"
+          />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Layered overlays for cinematic depth */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
