@@ -240,6 +240,87 @@ export function getUnreadCount(): number {
   return getMessages().filter((m) => !m.lu).length
 }
 
+// ─── Bureaux de contact ───────────────────────────────────────────────────────
+
+export interface BureauContact {
+  id: string
+  ville: string
+  adresse: string
+  tel: string
+  email: string
+  horaires: string
+  color: string
+}
+
+const DEFAULT_BUREAUX: BureauContact[] = [
+  { id: 'bureau-1', ville: 'Kinshasa (Siège)', adresse: 'Boulevard du 30 Juin, Immeuble AZES, Gombe', tel: '+243 81 234 5678', email: 'info@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#1B4F8C' },
+  { id: 'bureau-2', ville: 'Matadi', adresse: "Avenue de l'Indépendance, Zone Franche", tel: '+243 81 234 5679', email: 'matadi@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#2A7A4B' },
+  { id: 'bureau-3', ville: 'Lubumbashi', adresse: 'Boulevard Moïse Tshombe, Zone Minière', tel: '+243 81 234 5680', email: 'lubumbashi@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#C4894A' },
+]
+
+export function getBureaux(): BureauContact[] {
+  return readJSON('bureaux.json', DEFAULT_BUREAUX)
+}
+
+// ─── Projets détaillés ───────────────────────────────────────────────────────
+
+export interface ProjetItem {
+  id: string
+  nom: string
+  zone: string
+  statut: 'En cours' | 'Planifié' | 'Terminé' | 'Suspendu'
+  secteur: string
+  description: string
+  investissement: string
+  dateDebut: string
+}
+
+export function getProjetsItems(): ProjetItem[] {
+  return readJSON('projets-items.json', [])
+}
+
+// ─── Projets par zone (suivi de statut) ──────────────────────────────────────
+
+export interface ZoneProjet {
+  id: string
+  zoneSlug: string
+  nom: string
+  niveau: 'Préfaisabilité' | 'Faisabilité' | 'Études' | 'En cours' | 'Réalisé'
+  superficie: string        // ex: "450 ha"
+  investissements: string   // ex: "$120 M"
+  partenaires: string       // free-text, séparés par virgule
+  secteursVises: string[]
+  dateCreation: string
+}
+
+export function getZoneProjets(): ZoneProjet[] {
+  return readJSON('zone-projets.json', [])
+}
+
+export function getZoneProjetsForSlug(slug: string): ZoneProjet[] {
+  return getZoneProjets().filter(p => p.zoneSlug === slug)
+}
+
+// ─── Zones dynamiques (créées via admin) ─────────────────────────────────────
+
+export interface CustomZone {
+  slug: string
+  name: string
+  region: string
+  color: string
+  emplois: number
+  entreprises: number
+  investissement: string
+}
+
+export function getCustomZones(): CustomZone[] {
+  return readJSON('custom-zones.json', [])
+}
+
+export function writeCustomZones(zones: CustomZone[]): void {
+  writeJSON('custom-zones.json', zones)
+}
+
 // ─── Comptes email professionnels ─────────────────────────────────────────────
 
 export interface CompteEmail {

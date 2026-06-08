@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { WrenchScrewdriverIcon, ClockIcon, LightBulbIcon, DocumentMagnifyingGlassIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightSection from '@/components/ui/LightSection'
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.55 } }
 
@@ -44,7 +45,7 @@ const subPages = [
 
 export default function ProjetsOpportunitesPage() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       <DarkPageHero
         eyebrow="Hub"
         title="Projets &"
@@ -54,7 +55,7 @@ export default function ProjetsOpportunitesPage() {
         accentColor="#6B48A0"
       />
 
-      <section className="py-20 bg-white">
+      <LightSection className="py-20" image="aerial">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 text-[#6B48A0] text-xs font-bold uppercase tracking-widest mb-3">
@@ -77,10 +78,8 @@ export default function ProjetsOpportunitesPage() {
                   href={page.href}
                   className="group block h-full relative bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-gray-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                 >
-                  {/* Top accent */}
                   <div className="absolute top-0 left-0 right-0 h-0.5"
                     style={{ background: `linear-gradient(90deg, ${page.color}, transparent)` }} />
-
                   <div className="relative p-8">
                     <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
                       style={{ backgroundColor: `${page.color}15`, border: `1px solid ${page.color}25` }}>
@@ -99,7 +98,7 @@ export default function ProjetsOpportunitesPage() {
             ))}
           </div>
         </div>
-      </section>
+      </LightSection>
     </div>
   )
 }

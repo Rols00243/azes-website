@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import FileUpload from '@/components/FileUpload'
 import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightSection from '@/components/ui/LightSection'
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.55 } }
 
@@ -289,7 +290,7 @@ export default function DemarchesPage() {
   const activeDemarche = demarches.find(d => d.id === activeId)
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       <DarkPageHero
         eyebrow="Services en ligne"
         title="Démarches"
@@ -299,7 +300,7 @@ export default function DemarchesPage() {
         accentColor="#1B4F8C"
       />
 
-      <section className="py-20 bg-white">
+      <LightSection className="py-20" image="infra">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             {!activeId ? (
@@ -378,7 +379,7 @@ export default function DemarchesPage() {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </LightSection>
     </div>
   )
 }

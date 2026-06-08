@@ -1,15 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import type { DocumentAdmin } from '@/lib/server-data'
-import { TrashIcon, PlusIcon, ArrowDownTrayIcon, PencilSquareIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { TrashIcon, PlusIcon, ArrowDownTrayIcon, PencilSquareIcon, CheckIcon, XMarkIcon, ArrowUpTrayIcon, LinkIcon } from '@heroicons/react/24/outline'
 
 const CATEGORIES = [
   'Lois', 'Décrets', 'Arrêtés', 'Arrêtés interministériels', "Arrêtés d'approbation",
   'Décisions', 'Rapports', 'Statuts', "Appels d'offres", "Offres d'emploi",
   'Guides investisseurs', 'Formulaires', 'Communiqués',
 ]
-const TYPES = ['PDF', 'DOCX', 'XLSX', 'ZIP']
+const TYPES = ['PDF', 'DOCX', 'XLSX', 'ZIP'] as const
+type DocType = typeof TYPES[number]
 
 const EMPTY: Omit<DocumentAdmin, 'id'> = {
   titre: '', categorie: CATEGORIES[0], date: new Date().toISOString().split('T')[0],
@@ -25,14 +26,42 @@ export default function DocumentsForm({ initialItems }: { initialItems: Document
   const [items, setItems] = useState(initialItems)
   const [form, setForm] = useState(EMPTY)
   const [adding, setAdding] = useState(false)
+  const [uploadMode, setUploadMode] = useState(false) // false = URL, true = file upload
+  const [uploading, setUploading] = useState(false)
   const [editId, setEditId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<DocumentAdmin | null>(null)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   function flash(m: string) { setMsg(m); setTimeout(() => setMsg(''), 3000) }
   function set(k: string, v: string) { setForm(f => ({ ...f, [k]: v })) }
   function setEdit(k: string, v: string) { setEditForm(f => f ? ({ ...f, [k]: v }) : f) }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const fd = new FormData()
+    fd.append('file', file)
+    const res = await fetch('/api/admin/documents/upload', { method: 'POST', body: fd })
+    const data = await res.json()
+    if (data.url) {
+      // Auto-fill fields from file info
+      const ext = (file.name.split('.').pop()?.toUpperCase() ?? 'PDF') as DocType
+      const sizeKB = Math.round(file.size / 1024)
+      const sizeMB = sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} Mo` : `${sizeKB} Ko`
+      setForm(f => ({
+        ...f,
+        url: data.url,
+        taille: sizeMB,
+        type: (TYPES as readonly string[]).includes(ext) ? ext : 'PDF',
+        titre: f.titre || file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' '),
+      }))
+      flash('✓ Fichier téléversé, complétez les informations puis publiez')
+    }
+    setUploading(false)
+  }
 
   async function publish() {
     if (!form.titre || !form.url) return
@@ -42,7 +71,7 @@ export default function DocumentsForm({ initialItems }: { initialItems: Document
     })
     const data = await res.json()
     setItems([data.item, ...items])
-    setForm(EMPTY); setAdding(false)
+    setForm(EMPTY); setAdding(false); setUploadMode(false)
     flash('✓ Document publié !')
     setSaving(false)
   }
@@ -81,13 +110,58 @@ export default function DocumentsForm({ initialItems }: { initialItems: Document
       ) : (
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
           <h2 className="font-semibold text-gray-900">Nouveau document</h2>
-          <DocFields form={form} set={set} />
+
+          {/* Mode toggle */}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setUploadMode(false)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border-2 transition-colors ${
+                !uploadMode ? 'border-[#0A2342] bg-[#0A2342] text-white' : 'border-gray-200 text-gray-500 hover:border-gray-300'
+              }`}
+            >
+              <LinkIcon className="w-4 h-4" /> Lien URL
+            </button>
+            <button
+              type="button"
+              onClick={() => setUploadMode(true)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border-2 transition-colors ${
+                uploadMode ? 'border-[#0A2342] bg-[#0A2342] text-white' : 'border-gray-200 text-gray-500 hover:border-gray-300'
+              }`}
+            >
+              <ArrowUpTrayIcon className="w-4 h-4" /> Joindre un fichier
+            </button>
+          </div>
+
+          {/* File upload zone */}
+          {uploadMode && (
+            <div
+              className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-[#1B4F8C] transition-colors cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <ArrowUpTrayIcon className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+              <p className="text-sm font-medium text-gray-600 mb-1">
+                {uploading ? 'Téléversement en cours…' : 'Cliquez pour choisir un fichier'}
+              </p>
+              <p className="text-xs text-gray-400">PDF, DOCX, XLSX, ZIP — max 10 Mo</p>
+              {form.url && uploadMode && (
+                <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-green-700 bg-green-50 px-3 py-1.5 rounded-lg">
+                  <CheckIcon className="w-3.5 h-3.5" /> Fichier prêt : {form.taille}
+                </div>
+              )}
+              <input ref={fileInputRef} type="file" className="hidden"
+                accept=".pdf,.docx,.doc,.xlsx,.xls,.zip"
+                onChange={handleFileUpload} disabled={uploading} />
+            </div>
+          )}
+
+          <DocFields form={form} set={set} hideUrl={uploadMode} />
           <div className="flex gap-3 pt-2">
             <button onClick={publish} disabled={saving || !form.titre || !form.url}
               className="flex-1 bg-[#0A2342] text-white rounded-xl py-3 font-semibold hover:bg-[#1B4F8C] transition-colors disabled:opacity-50">
               {saving ? 'Publication…' : 'Publier'}
             </button>
-            <button onClick={() => { setAdding(false); setForm(EMPTY) }}
+            <button onClick={() => { setAdding(false); setForm(EMPTY); setUploadMode(false) }}
               className="px-5 rounded-xl border-2 border-gray-200 text-gray-600 hover:border-gray-300 transition-colors font-medium">
               Annuler
             </button>
@@ -159,9 +233,11 @@ export default function DocumentsForm({ initialItems }: { initialItems: Document
 function DocFields({
   form,
   set,
+  hideUrl = false,
 }: {
   form: Omit<DocumentAdmin, 'id'> | DocumentAdmin
   set: (k: string, v: string) => void
+  hideUrl?: boolean
 }) {
   return (
     <div className="space-y-4">
@@ -170,11 +246,13 @@ function DocFields({
         <input type="text" value={form.titre} onChange={e => set('titre', e.target.value)}
           className={I} placeholder="Loi n°23-011 portant création des ZES" />
       </div>
-      <div>
-        <label className={L}>URL du fichier * <span className="font-normal text-gray-400">(lien de téléchargement)</span></label>
-        <input type="url" value={form.url} onChange={e => set('url', e.target.value)}
-          className={I} placeholder="https://… ou /documents/fichier.pdf" />
-      </div>
+      {!hideUrl && (
+        <div>
+          <label className={L}>URL du fichier * <span className="font-normal text-gray-400">(lien de téléchargement)</span></label>
+          <input type="url" value={form.url} onChange={e => set('url', e.target.value)}
+            className={I} placeholder="https://… ou /documents/fichier.pdf" />
+        </div>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="col-span-2">
           <label className={L}>Catégorie</label>
