@@ -57,7 +57,7 @@ export default function WhyInvest() {
       {/* Atmospheric image — business district / modern infrastructure */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=1920&q=60"
+          src="/images/zone-infra.png"
           alt=""
           className="w-full h-full object-cover"
           style={{ opacity: 0.055 }}

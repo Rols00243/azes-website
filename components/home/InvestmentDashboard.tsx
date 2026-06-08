@@ -116,7 +116,7 @@ export default function InvestmentDashboard({ zones }: { zones: Zone[] }) {
       {/* Atmospheric image — data / finance / charts */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&w=1920&q=60"
+          src="/images/zone-decomp.png"
           alt=""
           className="w-full h-full object-cover"
           style={{ opacity: 0.04 }}

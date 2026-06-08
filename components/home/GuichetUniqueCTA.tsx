@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { CalendarDaysIcon, FolderArrowDownIcon, PhoneIcon } from '@heroicons/react/24/outline'
 
-const IMG_AERIAL = 'https://images.unsplash.com/photo-1565118531796-763e5082d113?w=1400&q=50'
+const IMG_AERIAL = '/images/zone-aerial.png'
 
 export default function GuichetUniqueCTA() {
   return (
