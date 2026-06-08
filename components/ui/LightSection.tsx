@@ -10,8 +10,9 @@
 
 import { motion } from 'framer-motion'
 
-export const IMG_INFRA  = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60'
-export const IMG_AERIAL = 'https://images.unsplash.com/photo-1565118531796-763e5082d113?w=1400&q=50'
+export const IMG_INFRA  = '/images/zone-infra.png'
+export const IMG_AERIAL = '/images/zone-aerial.png'
+export const IMG_DECOMP = '/images/zone-decomp.png'
 
 interface Props {
   children: React.ReactNode
@@ -19,7 +20,7 @@ interface Props {
   /** alternate = gray-50 base instead of white */
   alt?: boolean
   /** which atmospheric image to use (default: INFRA) */
-  image?: 'infra' | 'aerial' | string
+  image?: 'infra' | 'aerial' | 'decomp' | string
   /** extra opacity 0–1 for the image (default 0.045) */
   imageOpacity?: number
 }
@@ -29,11 +30,12 @@ export default function LightSection({
   className = '',
   alt = false,
   image = 'infra',
-  imageOpacity = 0.045,
+  imageOpacity = 0.07,
 }: Props) {
   const src =
-    image === 'infra'  ? IMG_INFRA :
+    image === 'infra'  ? IMG_INFRA  :
     image === 'aerial' ? IMG_AERIAL :
+    image === 'decomp' ? IMG_DECOMP :
     image // allow raw URL too
 
   return (

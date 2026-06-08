@@ -17,7 +17,7 @@ export default function ActualitesSection({ items }: { items: Actualite[] }) {
       {/* Atmospheric image — press / media */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60"
+          src="/images/zone-decomp.png"
           alt=""
           className="w-full h-full object-cover"
           style={{ opacity: 0.05 }}

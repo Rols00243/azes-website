@@ -41,7 +41,7 @@ export default function PublicsCibles() {
       {/* Atmospheric image — network / connectivity */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&w=1920&q=60"
+          src="/images/zone-aerial.png"
           alt=""
           className="w-full h-full object-cover"
           style={{ opacity: 0.05 }}

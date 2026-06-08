@@ -20,7 +20,7 @@ export default function ProjetsRubrique({ counts }: { counts: ProjetsCount }) {
       {/* Atmospheric image — industrial construction / infrastructure */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&w=1920&q=60"
+          src="/images/zone-infra.png"
           alt=""
           className="w-full h-full object-cover"
           style={{ opacity: 0.07 }}

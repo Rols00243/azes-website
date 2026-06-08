@@ -5,7 +5,7 @@ import AnimatedCounter from '@/components/AnimatedCounter'
 import { BuildingOffice2Icon, BriefcaseIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import type { SiteStats } from '@/lib/server-data'
 
-const IMG = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60'
+const IMG = '/images/zone-decomp.png'
 
 export default function StatsBand({ stats }: { stats: SiteStats }) {
   const items = [

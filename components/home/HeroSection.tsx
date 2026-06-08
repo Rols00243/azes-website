@@ -41,6 +41,7 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
         style={{ opacity: 0.55 }}
         onLoadedData={(e) => { (e.target as HTMLVideoElement).playbackRate = 0.55 }}
       >
+        <source src="/videos/zone-bg.mp4" type="video/mp4" />
         <source src="/videos/infra-bg.mp4" type="video/mp4" />
       </video>
 

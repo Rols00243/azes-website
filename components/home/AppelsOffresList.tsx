@@ -8,7 +8,7 @@ import StatusBadge from '@/components/StatusBadge'
 import ZoneTag from '@/components/ZoneTag'
 import SectionHeader from '@/components/SectionHeader'
 
-const IMG = 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&w=1920&q=60'
+const IMG = '/images/zone-aerial.png'
 
 export default function AppelsOffresList({ appels }: { appels: AppelOffreAdmin[] }) {
   const displayed = appels.slice(0, 3)

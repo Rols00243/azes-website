@@ -10,8 +10,9 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 
-const IMG_INFRA  = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&w=1920&q=60'
-const IMG_AERIAL = 'https://images.unsplash.com/photo-1565118531796-763e5082d113?w=1400&q=50'
+const IMG_INFRA  = '/images/zone-infra.png'
+const IMG_AERIAL = '/images/zone-aerial.png'
+const IMG_DECOMP = '/images/zone-decomp.png'
 
 export type HeroVariant = 1 | 2 | 3 | 4
 
@@ -43,8 +44,8 @@ export default function LightPageHero({
   accentColor = '#1B4F8C',
   minHeight = 'min-h-[52vh]',
 }: Props) {
-  // Alternate between infra and aerial images by variant
-  const bgImg = variant === 2 || variant === 4 ? IMG_AERIAL : IMG_INFRA
+  // Alternate images by variant for visual variety
+  const bgImg = variant === 2 ? IMG_AERIAL : variant === 4 ? IMG_DECOMP : IMG_INFRA
 
   return (
     <section className={`relative ${minHeight} flex flex-col overflow-hidden bg-white pt-20`}>
@@ -53,7 +54,7 @@ export default function LightPageHero({
       <div
         aria-hidden
         className="absolute inset-0 bg-cover bg-center pointer-events-none"
-        style={{ backgroundImage: `url('${bgImg}')`, opacity: 0.07 }}
+        style={{ backgroundImage: `url('${bgImg}')`, opacity: 0.12 }}
       />
 
       {/* ── Soft white directional vignette ── */}
