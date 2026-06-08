@@ -4,17 +4,9 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { CalendarDaysIcon, FolderArrowDownIcon, PhoneIcon } from '@heroicons/react/24/outline'
 
-const IMG_AERIAL = '/images/zone-aerial.png'
-
 export default function GuichetUniqueCTA() {
   return (
     <section className="py-24 relative overflow-hidden bg-white" aria-label="Guichet Unique">
-
-      {/* Aerial industrial zone — atmospheric watermark */}
-      <div
-        className="absolute inset-0 pointer-events-none bg-cover bg-center"
-        style={{ backgroundImage: `url('${IMG_AERIAL}')`, opacity: 0.06 }}
-      />
 
       {/* Soft directional vignette */}
       <div className="absolute inset-0 pointer-events-none"

@@ -1,7 +1,7 @@
-export const dynamic = 'force-dynamic'
+﻿export const dynamic = 'force-dynamic'
 
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
-import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightPageHero from '@/components/ui/LightPageHero'
 import LightSection from '@/components/ui/LightSection'
 import { getBureaux } from '@/lib/server-data'
 import ContactForm from './ContactForm'
@@ -11,7 +11,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen">
-      <DarkPageHero
+      <LightPageHero
         eyebrow="Nous contacter"
         title="Contact &"
         titleAccent="Bureaux"

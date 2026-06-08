@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic'
+﻿export const dynamic = 'force-dynamic'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { MapPinIcon, CalendarIcon, ArrowRightIcon, BriefcaseIcon, AcademicCapIcon } from '@heroicons/react/24/outline'
-import DarkPageHero from '@/components/ui/DarkPageHero'
+import LightPageHero from '@/components/ui/LightPageHero'
 import LightSection from '@/components/ui/LightSection'
 import { getEmplois } from '@/lib/server-data'
 
@@ -36,7 +36,7 @@ export default function EmploisPage() {
 
   return (
     <div className="min-h-screen">
-      <DarkPageHero
+      <LightPageHero
         eyebrow="Carrières"
         title="Emplois &"
         titleAccent="Compétences"

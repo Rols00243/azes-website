@@ -17,17 +17,6 @@ export default function ProjetsRubrique({ counts }: { counts: ProjetsCount }) {
   return (
     <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fdf7ed 0%, #ffffff 50%, #fef3e2 100%)' }} aria-label="Projets et opportunités">
 
-      {/* Atmospheric image — industrial construction / infrastructure */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-infra.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.07 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

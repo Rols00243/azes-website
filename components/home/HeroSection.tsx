@@ -10,14 +10,30 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
   const [current, setCurrent] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-  const next = useCallback(() => setCurrent(c => (c + 1) % slides.length), [slides.length])
-  const prev = useCallback(() => setCurrent(c => (c - 1 + slides.length) % slides.length), [slides.length])
+  // Default slide shown when admin hasn't added any custom slides
+  const DEFAULT_SLIDES: Slide[] = [{
+    id: 'default-1',
+    image: '/images/zone-aerial.png',
+    tag: 'ZES de Maluku · Kinshasa',
+    headline: 'Investissez au cœur',
+    accent: "de l'Afrique Centrale",
+    description: "L'AZES ouvre les portes d'un marché de 100 millions de consommateurs. Infrastructure prête. Avantages fiscaux garantis.",
+    ctaLabel: 'Explorer les zones',
+    ctaHref: '/zones',
+    ctaSecondLabel: 'Investir maintenant',
+    ctaSecondHref: '/demarches',
+  }]
+
+  const allSlides = slides.length > 0 ? slides : DEFAULT_SLIDES
+
+  const next = useCallback(() => setCurrent(c => (c + 1) % allSlides.length), [allSlides.length])
+  const prev = useCallback(() => setCurrent(c => (c - 1 + allSlides.length) % allSlides.length), [allSlides.length])
 
   useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!isAutoPlaying || allSlides.length <= 1) return
     const timer = setInterval(next, 6000)
     return () => clearInterval(timer)
-  }, [isAutoPlaying, next])
+  }, [isAutoPlaying, next, allSlides.length])
 
   const goTo = (i: number) => {
     setCurrent(i)
@@ -25,7 +41,7 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
     setTimeout(() => setIsAutoPlaying(true), 12000)
   }
 
-  const slide = slides[current]
+  const slide = allSlides[Math.min(current, allSlides.length - 1)]
 
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-black">
@@ -144,7 +160,7 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
       <div className="absolute bottom-0 left-0 right-0 z-20">
         {/* Progress bar */}
         <div className="flex h-0.5">
-          {slides.map((s, i) => (
+          {allSlides.map((s, i) => (
             <button
               key={s.id}
               onClick={() => goTo(i)}
@@ -185,7 +201,7 @@ export default function HeroSection({ stats, slides }: { stats: SiteStats; slide
           {/* Slide counter + arrows */}
           <div className="flex items-center gap-4 ml-auto">
             <span className="text-white/40 text-sm tabular-nums">
-              {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+              {String(current + 1).padStart(2, '0')} / {String(allSlides.length).padStart(2, '0')}
             </span>
             <div className="flex gap-2">
               <button

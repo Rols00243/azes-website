@@ -38,17 +38,6 @@ export default function PublicsCibles() {
   return (
     <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #f3eeff 0%, #ffffff 50%, #e8f4fd 100%)' }} aria-label="Publics cibles">
 
-      {/* Atmospheric image — network / connectivity */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-aerial.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.05 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

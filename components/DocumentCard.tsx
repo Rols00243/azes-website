@@ -1,3 +1,5 @@
+'use client'
+
 import type { Document } from '@/lib/data/documents'
 import { categoryConfig } from '@/lib/data/documents'
 import { ArrowDownTrayIcon, DocumentTextIcon, TableCellsIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline'

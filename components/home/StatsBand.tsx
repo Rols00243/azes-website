@@ -5,8 +5,6 @@ import AnimatedCounter from '@/components/AnimatedCounter'
 import { BuildingOffice2Icon, BriefcaseIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import type { SiteStats } from '@/lib/server-data'
 
-const IMG = '/images/zone-decomp.png'
-
 export default function StatsBand({ stats }: { stats: SiteStats }) {
   const items = [
     { icon: BuildingOffice2Icon, value: stats.zones_actives,   label: 'Zones Actives',           isNum: true,  suffix: '',  color: '#1B4F8C' },
@@ -17,14 +15,6 @@ export default function StatsBand({ stats }: { stats: SiteStats }) {
 
   return (
     <section className="py-20 relative overflow-hidden bg-gray-50" aria-label="Chiffres clés">
-
-      {/* Atmospheric infrastructure image */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${IMG}')`, opacity: 0.055 }}
-        />
-      </div>
 
       {/* Directional vignette */}
       <div className="absolute inset-0 pointer-events-none"
