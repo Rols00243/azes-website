@@ -113,17 +113,6 @@ export default function InvestmentDashboard({ zones }: { zones: Zone[] }) {
   return (
     <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #f8f9ff 0%, #ffffff 50%, #f0f8f4 100%)' }} aria-label="Synthèse des investissements">
 
-      {/* Atmospheric image — data / finance / charts */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-decomp.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.04 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

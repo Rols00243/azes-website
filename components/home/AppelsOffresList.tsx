@@ -8,8 +8,6 @@ import StatusBadge from '@/components/StatusBadge'
 import ZoneTag from '@/components/ZoneTag'
 import SectionHeader from '@/components/SectionHeader'
 
-const IMG = '/images/zone-aerial.png'
-
 export default function AppelsOffresList({ appels }: { appels: AppelOffreAdmin[] }) {
   const displayed = appels.slice(0, 3)
 
@@ -17,11 +15,6 @@ export default function AppelsOffresList({ appels }: { appels: AppelOffreAdmin[]
 
   return (
     <section className="relative py-20 overflow-hidden bg-gray-50">
-      {/* Atmospheric image — construction / infrastructure */}
-      <div
-        className="absolute inset-0 pointer-events-none bg-cover bg-center"
-        style={{ backgroundImage: `url('${IMG}')`, opacity: 0.05 }}
-      />
       {/* Vignette */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 60%, rgba(255,255,255,0.4) 100%)' }} />

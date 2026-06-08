@@ -30,17 +30,6 @@ export default function PartnersSection() {
   return (
     <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #e8f0fe 0%, #ffffff 50%, #f0f7f4 100%)' }} aria-label="Partenaires">
 
-      {/* Atmospheric image — world map / global network */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-infra.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.05 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

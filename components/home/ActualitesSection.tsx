@@ -14,17 +14,6 @@ export default function ActualitesSection({ items }: { items: Actualite[] }) {
   return (
     <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #fffbf5 0%, #ffffff 45%, #f5f9ff 100%)' }} aria-label="Actualités">
 
-      {/* Atmospheric image — press / media */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-decomp.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.05 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

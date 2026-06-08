@@ -54,17 +54,6 @@ export default function WhyInvest() {
   return (
     <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #edf2ff 0%, #ffffff 50%, #e8f4fd 100%)' }} aria-labelledby="pourquoi-investir">
 
-      {/* Atmospheric image — business district / modern infrastructure */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-infra.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.055 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div

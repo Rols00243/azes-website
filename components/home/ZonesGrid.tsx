@@ -10,17 +10,6 @@ export default function ZonesGrid() {
   return (
     <section className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(150deg, #f0faf5 0%, #ffffff 45%, #e8f4fd 100%)' }} aria-label="Zones économiques">
 
-      {/* Atmospheric image — aerial Congo / African industrial zone */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/zone-aerial.png"
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.06 }}
-          loading="lazy"
-        />
-      </div>
-
       {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
