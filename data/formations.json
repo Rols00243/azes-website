@@ -1,0 +1,6 @@
+[
+  { "id": "f1", "titre": "Formation Logistique & Supply Chain", "duree": "6 mois", "zone": "Zone Franche de Matadi", "places": 40, "color": "#C4894A" },
+  { "id": "f2", "titre": "Formation Développement Numérique", "duree": "3 mois", "zone": "Zone Tech de Kinshasa", "places": 60, "color": "#1B4F8C" },
+  { "id": "f3", "titre": "Formation Transformation Agro-Alimentaire", "duree": "4 mois", "zone": "Zone Agro-Industrielle du Kasaï", "places": 50, "color": "#2A7A4B" },
+  { "id": "f4", "titre": "Formation Sécurité Minière", "duree": "2 mois", "zone": "Zone Minière de Lubumbashi", "places": 35, "color": "#8B5E3C" }
+]

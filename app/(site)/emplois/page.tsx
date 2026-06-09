@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import dynamicImport from 'next/dynamic'
-import { getEmplois } from '@/lib/server-data'
+import { getEmplois, getEntreprisesEmploi, getFormations } from '@/lib/server-data'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,5 +13,7 @@ const EmploisClient = dynamicImport(() => import('./EmploisClient'), { ssr: fals
 
 export default function EmploisPage() {
   const offres = getEmplois()
-  return <EmploisClient offres={offres} />
+  const entreprises = getEntreprisesEmploi()
+  const formations = getFormations()
+  return <EmploisClient offres={offres} entreprises={entreprises} formations={formations} />
 }
