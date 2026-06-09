@@ -4,7 +4,7 @@ import ActualitesForm from './ActualitesForm'
 
 export default async function ActualitesPage() {
   await requireAuth()
-  const items = getActualites()
+  const items = await getActualites()
   return (
     <div className="max-w-3xl mx-auto py-10 px-4 sm:px-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Actualités</h1>

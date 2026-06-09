@@ -6,13 +6,17 @@ import { zones as staticZones } from '@/lib/data/zones'
 
 export async function GET() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  return NextResponse.json({ stats: getZonesStats(), custom: getCustomZones(), hidden: getHiddenZones() })
+  return NextResponse.json({
+    stats: await getZonesStats(),
+    custom: await getCustomZones(),
+    hidden: await getHiddenZones(),
+  })
 }
 
 export async function PUT(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const data = await req.json()
-  writeJSON('zones-stats.json', data)
+  await writeJSON('zones-stats.json', data)
   return NextResponse.json({ ok: true })
 }
 
@@ -28,7 +32,7 @@ export async function POST(req: NextRequest) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
 
-  const all = getCustomZones()
+  const all = await getCustomZones()
   // Avoid duplicate slugs
   if (all.some(z => z.slug === slug)) {
     return NextResponse.json({ error: 'Une zone avec ce nom existe déjà' }, { status: 409 })
@@ -43,17 +47,17 @@ export async function POST(req: NextRequest) {
     entreprises: zone.entreprises || 0,
     investissement: zone.investissement || '$0',
   }
-  writeCustomZones([...all, newZone])
+  await writeCustomZones([...all, newZone])
   return NextResponse.json({ ok: true, zone: newZone })
 }
 
 export async function PATCH(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { slug, name, region, color } = await req.json()
-  const all = getCustomZones().map(z =>
+  const all = await getCustomZones()
+  await writeCustomZones(all.map(z =>
     z.slug === slug ? { ...z, name: name || z.name, region: region ?? z.region, color: color || z.color } : z
-  )
-  writeCustomZones(all)
+  ))
   return NextResponse.json({ ok: true })
 }
 
@@ -65,13 +69,14 @@ export async function DELETE(req: NextRequest) {
 
   if (isStatic) {
     // Zone statique : l'ajouter à la liste des zones masquées
-    const hidden = getHiddenZones()
+    const hidden = await getHiddenZones()
     if (!hidden.includes(slug)) {
-      writeHiddenZones([...hidden, slug])
+      await writeHiddenZones([...hidden, slug])
     }
   } else {
     // Zone personnalisée : la supprimer de custom-zones.json
-    writeCustomZones(getCustomZones().filter(z => z.slug !== slug))
+    const all = await getCustomZones()
+    await writeCustomZones(all.filter(z => z.slug !== slug))
   }
 
   return NextResponse.json({ ok: true })
@@ -80,6 +85,6 @@ export async function DELETE(req: NextRequest) {
 // Restaurer toutes les zones masquées
 export async function OPTIONS() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  writeHiddenZones([])
+  await writeHiddenZones([])
   return NextResponse.json({ ok: true })
 }

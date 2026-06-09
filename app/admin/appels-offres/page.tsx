@@ -5,7 +5,7 @@ import AppelsOffresForm from './AppelsOffresForm'
 
 export default async function AppelsOffresAdminPage() {
   await requireAuth()
-  const items = getAppelsOffresAdmin()
+  const items = await getAppelsOffresAdmin()
   const zoneOptions = zones.map(z => ({ slug: z.slug, name: z.name }))
   return (
     <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6">

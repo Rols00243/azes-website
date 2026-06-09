@@ -5,30 +5,30 @@ import type { Emploi } from '@/lib/server-data'
 
 export async function GET() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  return NextResponse.json(getEmplois())
+  return NextResponse.json(await getEmplois())
 }
 
 export async function POST(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const item: Omit<Emploi, 'id'> = await req.json()
-  const all = getEmplois()
+  const all = await getEmplois()
   const newItem: Emploi = { ...item, id: Date.now().toString() }
-  writeJSON('emplois.json', [newItem, ...all])
+  await writeJSON('emplois.json', [newItem, ...all])
   return NextResponse.json({ ok: true, item: newItem })
 }
 
 export async function PUT(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const updated: Emploi = await req.json()
-  const all = getEmplois().map((e) => (e.id === updated.id ? updated : e))
-  writeJSON('emplois.json', all)
+  const all = (await getEmplois()).map((e) => (e.id === updated.id ? updated : e))
+  await writeJSON('emplois.json', all)
   return NextResponse.json({ ok: true, item: updated })
 }
 
 export async function DELETE(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { id } = await req.json()
-  const all = getEmplois().filter((e) => e.id !== id)
-  writeJSON('emplois.json', all)
+  const all = (await getEmplois()).filter((e) => e.id !== id)
+  await writeJSON('emplois.json', all)
   return NextResponse.json({ ok: true })
 }

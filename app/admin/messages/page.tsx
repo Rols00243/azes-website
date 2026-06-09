@@ -4,7 +4,7 @@ import MessagesInbox from './MessagesInbox'
 
 export default async function MessagesPage() {
   await requireAuth()
-  const messages = getMessages()
+  const messages = await getMessages()
   return (
     <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Messages reçus</h1>

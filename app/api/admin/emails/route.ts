@@ -5,7 +5,7 @@ import type { CompteEmail } from '@/lib/server-data'
 
 export async function GET() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  return NextResponse.json(getCompteEmails())
+  return NextResponse.json(await getCompteEmails())
 }
 
 export async function POST(req: NextRequest) {
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     ? item.motDePasse.trim()
     : Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
 
-  const all = getCompteEmails()
+  const all = await getCompteEmails()
   const newItem: CompteEmail = {
     ...item,
     id: Date.now().toString(),
@@ -33,22 +33,22 @@ export async function POST(req: NextRequest) {
     actif: true,
     dateCreation: new Date().toISOString().split('T')[0],
   }
-  writeJSON('emails.json', [newItem, ...all])
+  await writeJSON('emails.json', [newItem, ...all])
   return NextResponse.json({ ok: true, item: newItem })
 }
 
 export async function PUT(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const updated: CompteEmail = await req.json()
-  const all = getCompteEmails().map((e) => (e.id === updated.id ? updated : e))
-  writeJSON('emails.json', all)
+  const all = await getCompteEmails()
+  await writeJSON('emails.json', all.map((e) => (e.id === updated.id ? updated : e)))
   return NextResponse.json({ ok: true, item: updated })
 }
 
 export async function DELETE(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { id } = await req.json()
-  const all = getCompteEmails().filter((e) => e.id !== id)
-  writeJSON('emails.json', all)
+  const all = await getCompteEmails()
+  await writeJSON('emails.json', all.filter((e) => e.id !== id))
   return NextResponse.json({ ok: true })
 }

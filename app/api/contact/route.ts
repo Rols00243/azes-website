@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
       lu: false,
     }
 
-    const all = getMessages()
-    writeJSON('messages.json', [newMessage, ...all])
+    const all = await getMessages()
+    await writeJSON('messages.json', [newMessage, ...all])
 
     return NextResponse.json({ ok: true })
   } catch {

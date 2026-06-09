@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 
 const HomeContentClient = dynamicImport(() => import('./HomeContentClient'), { ssr: false })
 
-export default function HomePage() {
-  const stats = getStats()
-  const zones = getMergedZones()
-  const projets = getProjetsCount()
-  const actualites = getActualites()
-  const slides = getSlides()
-  const appels = getAppelsOffresAdmin()
+export default async function HomePage() {
+  const stats = await getStats()
+  const zones = await getMergedZones()
+  const projets = await getProjetsCount()
+  const actualites = await getActualites()
+  const slides = await getSlides()
+  const appels = await getAppelsOffresAdmin()
 
   return (
     <HomeContentClient

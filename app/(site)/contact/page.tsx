@@ -1,4 +1,4 @@
-﻿export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic'
 
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import LightPageHero from '@/components/ui/LightPageHero'
@@ -6,8 +6,8 @@ import LightSection from '@/components/ui/LightSection'
 import { getBureaux } from '@/lib/server-data'
 import ContactForm from './ContactForm'
 
-export default function ContactPage() {
-  const bureaux = getBureaux()
+export default async function ContactPage() {
+  const bureaux = await getBureaux()
 
   return (
     <div className="min-h-screen">

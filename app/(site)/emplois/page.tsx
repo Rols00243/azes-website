@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 
 const EmploisClient = dynamicImport(() => import('./EmploisClient'), { ssr: false })
 
-export default function EmploisPage() {
-  const offres = getEmplois()
-  const entreprises = getEntreprisesEmploi()
-  const formations = getFormations()
+export default async function EmploisPage() {
+  const offres = await getEmplois()
+  const entreprises = await getEntreprisesEmploi()
+  const formations = await getFormations()
   return <EmploisClient offres={offres} entreprises={entreprises} formations={formations} />
 }

@@ -5,7 +5,7 @@ import type { Formation } from '@/lib/server-data'
 
 export async function GET() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  return NextResponse.json(getFormations())
+  return NextResponse.json(await getFormations())
 }
 
 export async function POST(req: NextRequest) {
@@ -20,20 +20,23 @@ export async function POST(req: NextRequest) {
     places: body.places || 0,
     color: body.color || '#1B4F8C',
   }
-  writeFormations([...getFormations(), item])
+  const all = await getFormations()
+  await writeFormations([...all, item])
   return NextResponse.json({ ok: true, item })
 }
 
 export async function PUT(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const body: Formation = await req.json()
-  writeFormations(getFormations().map(f => f.id === body.id ? body : f))
+  const all = await getFormations()
+  await writeFormations(all.map(f => f.id === body.id ? body : f))
   return NextResponse.json({ ok: true })
 }
 
 export async function DELETE(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { id } = await req.json()
-  writeFormations(getFormations().filter(f => f.id !== id))
+  const all = await getFormations()
+  await writeFormations(all.filter(f => f.id !== id))
   return NextResponse.json({ ok: true })
 }

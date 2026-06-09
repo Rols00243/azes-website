@@ -4,13 +4,13 @@ import { getZonesDetail, writeJSON } from '@/lib/server-data'
 
 export async function GET() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  return NextResponse.json(getZonesDetail())
+  return NextResponse.json(await getZonesDetail())
 }
 
 export async function PUT(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const data = await req.json()
-  writeJSON('zones-detail.json', data)
+  await writeJSON('zones-detail.json', data)
   return NextResponse.json({ ok: true })
 }
 
@@ -21,9 +21,9 @@ export async function PATCH(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { slug, block, data } = await req.json()
   if (!slug || !block || !data) return NextResponse.json({ error: 'Paramètres manquants' }, { status: 400 })
-  const all = getZonesDetail()
+  const all = await getZonesDetail()
   if (!all[slug]) return NextResponse.json({ error: 'Zone introuvable' }, { status: 404 })
   all[slug] = { ...all[slug], [block]: { ...all[slug][block as keyof typeof all[typeof slug]], ...data } }
-  writeJSON('zones-detail.json', all)
+  await writeJSON('zones-detail.json', all)
   return NextResponse.json({ ok: true })
 }
