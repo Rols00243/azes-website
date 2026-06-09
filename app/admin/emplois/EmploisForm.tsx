@@ -25,12 +25,17 @@ export default function EmploisForm({ initialItems, initialEntreprises, initialF
   const [tab, setTab] = useState<Tab>('offres')
   const [msg, setMsg] = useState('')
 
+  // Lift item counts up so tab badges update live
+  const [offreCount, setOffreCount] = useState(initialItems.length)
+  const [entrepriseCount, setEntrepriseCount] = useState(initialEntreprises.length)
+  const [formationCount, setFormationCount] = useState(initialFormations.length)
+
   function flash(m: string) { setMsg(m); setTimeout(() => setMsg(''), 3000) }
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode; count: number }[] = [
-    { id: 'offres', label: 'Offres d\'emploi', icon: <BriefcaseIcon className="w-4 h-4" />, count: initialItems.length },
-    { id: 'entreprises', label: 'Entreprises', icon: <BuildingOfficeIcon className="w-4 h-4" />, count: initialEntreprises.length },
-    { id: 'formations', label: 'Formations', icon: <AcademicCapIcon className="w-4 h-4" />, count: initialFormations.length },
+    { id: 'offres', label: 'Offres d\'emploi', icon: <BriefcaseIcon className="w-4 h-4" />, count: offreCount },
+    { id: 'entreprises', label: 'Entreprises', icon: <BuildingOfficeIcon className="w-4 h-4" />, count: entrepriseCount },
+    { id: 'formations', label: 'Formations', icon: <AcademicCapIcon className="w-4 h-4" />, count: formationCount },
   ]
 
   return (
@@ -58,17 +63,17 @@ export default function EmploisForm({ initialItems, initialEntreprises, initialF
       </div>
 
       {/* Panels */}
-      {tab === 'offres' && <OffresPanel initialItems={initialItems} zoneNames={zoneNames} flash={flash} />}
-      {tab === 'entreprises' && <EntreprisesPanel initialItems={initialEntreprises} flash={flash} />}
-      {tab === 'formations' && <FormationsPanel initialItems={initialFormations} flash={flash} />}
+      {tab === 'offres' && <OffresPanel initialItems={initialItems} zoneNames={zoneNames} flash={flash} onCountChange={setOffreCount} />}
+      {tab === 'entreprises' && <EntreprisesPanel initialItems={initialEntreprises} flash={flash} onCountChange={setEntrepriseCount} />}
+      {tab === 'formations' && <FormationsPanel initialItems={initialFormations} flash={flash} onCountChange={setFormationCount} />}
     </div>
   )
 }
 
 // ── OFFRES D'EMPLOI ────────────────────────────────────────────────────────────
 
-function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[]; zoneNames: string[]; flash: (m: string) => void }) {
-  const emptyForm = { titre: '', zone: zoneNames[0] || '', type: TYPES[0], description: '', date: new Date().toISOString().split('T')[0] }
+function OffresPanel({ initialItems, zoneNames, flash, onCountChange }: { initialItems: Emploi[]; zoneNames: string[]; flash: (m: string) => void; onCountChange: (n: number) => void }) {
+  const emptyForm = { titre: '', zone: '', type: TYPES[0], description: '', date: new Date().toISOString().split('T')[0] }
   const [items, setItems] = useState(initialItems)
   const [form, setForm] = useState(emptyForm)
   const [adding, setAdding] = useState(false)
@@ -79,12 +84,17 @@ function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[
   function setField(k: string, v: string) { setForm(f => ({ ...f, [k]: v })) }
   function setEditField(k: string, v: string) { setEditForm(f => f ? ({ ...f, [k]: v }) : f) }
 
+  function updateItems(newItems: Emploi[]) {
+    setItems(newItems)
+    onCountChange(newItems.length)
+  }
+
   async function publish() {
     if (!form.titre || !form.description) return
     setSaving(true)
     const res = await fetch('/api/admin/emplois', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
     const data = await res.json()
-    setItems([data.item, ...items]); setForm(emptyForm); setAdding(false)
+    updateItems([data.item, ...items]); setForm(emptyForm); setAdding(false)
     flash('✓ Offre publiée !')
     setSaving(false)
   }
@@ -93,7 +103,7 @@ function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[
     if (!editForm) return
     setSaving(true)
     await fetch('/api/admin/emplois', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(editForm) })
-    setItems(items.map(e => e.id === editForm.id ? editForm : e)); setEditId(null); setEditForm(null)
+    updateItems(items.map(e => e.id === editForm.id ? editForm : e)); setEditId(null); setEditForm(null)
     flash('✓ Offre mise à jour !')
     setSaving(false)
   }
@@ -101,7 +111,7 @@ function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[
   async function remove(id: string) {
     if (!confirm('Supprimer cette offre ?')) return
     await fetch('/api/admin/emplois', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
-    setItems(items.filter(e => e.id !== id))
+    updateItems(items.filter(e => e.id !== id))
     flash('✓ Offre supprimée')
   }
 
@@ -121,9 +131,8 @@ function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[
             <div><label className={LABEL}>Description *</label>
               <textarea value={form.description} onChange={e => setField('description', e.target.value)} className={INPUT + ' resize-none'} rows={3} placeholder="Missions, profil recherché…" /></div>
             <div className="grid grid-cols-3 gap-3">
-              <div><label className={LABEL}>Zone</label>
-                <select value={form.zone} onChange={e => setField('zone', e.target.value)} className={INPUT}>
-                  {zoneNames.map(z => <option key={z}>{z}</option>)}</select></div>
+              <div><label className={LABEL}>Zone concernée</label>
+                <input type="text" value={form.zone} onChange={e => setField('zone', e.target.value)} className={INPUT} placeholder="Ex : Zone Minière de Lubumbashi" /></div>
               <div><label className={LABEL}>Type</label>
                 <select value={form.type} onChange={e => setField('type', e.target.value)} className={INPUT}>
                   {TYPES.map(t => <option key={t}>{t}</option>)}</select></div>
@@ -154,9 +163,8 @@ function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[
                 <div><label className={LABEL}>Description *</label>
                   <textarea value={editForm.description} onChange={e => setEditField('description', e.target.value)} className={INPUT + ' resize-none'} rows={3} /></div>
                 <div className="grid grid-cols-3 gap-3">
-                  <div><label className={LABEL}>Zone</label>
-                    <select value={editForm.zone} onChange={e => setEditField('zone', e.target.value)} className={INPUT}>
-                      {zoneNames.map(z => <option key={z}>{z}</option>)}</select></div>
+                  <div><label className={LABEL}>Zone concernée</label>
+                    <input type="text" value={editForm.zone} onChange={e => setEditField('zone', e.target.value)} className={INPUT} placeholder="Ex : Zone Minière de Lubumbashi" /></div>
                   <div><label className={LABEL}>Type</label>
                     <select value={editForm.type} onChange={e => setEditField('type', e.target.value)} className={INPUT}>
                       {TYPES.map(t => <option key={t}>{t}</option>)}</select></div>
@@ -202,7 +210,7 @@ function OffresPanel({ initialItems, zoneNames, flash }: { initialItems: Emploi[
 
 // ── ENTREPRISES QUI RECRUTENT ─────────────────────────────────────────────────
 
-function EntreprisesPanel({ initialItems, flash }: { initialItems: EntrepriseEmploi[]; flash: (m: string) => void }) {
+function EntreprisesPanel({ initialItems, flash, onCountChange }: { initialItems: EntrepriseEmploi[]; flash: (m: string) => void; onCountChange: (n: number) => void }) {
   const emptyForm = { nom: '', zone: '', emplois: 0, color: '#1B4F8C' }
   const [items, setItems] = useState(initialItems)
   const [adding, setAdding] = useState(false)
@@ -211,12 +219,17 @@ function EntreprisesPanel({ initialItems, flash }: { initialItems: EntrepriseEmp
   const [editForm, setEditForm] = useState<EntrepriseEmploi | null>(null)
   const [saving, setSaving] = useState(false)
 
+  function updateItems(newItems: EntrepriseEmploi[]) {
+    setItems(newItems)
+    onCountChange(newItems.length)
+  }
+
   async function create() {
     if (!form.nom.trim()) return
     setSaving(true)
     const res = await fetch('/api/admin/emplois/entreprises', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
     const data = await res.json()
-    setItems(prev => [...prev, data.item]); setForm(emptyForm); setAdding(false)
+    updateItems([...items, data.item]); setForm(emptyForm); setAdding(false)
     flash('✓ Entreprise ajoutée !')
     setSaving(false)
   }
@@ -225,7 +238,7 @@ function EntreprisesPanel({ initialItems, flash }: { initialItems: EntrepriseEmp
     if (!editForm) return
     setSaving(true)
     await fetch('/api/admin/emplois/entreprises', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(editForm) })
-    setItems(prev => prev.map(e => e.id === editForm.id ? editForm : e)); setEditId(null); setEditForm(null)
+    updateItems(items.map(e => e.id === editForm.id ? editForm : e)); setEditId(null); setEditForm(null)
     flash('✓ Entreprise mise à jour !')
     setSaving(false)
   }
@@ -233,7 +246,7 @@ function EntreprisesPanel({ initialItems, flash }: { initialItems: EntrepriseEmp
   async function remove(id: string) {
     if (!confirm('Supprimer cette entreprise ?')) return
     await fetch('/api/admin/emplois/entreprises', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
-    setItems(prev => prev.filter(e => e.id !== id))
+    updateItems(items.filter(e => e.id !== id))
     flash('✓ Entreprise supprimée')
   }
 
@@ -333,7 +346,7 @@ function EntrepriseFields({ form, set }: { form: { nom: string; zone: string; em
 
 // ── PROGRAMMES DE FORMATION ────────────────────────────────────────────────────
 
-function FormationsPanel({ initialItems, flash }: { initialItems: Formation[]; flash: (m: string) => void }) {
+function FormationsPanel({ initialItems, flash, onCountChange }: { initialItems: Formation[]; flash: (m: string) => void; onCountChange: (n: number) => void }) {
   const emptyForm = { titre: '', duree: '', zone: '', places: 0, color: '#1B4F8C' }
   const [items, setItems] = useState(initialItems)
   const [adding, setAdding] = useState(false)
@@ -342,12 +355,17 @@ function FormationsPanel({ initialItems, flash }: { initialItems: Formation[]; f
   const [editForm, setEditForm] = useState<Formation | null>(null)
   const [saving, setSaving] = useState(false)
 
+  function updateItems(newItems: Formation[]) {
+    setItems(newItems)
+    onCountChange(newItems.length)
+  }
+
   async function create() {
     if (!form.titre.trim()) return
     setSaving(true)
     const res = await fetch('/api/admin/emplois/formations', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
     const data = await res.json()
-    setItems(prev => [...prev, data.item]); setForm(emptyForm); setAdding(false)
+    updateItems([...items, data.item]); setForm(emptyForm); setAdding(false)
     flash('✓ Formation ajoutée !')
     setSaving(false)
   }
@@ -356,7 +374,7 @@ function FormationsPanel({ initialItems, flash }: { initialItems: Formation[]; f
     if (!editForm) return
     setSaving(true)
     await fetch('/api/admin/emplois/formations', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(editForm) })
-    setItems(prev => prev.map(f => f.id === editForm.id ? editForm : f)); setEditId(null); setEditForm(null)
+    updateItems(items.map(f => f.id === editForm.id ? editForm : f)); setEditId(null); setEditForm(null)
     flash('✓ Formation mise à jour !')
     setSaving(false)
   }
@@ -364,7 +382,7 @@ function FormationsPanel({ initialItems, flash }: { initialItems: Formation[]; f
   async function remove(id: string) {
     if (!confirm('Supprimer cette formation ?')) return
     await fetch('/api/admin/emplois/formations', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
-    setItems(prev => prev.filter(f => f.id !== id))
+    updateItems(items.filter(f => f.id !== id))
     flash('✓ Formation supprimée')
   }
 
