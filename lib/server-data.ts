@@ -297,6 +297,59 @@ export function getZoneProjets(): ZoneProjet[] {
   return readJSON('zone-projets.json', [])
 }
 
+// ─── Entreprises qui recrutent ────────────────────────────────────────────────
+
+export interface EntrepriseEmploi {
+  id: string
+  nom: string
+  zone: string
+  emplois: number
+  color: string
+}
+
+const DEFAULT_ENTREPRISES: EntrepriseEmploi[] = [
+  { id: 'e1', nom: 'Bolloré Logistics', zone: 'Matadi', emplois: 450, color: '#C4894A' },
+  { id: 'e2', nom: 'MTN Group', zone: 'Kinshasa', emplois: 320, color: '#1B4F8C' },
+  { id: 'e3', nom: 'Olam International', zone: 'Kasaï', emplois: 580, color: '#2A7A4B' },
+  { id: 'e4', nom: 'Gécamines', zone: 'Lubumbashi', emplois: 2400, color: '#8B5E3C' },
+  { id: 'e5', nom: 'Orange Digital', zone: 'Kinshasa', emplois: 180, color: '#6B48A0' },
+  { id: 'e6', nom: 'Banque Mondiale', zone: 'Kinshasa', emplois: 45, color: '#1E7A9E' },
+]
+
+export function getEntreprisesEmploi(): EntrepriseEmploi[] {
+  return readJSON('entreprises-emplois.json', DEFAULT_ENTREPRISES)
+}
+
+export function writeEntreprisesEmploi(data: EntrepriseEmploi[]): void {
+  writeJSON('entreprises-emplois.json', data)
+}
+
+// ─── Programmes de formation ──────────────────────────────────────────────────
+
+export interface Formation {
+  id: string
+  titre: string
+  duree: string
+  zone: string
+  places: number
+  color: string
+}
+
+const DEFAULT_FORMATIONS: Formation[] = [
+  { id: 'f1', titre: 'Formation Logistique & Supply Chain', duree: '6 mois', zone: 'Zone Franche de Matadi', places: 40, color: '#C4894A' },
+  { id: 'f2', titre: 'Formation Développement Numérique', duree: '3 mois', zone: 'Zone Tech de Kinshasa', places: 60, color: '#1B4F8C' },
+  { id: 'f3', titre: 'Formation Transformation Agro-Alimentaire', duree: '4 mois', zone: 'Zone Agro-Industrielle du Kasaï', places: 50, color: '#2A7A4B' },
+  { id: 'f4', titre: 'Formation Sécurité Minière', duree: '2 mois', zone: 'Zone Minière de Lubumbashi', places: 35, color: '#8B5E3C' },
+]
+
+export function getFormations(): Formation[] {
+  return readJSON('formations.json', DEFAULT_FORMATIONS)
+}
+
+export function writeFormations(data: Formation[]): void {
+  writeJSON('formations.json', data)
+}
+
 export function getZoneProjetsForSlug(slug: string): ZoneProjet[] {
   return getZoneProjets().filter(p => p.zoneSlug === slug)
 }
