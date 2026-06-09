@@ -47,12 +47,14 @@ interface Props {
   initialData: ZoneRow[]
   initialDetail: ZonesDetailMap
   initialZoneProjets: ZoneProjet[]
+  initialHidden?: string[]
 }
 
 const EMPTY_NEW_ZONE = { name: '', region: '', color: '#1B4F8C', emplois: 0, entreprises: 0, investissement: '$0' }
 
-export default function ZonesForm({ initialData, initialDetail, initialZoneProjets }: Props) {
+export default function ZonesForm({ initialData, initialDetail, initialZoneProjets, initialHidden = [] }: Props) {
   const [rows, setRows] = useState(initialData)
+  const [hiddenSlugs, setHiddenSlugs] = useState<string[]>(initialHidden)
   const [detail, setDetail] = useState<ZonesDetailMap>(initialDetail)
   const [savedStats, setSavedStats] = useState(false)
   const [savedDetail, setSavedDetail] = useState<Record<string, string>>({})
@@ -95,13 +97,28 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
     setLoading(false)
   }
 
-  async function deleteZone(slug: string) {
-    if (!confirm('Supprimer cette zone ? Cette action est irréversible.')) return
+  async function deleteZone(slug: string, isCustom: boolean) {
+    const msg = isCustom
+      ? 'Supprimer cette zone personnalisée ? Cette action est irréversible.'
+      : 'Masquer cette zone statique ? Elle ne sera plus visible sur le site (vous pouvez la restaurer via "Restaurer toutes les zones").'
+    if (!confirm(msg)) return
     await fetch('/api/admin/zones', {
       method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug }),
     })
-    setRows(prev => prev.filter(r => r.slug !== slug))
+    if (isCustom) {
+      setRows(prev => prev.filter(r => r.slug !== slug))
+    } else {
+      setRows(prev => prev.filter(r => r.slug !== slug))
+      setHiddenSlugs(prev => [...prev, slug])
+    }
     flash('✓ Zone supprimée')
+  }
+
+  async function restoreAllZones() {
+    if (!confirm('Restaurer toutes les zones masquées ?')) return
+    await fetch('/api/admin/zones', { method: 'OPTIONS' })
+    setHiddenSlugs([])
+    flash('✓ Toutes les zones ont été restaurées — rechargez la page pour les voir.')
   }
 
   function startEditZone(z: ZoneRow) {
@@ -227,6 +244,19 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
         }`}>{msg}</div>
       )}
 
+      {/* ── Restore hidden zones ───────────────── */}
+      {hiddenSlugs.length > 0 && (
+        <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3.5">
+          <span className="text-sm text-amber-800 font-medium">
+            {hiddenSlugs.length} zone{hiddenSlugs.length > 1 ? 's' : ''} masquée{hiddenSlugs.length > 1 ? 's' : ''}
+          </span>
+          <button onClick={restoreAllZones}
+            className="text-sm font-semibold text-amber-700 underline hover:text-amber-900 transition-colors">
+            Restaurer tout
+          </button>
+        </div>
+      )}
+
       {/* ── Create zone button ─────────────────── */}
       {!creating ? (
         <button onClick={() => setCreating(true)}
@@ -321,23 +351,21 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
                 )}
                 <div className="ml-auto flex items-center gap-2">
                   {z.custom && (
-                    <>
-                      <button
-                        onClick={() => startEditZone(z)}
-                        className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/40 transition-colors"
-                        title="Modifier cette zone"
-                      >
-                        <PencilSquareIcon className="w-3.5 h-3.5 text-white" />
-                      </button>
-                      <button
-                        onClick={() => deleteZone(z.slug)}
-                        className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-red-500 transition-colors"
-                        title="Supprimer cette zone"
-                      >
-                        <TrashIcon className="w-3.5 h-3.5 text-white" />
-                      </button>
-                    </>
+                    <button
+                      onClick={() => startEditZone(z)}
+                      className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/40 transition-colors"
+                      title="Modifier cette zone"
+                    >
+                      <PencilSquareIcon className="w-3.5 h-3.5 text-white" />
+                    </button>
                   )}
+                  <button
+                    onClick={() => deleteZone(z.slug, z.custom)}
+                    className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-red-500 transition-colors"
+                    title={z.custom ? 'Supprimer cette zone' : 'Masquer cette zone'}
+                  >
+                    <TrashIcon className="w-3.5 h-3.5 text-white" />
+                  </button>
                 </div>
               </div>
 

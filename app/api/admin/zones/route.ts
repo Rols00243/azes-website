@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticated } from '@/lib/admin-auth'
-import { getZonesStats, getCustomZones, writeCustomZones, writeJSON } from '@/lib/server-data'
+import { getZonesStats, getCustomZones, writeCustomZones, writeJSON, getHiddenZones, writeHiddenZones } from '@/lib/server-data'
 import type { CustomZone } from '@/lib/server-data'
+import { zones as staticZones } from '@/lib/data/zones'
 
 export async function GET() {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-  return NextResponse.json({ stats: getZonesStats(), custom: getCustomZones() })
+  return NextResponse.json({ stats: getZonesStats(), custom: getCustomZones(), hidden: getHiddenZones() })
 }
 
 export async function PUT(req: NextRequest) {
@@ -59,7 +60,26 @@ export async function PATCH(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { slug } = await req.json()
-  const all = getCustomZones().filter(z => z.slug !== slug)
-  writeCustomZones(all)
+
+  const isStatic = staticZones.some(z => z.slug === slug)
+
+  if (isStatic) {
+    // Zone statique : l'ajouter à la liste des zones masquées
+    const hidden = getHiddenZones()
+    if (!hidden.includes(slug)) {
+      writeHiddenZones([...hidden, slug])
+    }
+  } else {
+    // Zone personnalisée : la supprimer de custom-zones.json
+    writeCustomZones(getCustomZones().filter(z => z.slug !== slug))
+  }
+
+  return NextResponse.json({ ok: true })
+}
+
+// Restaurer toutes les zones masquées
+export async function OPTIONS() {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  writeHiddenZones([])
   return NextResponse.json({ ok: true })
 }
