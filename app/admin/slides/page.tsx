@@ -4,7 +4,7 @@ import SlidesForm from './SlidesForm'
 
 export default async function SlidesPage() {
   await requireAuth()
-  const slides = getSlides()
+  const slides = await getSlides()
   return (
     <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Slides du hero</h1>

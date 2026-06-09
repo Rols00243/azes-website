@@ -4,7 +4,7 @@ import BureauxForm from './BureauxForm'
 
 export default async function ContactAdminPage() {
   await requireAuth()
-  const bureaux = getBureaux()
+  const bureaux = await getBureaux()
   return (
     <div className="max-w-3xl mx-auto py-10 px-4 sm:px-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Page Contact</h1>

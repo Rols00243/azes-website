@@ -8,18 +8,18 @@ import {
 
 export default async function DashboardPage() {
   await requireAuth()
-  const stats      = getStats()
-  const projets    = getProjetsCount()
-  const actualites = getActualites()
-  const emplois    = getEmplois()
-  const slides     = getSlides()
-  const docs       = getDocumentsAdmin()
-  const appels     = getAppelsOffresAdmin()
-  const messages    = getMessages()
+  const stats      = await getStats()
+  const projets    = await getProjetsCount()
+  const actualites = await getActualites()
+  const emplois    = await getEmplois()
+  const slides     = await getSlides()
+  const docs       = await getDocumentsAdmin()
+  const appels     = await getAppelsOffresAdmin()
+  const messages    = await getMessages()
   const unread      = messages.filter(m => !m.lu).length
-  const emails      = getCompteEmails()
-  const entreprises = getEntreprisesEmploi()
-  const formations  = getFormations()
+  const emails      = await getCompteEmails()
+  const entreprises = await getEntreprisesEmploi()
+  const formations  = await getFormations()
 
   const sections = [
     {

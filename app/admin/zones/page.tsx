@@ -5,11 +5,11 @@ import ZonesForm from './ZonesForm'
 
 export default async function ZonesPage() {
   await requireAuth()
-  const zonesStats = getZonesStats()
-  const zonesDetail = getZonesDetail()
-  const customZones = getCustomZones()
-  const zoneProjets = getZoneProjets()
-  const hidden = getHiddenZones()
+  const zonesStats = await getZonesStats()
+  const zonesDetail = await getZonesDetail()
+  const customZones = await getCustomZones()
+  const zoneProjets = await getZoneProjets()
+  const hidden = await getHiddenZones()
 
   // Zones statiques — exclure les zones masquées
   const staticData = zones

@@ -1,35 +1,47 @@
-import { readFileSync, existsSync, mkdirSync, writeFileSync, readdirSync } from 'fs'
+import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { zones as staticZones } from './data/zones'
 
-// ── Répertoire de données ──────────────────────────────────────────────────
-// Sur Vercel : /tmp/azes-data (accessible en écriture)
-// En local   : ./data (fichiers sources)
-const IS_VERCEL  = !!process.env.VERCEL
-const SOURCE_DIR = join(process.cwd(), 'data')   // bundled — lecture seule sur Vercel
-const DATA_DIR   = IS_VERCEL ? '/tmp/azes-data' : SOURCE_DIR
+// ── Storage backend ────────────────────────────────────────────────────────────
+// On Vercel: Upstash Redis (persistent) via KV_REST_API_URL + KV_REST_API_TOKEN
+// Locally:   ./data  (JSON files)
 
-/**
- * Initialise /tmp/azes-data au premier appel sur Vercel :
- * copie tous les JSON sources dans le répertoire temporaire inscriptible.
- */
-function initDataDir(): void {
-  if (!IS_VERCEL) return
-  if (existsSync(DATA_DIR)) return            // déjà initialisé dans cette instance
-  mkdirSync(DATA_DIR, { recursive: true })
-  try {
-    const files = readdirSync(SOURCE_DIR).filter(f => f.endsWith('.json'))
-    for (const f of files) {
-      writeFileSync(join(DATA_DIR, f), readFileSync(join(SOURCE_DIR, f)))
-    }
-  } catch {
-    // En cas d'erreur de lecture source, on continue avec des fallbacks
-  }
+const USE_REDIS = !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
+const SOURCE_DIR = join(process.cwd(), 'data')
+
+// Lazy Redis client — only imported when actually needed (avoids edge-runtime issues)
+let _redis: import('@upstash/redis').Redis | null = null
+async function getRedis() {
+  if (_redis) return _redis
+  const { Redis } = await import('@upstash/redis')
+  _redis = new Redis({
+    url: process.env.KV_REST_API_URL!,
+    token: process.env.KV_REST_API_TOKEN!,
+  })
+  return _redis
 }
 
-function readJSON<T>(filename: string, fallback: T): T {
-  initDataDir()
-  const filePath = join(DATA_DIR, filename)
+// ── Core I/O ──────────────────────────────────────────────────────────────────
+
+async function readJSON<T>(filename: string, fallback: T): Promise<T> {
+  if (USE_REDIS) {
+    try {
+      const redis = await getRedis()
+      const val = await redis.get<T>(filename)
+      if (val !== null && val !== undefined) return val
+      // If nothing in Redis yet, seed from bundled file
+      const seeded = readSourceFile<T>(filename)
+      if (seeded !== null) {
+        await redis.set(filename, seeded)
+        return seeded
+      }
+      return fallback
+    } catch {
+      return fallback
+    }
+  }
+  // Local file system
+  const filePath = join(SOURCE_DIR, filename)
   try {
     if (!existsSync(filePath)) return fallback
     return JSON.parse(readFileSync(filePath, 'utf-8')) as T
@@ -38,10 +50,25 @@ function readJSON<T>(filename: string, fallback: T): T {
   }
 }
 
-export function writeJSON(filename: string, data: unknown): void {
-  initDataDir()
-  if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true })
-  writeFileSync(join(DATA_DIR, filename), JSON.stringify(data, null, 2), 'utf-8')
+export async function writeJSON(filename: string, data: unknown): Promise<void> {
+  if (USE_REDIS) {
+    const redis = await getRedis()
+    await redis.set(filename, data)
+    return
+  }
+  // Local file system
+  if (!existsSync(SOURCE_DIR)) mkdirSync(SOURCE_DIR, { recursive: true })
+  writeFileSync(join(SOURCE_DIR, filename), JSON.stringify(data, null, 2), 'utf-8')
+}
+
+function readSourceFile<T>(filename: string): T | null {
+  const filePath = join(SOURCE_DIR, filename)
+  try {
+    if (!existsSync(filePath)) return null
+    return JSON.parse(readFileSync(filePath, 'utf-8')) as T
+  } catch {
+    return null
+  }
 }
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -191,53 +218,54 @@ const DEFAULT_PROJETS: ProjetsCount = {
 
 // ─── Getters ─────────────────────────────────────────────────────────────────
 
-export function getStats(): SiteStats {
+export async function getStats(): Promise<SiteStats> {
   return readJSON('stats.json', DEFAULT_STATS)
 }
 
-export function getZonesStats(): Record<string, ZoneStat> {
+export async function getZonesStats(): Promise<Record<string, ZoneStat>> {
   return readJSON('zones-stats.json', DEFAULT_ZONES_STATS)
 }
 
-export function getProjetsCount(): ProjetsCount {
+export async function getProjetsCount(): Promise<ProjetsCount> {
   return readJSON('projets-counts.json', DEFAULT_PROJETS)
 }
 
-export function getActualites(): Actualite[] {
+export async function getActualites(): Promise<Actualite[]> {
   return readJSON('actualites.json', [])
 }
 
-export function getEmplois(): Emploi[] {
+export async function getEmplois(): Promise<Emploi[]> {
   return readJSON('emplois.json', [])
 }
 
-export function getSlides(): Slide[] {
+export async function getSlides(): Promise<Slide[]> {
   return readJSON('slides.json', [])
 }
 
-export function getDocumentsAdmin(): DocumentAdmin[] {
+export async function getDocumentsAdmin(): Promise<DocumentAdmin[]> {
   return readJSON('documents-data.json', [])
 }
 
-export function getAppelsOffresAdmin(): AppelOffreAdmin[] {
+export async function getAppelsOffresAdmin(): Promise<AppelOffreAdmin[]> {
   return readJSON('appels-offres-data.json', [])
 }
 
-export function getZonesDetail(): Record<string, ZoneDetail> {
+export async function getZonesDetail(): Promise<Record<string, ZoneDetail>> {
   return readJSON('zones-detail.json', {})
 }
 
-export function getZoneDetail(slug: string): ZoneDetail | null {
-  const all = getZonesDetail()
+export async function getZoneDetail(slug: string): Promise<ZoneDetail | null> {
+  const all = await getZonesDetail()
   return all[slug] ?? null
 }
 
-export function getMessages(): Message[] {
+export async function getMessages(): Promise<Message[]> {
   return readJSON('messages.json', [])
 }
 
-export function getUnreadCount(): number {
-  return getMessages().filter((m) => !m.lu).length
+export async function getUnreadCount(): Promise<number> {
+  const msgs = await getMessages()
+  return msgs.filter((m) => !m.lu).length
 }
 
 // ─── Bureaux de contact ───────────────────────────────────────────────────────
@@ -258,7 +286,7 @@ const DEFAULT_BUREAUX: BureauContact[] = [
   { id: 'bureau-3', ville: 'Lubumbashi', adresse: 'Boulevard Moïse Tshombe, Zone Minière', tel: '+243 81 234 5680', email: 'lubumbashi@azes.cd', horaires: 'Lun–Ven 08h–17h', color: '#C4894A' },
 ]
 
-export function getBureaux(): BureauContact[] {
+export async function getBureaux(): Promise<BureauContact[]> {
   return readJSON('bureaux.json', DEFAULT_BUREAUX)
 }
 
@@ -275,7 +303,7 @@ export interface ProjetItem {
   dateDebut: string
 }
 
-export function getProjetsItems(): ProjetItem[] {
+export async function getProjetsItems(): Promise<ProjetItem[]> {
   return readJSON('projets-items.json', [])
 }
 
@@ -293,7 +321,7 @@ export interface ZoneProjet {
   dateCreation: string
 }
 
-export function getZoneProjets(): ZoneProjet[] {
+export async function getZoneProjets(): Promise<ZoneProjet[]> {
   return readJSON('zone-projets.json', [])
 }
 
@@ -316,12 +344,12 @@ const DEFAULT_ENTREPRISES: EntrepriseEmploi[] = [
   { id: 'e6', nom: 'Banque Mondiale', zone: 'Kinshasa', emplois: 45, color: '#1E7A9E' },
 ]
 
-export function getEntreprisesEmploi(): EntrepriseEmploi[] {
+export async function getEntreprisesEmploi(): Promise<EntrepriseEmploi[]> {
   return readJSON('entreprises-emplois.json', DEFAULT_ENTREPRISES)
 }
 
-export function writeEntreprisesEmploi(data: EntrepriseEmploi[]): void {
-  writeJSON('entreprises-emplois.json', data)
+export async function writeEntreprisesEmploi(data: EntrepriseEmploi[]): Promise<void> {
+  return writeJSON('entreprises-emplois.json', data)
 }
 
 // ─── Programmes de formation ──────────────────────────────────────────────────
@@ -342,16 +370,17 @@ const DEFAULT_FORMATIONS: Formation[] = [
   { id: 'f4', titre: 'Formation Sécurité Minière', duree: '2 mois', zone: 'Zone Minière de Lubumbashi', places: 35, color: '#8B5E3C' },
 ]
 
-export function getFormations(): Formation[] {
+export async function getFormations(): Promise<Formation[]> {
   return readJSON('formations.json', DEFAULT_FORMATIONS)
 }
 
-export function writeFormations(data: Formation[]): void {
-  writeJSON('formations.json', data)
+export async function writeFormations(data: Formation[]): Promise<void> {
+  return writeJSON('formations.json', data)
 }
 
-export function getZoneProjetsForSlug(slug: string): ZoneProjet[] {
-  return getZoneProjets().filter(p => p.zoneSlug === slug)
+export async function getZoneProjetsForSlug(slug: string): Promise<ZoneProjet[]> {
+  const all = await getZoneProjets()
+  return all.filter(p => p.zoneSlug === slug)
 }
 
 // ─── Zones dynamiques (créées via admin) ─────────────────────────────────────
@@ -366,12 +395,12 @@ export interface CustomZone {
   investissement: string
 }
 
-export function getCustomZones(): CustomZone[] {
+export async function getCustomZones(): Promise<CustomZone[]> {
   return readJSON('custom-zones.json', [])
 }
 
-export function writeCustomZones(zones: CustomZone[]): void {
-  writeJSON('custom-zones.json', zones)
+export async function writeCustomZones(zones: CustomZone[]): Promise<void> {
+  return writeJSON('custom-zones.json', zones)
 }
 
 // ─── Comptes email professionnels ─────────────────────────────────────────────
@@ -388,25 +417,25 @@ export interface CompteEmail {
   dateCreation: string // ISO date
 }
 
-export function getCompteEmails(): CompteEmail[] {
+export async function getCompteEmails(): Promise<CompteEmail[]> {
   return readJSON('emails.json', [])
 }
 
 // ─── Zones masquées (zones statiques supprimées via admin) ───────────────────
 
-export function getHiddenZones(): string[] {
+export async function getHiddenZones(): Promise<string[]> {
   return readJSON('hidden-zones.json', [])
 }
 
-export function writeHiddenZones(slugs: string[]): void {
-  writeJSON('hidden-zones.json', slugs)
+export async function writeHiddenZones(slugs: string[]): Promise<void> {
+  return writeJSON('hidden-zones.json', slugs)
 }
 
 // ─── Zone merging ─────────────────────────────────────────────────────────────
 
-export function getMergedZones() {
-  const stats = getZonesStats()
-  const hidden = getHiddenZones()
+export async function getMergedZones() {
+  const stats = await getZonesStats()
+  const hidden = await getHiddenZones()
   return staticZones
     .filter((z) => !hidden.includes(z.slug))
     .map((z) => ({
@@ -417,6 +446,7 @@ export function getMergedZones() {
     }))
 }
 
-export function getMergedZoneBySlug(slug: string) {
-  return getMergedZones().find((z) => z.slug === slug)
+export async function getMergedZoneBySlug(slug: string) {
+  const zones = await getMergedZones()
+  return zones.find((z) => z.slug === slug)
 }

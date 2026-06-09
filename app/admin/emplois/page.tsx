@@ -5,9 +5,9 @@ import EmploisForm from './EmploisForm'
 
 export default async function EmploisPage() {
   await requireAuth()
-  const items = getEmplois()
-  const entreprises = getEntreprisesEmploi()
-  const formations = getFormations()
+  const items = await getEmplois()
+  const entreprises = await getEntreprisesEmploi()
+  const formations = await getFormations()
   const zoneNames = zones.map((z) => z.shortName)
   return (
     <div className="max-w-3xl mx-auto py-10 px-4 sm:px-6">

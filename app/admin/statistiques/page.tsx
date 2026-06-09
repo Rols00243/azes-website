@@ -4,7 +4,7 @@ import StatistiquesForm from './StatistiquesForm'
 
 export default async function StatistiquesPage() {
   await requireAuth()
-  const stats = getStats()
+  const stats = await getStats()
   return (
     <div className="max-w-2xl mx-auto py-10 px-4 sm:px-6">
       <h1 className="text-2xl font-bold text-gray-900 mb-1">Statistiques globales</h1>
