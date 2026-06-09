@@ -1,5 +1,5 @@
 import { requireAuth } from '@/lib/admin-auth'
-import { getStats, getProjetsCount, getActualites, getEmplois, getSlides, getDocumentsAdmin, getAppelsOffresAdmin, getMessages, getCompteEmails } from '@/lib/server-data'
+import { getStats, getProjetsCount, getActualites, getEmplois, getSlides, getDocumentsAdmin, getAppelsOffresAdmin, getMessages, getCompteEmails, getEntreprisesEmploi, getFormations } from '@/lib/server-data'
 import Link from 'next/link'
 import {
   ChartBarIcon, MapIcon, BriefcaseIcon, NewspaperIcon,
@@ -15,9 +15,11 @@ export default async function DashboardPage() {
   const slides     = getSlides()
   const docs       = getDocumentsAdmin()
   const appels     = getAppelsOffresAdmin()
-  const messages   = getMessages()
-  const unread     = messages.filter(m => !m.lu).length
-  const emails     = getCompteEmails()
+  const messages    = getMessages()
+  const unread      = messages.filter(m => !m.lu).length
+  const emails      = getCompteEmails()
+  const entreprises = getEntreprisesEmploi()
+  const formations  = getFormations()
 
   const sections = [
     {
@@ -79,10 +81,10 @@ export default async function DashboardPage() {
     {
       href: '/admin/emplois',
       icon: UserGroupIcon,
-      label: "Offres d'emploi",
-      desc: 'Postes ouverts dans les ZES',
+      label: 'Emplois & Compétences',
+      desc: 'Offres d\'emploi, entreprises qui recrutent, formations',
       color: 'bg-rose-50 text-rose-700',
-      badge: `${emplois.length} offre(s)`,
+      badge: `${emplois.length} offre(s) · ${entreprises.length} entreprise(s) · ${formations.length} formation(s)`,
     },
     {
       href: '/admin/messages',
