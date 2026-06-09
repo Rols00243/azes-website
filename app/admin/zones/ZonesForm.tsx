@@ -61,6 +61,8 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
   const [creating, setCreating] = useState(false)
   const [newZone, setNewZone] = useState(EMPTY_NEW_ZONE)
   const [msg, setMsg] = useState('')
+  const [editingSlug, setEditingSlug] = useState<string | null>(null)
+  const [editZone, setEditZone] = useState<{ name: string; region: string; color: string }>({ name: '', region: '', color: '#1B4F8C' })
 
   // Zone projets state
   const [zoneProjets, setZoneProjets] = useState<ZoneProjet[]>(initialZoneProjets)
@@ -100,6 +102,25 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
     })
     setRows(prev => prev.filter(r => r.slug !== slug))
     flash('✓ Zone supprimée')
+  }
+
+  function startEditZone(z: ZoneRow) {
+    setEditingSlug(z.slug)
+    setEditZone({ name: z.name, region: z.region, color: z.color })
+  }
+
+  async function saveEditZone() {
+    if (!editingSlug) return
+    setLoading(true)
+    await fetch('/api/admin/zones', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: editingSlug, ...editZone }),
+    })
+    setRows(prev => prev.map(r => r.slug === editingSlug ? { ...r, ...editZone } : r))
+    setEditingSlug(null)
+    setLoading(false)
+    flash('✓ Zone mise à jour !')
   }
 
   // ── Stats ──────────────────────────────────────────────────────────────────
@@ -290,6 +311,7 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
         <div className="space-y-4">
           {rows.map((z) => (
             <div key={z.slug} className="rounded-2xl border border-gray-100 overflow-hidden">
+              {/* Zone header */}
               <div className="px-5 py-3 flex items-center gap-3" style={{ backgroundColor: z.color }}>
                 <div className="w-2 h-2 rounded-full bg-white/70" />
                 <span className="text-white font-semibold">{z.name}</span>
@@ -299,16 +321,68 @@ export default function ZonesForm({ initialData, initialDetail, initialZoneProje
                 )}
                 <div className="ml-auto flex items-center gap-2">
                   {z.custom && (
-                    <button
-                      onClick={() => deleteZone(z.slug)}
-                      className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-red-500 transition-colors"
-                      title="Supprimer cette zone"
-                    >
-                      <TrashIcon className="w-3.5 h-3.5 text-white" />
-                    </button>
+                    <>
+                      <button
+                        onClick={() => startEditZone(z)}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-white/40 transition-colors"
+                        title="Modifier cette zone"
+                      >
+                        <PencilSquareIcon className="w-3.5 h-3.5 text-white" />
+                      </button>
+                      <button
+                        onClick={() => deleteZone(z.slug)}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/20 hover:bg-red-500 transition-colors"
+                        title="Supprimer cette zone"
+                      >
+                        <TrashIcon className="w-3.5 h-3.5 text-white" />
+                      </button>
+                    </>
                   )}
                 </div>
               </div>
+
+              {/* Inline edit form for custom zones */}
+              {editingSlug === z.slug && (
+                <div className="p-5 bg-blue-50 border-b border-blue-100 space-y-4">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-700">Modifier la zone</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-500 mb-1.5">Nom</label>
+                      <input type="text" value={editZone.name}
+                        onChange={e => setEditZone(v => ({ ...v, name: e.target.value }))}
+                        className={INPUT} />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-500 mb-1.5">Région</label>
+                      <input type="text" value={editZone.region}
+                        onChange={e => setEditZone(v => ({ ...v, region: e.target.value }))}
+                        className={INPUT} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1.5">Couleur</label>
+                    <div className="flex flex-wrap gap-2">
+                      {ACCENT_COLORS.map(c => (
+                        <button key={c} type="button"
+                          onClick={() => setEditZone(v => ({ ...v, color: c }))}
+                          className={`w-8 h-8 rounded-lg border-2 transition-all ${editZone.color === c ? 'border-gray-900 scale-110' : 'border-transparent'}`}
+                          style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <button onClick={saveEditZone} disabled={loading || !editZone.name.trim()}
+                      className="flex-1 bg-[#0A2342] text-white rounded-xl py-2.5 font-semibold hover:bg-[#1B4F8C] transition-colors disabled:opacity-50 text-sm flex items-center justify-center gap-2">
+                      <CheckIcon className="w-4 h-4" /> {loading ? 'Sauvegarde…' : 'Enregistrer les modifications'}
+                    </button>
+                    <button onClick={() => setEditingSlug(null)}
+                      className="px-5 rounded-xl border-2 border-gray-200 text-gray-600 font-medium hover:border-gray-300 transition-colors text-sm">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div className="p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 bg-gray-50">
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Emplois créés</label>
