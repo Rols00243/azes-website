@@ -339,16 +339,29 @@ export function getCompteEmails(): CompteEmail[] {
   return readJSON('emails.json', [])
 }
 
+// ─── Zones masquées (zones statiques supprimées via admin) ───────────────────
+
+export function getHiddenZones(): string[] {
+  return readJSON('hidden-zones.json', [])
+}
+
+export function writeHiddenZones(slugs: string[]): void {
+  writeJSON('hidden-zones.json', slugs)
+}
+
 // ─── Zone merging ─────────────────────────────────────────────────────────────
 
 export function getMergedZones() {
   const stats = getZonesStats()
-  return staticZones.map((z) => ({
-    ...z,
-    emplois: stats[z.slug]?.emplois ?? 0,
-    entreprises: stats[z.slug]?.entreprises ?? 0,
-    investissement: stats[z.slug]?.investissement ?? '$0',
-  }))
+  const hidden = getHiddenZones()
+  return staticZones
+    .filter((z) => !hidden.includes(z.slug))
+    .map((z) => ({
+      ...z,
+      emplois: stats[z.slug]?.emplois ?? 0,
+      entreprises: stats[z.slug]?.entreprises ?? 0,
+      investissement: stats[z.slug]?.investissement ?? '$0',
+    }))
 }
 
 export function getMergedZoneBySlug(slug: string) {
