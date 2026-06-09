@@ -46,6 +46,16 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, zone: newZone })
 }
 
+export async function PATCH(req: NextRequest) {
+  if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  const { slug, name, region, color } = await req.json()
+  const all = getCustomZones().map(z =>
+    z.slug === slug ? { ...z, name: name || z.name, region: region ?? z.region, color: color || z.color } : z
+  )
+  writeCustomZones(all)
+  return NextResponse.json({ ok: true })
+}
+
 export async function DELETE(req: NextRequest) {
   if (!(await isAuthenticated())) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const { slug } = await req.json()
