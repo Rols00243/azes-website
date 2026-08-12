@@ -1,0 +1,35 @@
+{
+  "name": "Devis Fondations — AZES",
+  "short_name": "Devis Fondations",
+  "description": "Calculateur de métré et de devis pour les fondations : fouilles, béton, aciers, coffrage, maçonnerie et tuyaux d'attente.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "/devis-fondations",
+  "scope": "/",
+  "id": "/devis-fondations",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#1B4F8C",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    {
+      "src": "/icons/devis-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/devis-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/devis-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

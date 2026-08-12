@@ -71,3 +71,126 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+/* ─────────────  Devis Fondations — document imprimé  ───────────── */
+
+/* Le document A4 n'existe qu'à l'impression : masqué à l'écran. */
+.devis-impression {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000;
+    font-size: 10pt;
+  }
+
+  /* En-tête de site, pied de page et commandes de l'outil */
+  header,
+  footer,
+  .skip-link,
+  .devis-no-print {
+    display: none !important;
+  }
+
+  .devis-page {
+    padding: 0 !important;
+  }
+
+  .devis-impression {
+    display: block;
+  }
+
+  .devis-impression h1 {
+    font-size: 16pt;
+    font-weight: 700;
+    margin-bottom: 2mm;
+  }
+
+  .devis-impression h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    margin: 6mm 0 2mm;
+    border-bottom: 1px solid #000;
+    padding-bottom: 1mm;
+  }
+
+  .devis-impression .devis-sous-titre {
+    font-size: 11pt;
+    margin-bottom: 4mm;
+  }
+
+  .devis-impression table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 3mm;
+  }
+
+  .devis-impression th,
+  .devis-impression td {
+    border: 1px solid #666;
+    padding: 1.2mm 2mm;
+    font-size: 9pt;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .devis-impression th {
+    background: #f0f0f0;
+    font-weight: 700;
+  }
+
+  .devis-impression .devis-num {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .devis-impression .devis-lot td {
+    background: #e8e8e8;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 8.5pt;
+  }
+
+  .devis-impression .devis-totaux {
+    width: 70%;
+    margin-left: auto;
+  }
+
+  .devis-impression .devis-ttc th,
+  .devis-impression .devis-ttc td {
+    background: #e0e0e0;
+    font-size: 11pt;
+    font-weight: 700;
+  }
+
+  .devis-impression .devis-mention {
+    font-size: 8pt;
+    font-style: italic;
+    margin-top: 4mm;
+  }
+
+  .devis-impression .devis-signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14mm;
+    font-size: 9pt;
+  }
+
+  .devis-impression .devis-signatures > div {
+    width: 45%;
+    border-top: 1px solid #000;
+    padding-top: 1.5mm;
+  }
+
+  .devis-impression tr,
+  .devis-impression table {
+    page-break-inside: auto;
+  }
+}
