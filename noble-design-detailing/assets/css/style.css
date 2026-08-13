@@ -1,0 +1,1840 @@
+/* ==========================================================================
+   Noble Design Detailing — Feuille de styles principale
+   Palette : noir profond + or champagne
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Variables & reset
+   -------------------------------------------------------------------------- */
+:root {
+  --noir: #0a0a0b;
+  --noir-2: #111114;
+  --noir-3: #17171b;
+  --ligne: rgba(255, 255, 255, 0.08);
+  --ligne-forte: rgba(255, 255, 255, 0.16);
+
+  --or: #c9a227;
+  --or-clair: #e7c873;
+  --or-sombre: #8a6f18;
+
+  --blanc: #f6f5f3;
+  --gris: #a5a5ad;
+  --gris-sombre: #6f6f78;
+
+  --rayon: 14px;
+  --rayon-sm: 8px;
+  --max: 1200px;
+
+  --police-titre: "Playfair Display", "Iowan Old Style", Georgia, serif;
+  --police-texte: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  --ombre: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--noir);
+  color: var(--blanc);
+  font-family: var(--police-texte);
+  font-size: 16.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+}
+h2 {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+}
+h3 {
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+}
+
+p {
+  margin: 0 0 1.1em;
+  color: var(--gris);
+}
+
+::selection {
+  background: var(--or);
+  color: var(--noir);
+}
+
+:focus-visible {
+  outline: 2px solid var(--or-clair);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Utilitaires
+   -------------------------------------------------------------------------- */
+.contenu {
+  width: min(100% - 2.5rem, var(--max));
+  margin-inline: auto;
+}
+
+.section {
+  padding: clamp(4rem, 9vw, 7.5rem) 0;
+  position: relative;
+}
+
+.section--alt {
+  background: var(--noir-2);
+  border-top: 1px solid var(--ligne);
+  border-bottom: 1px solid var(--ligne);
+}
+
+.surtitre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.surtitre::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--or);
+}
+
+.entete-section {
+  max-width: 660px;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.entete-section--centre {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.entete-section--centre .surtitre::before {
+  display: none;
+}
+
+.chapeau {
+  font-size: 1.05rem;
+  color: var(--gris);
+  max-width: 62ch;
+}
+
+.or {
+  color: var(--or-clair);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Boutons ---------------------------------------------------------------- */
+.btn {
+  font-family: var(--police-texte);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.95rem 1.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform var(--transition), background var(--transition),
+    border-color var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn--or {
+  background: linear-gradient(135deg, var(--or-clair), var(--or));
+  color: #17130a;
+  box-shadow: 0 12px 30px rgba(201, 162, 39, 0.22);
+}
+
+.btn--or:hover {
+  background: linear-gradient(135deg, #f2dc9c, var(--or-clair));
+}
+
+.btn--ligne {
+  border-color: var(--ligne-forte);
+  color: var(--blanc);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.btn--ligne:hover {
+  border-color: var(--or);
+  color: var(--or-clair);
+}
+
+.btn--large {
+  padding: 1.1rem 2.2rem;
+  font-size: 1rem;
+}
+
+/* Cartes ----------------------------------------------------------------- */
+.carte {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  padding: 2rem 1.8rem;
+  transition: transform var(--transition), border-color var(--transition),
+    background var(--transition);
+  height: 100%;
+}
+
+.carte:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 162, 39, 0.4);
+}
+
+/* Animation d'apparition ---------------------------------------------------
+   L'état masqué n'est appliqué que si JavaScript est actif (classe « js »
+   posée dans le <head>) : sans JS, tout le contenu reste visible. */
+.js .apparait {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js .apparait.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. En-tête / navigation
+   -------------------------------------------------------------------------- */
+.entete {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background var(--transition), backdrop-filter var(--transition),
+    border-color var(--transition);
+  border-bottom: 1px solid transparent;
+}
+
+.entete.figee {
+  background: rgba(10, 10, 11, 0.86);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--ligne);
+}
+
+.entete__barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.logo img {
+  width: 42px;
+  height: 42px;
+}
+
+.logo__texte {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo__nom {
+  font-family: var(--police-titre);
+  font-size: 1.02rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.logo__sous {
+  font-size: 0.6rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.9rem;
+  margin-left: auto;
+}
+
+.nav a {
+  font-size: 0.9rem;
+  color: var(--gris);
+  position: relative;
+  padding: 0.3rem 0;
+  transition: color var(--transition);
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--or);
+  transition: width var(--transition);
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  color: var(--blanc);
+}
+
+.nav a:hover::after,
+.nav a[aria-current="page"]::after {
+  width: 100%;
+}
+
+.entete__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.entete__tel {
+  font-size: 0.9rem;
+  color: var(--blanc);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.entete__tel:hover {
+  color: var(--or-clair);
+}
+
+.burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 1px solid var(--ligne-forte);
+  border-radius: 10px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.burger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--blanc);
+  position: relative;
+  transition: background 0.2s;
+}
+
+.burger span::before,
+.burger span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 1.5px;
+  background: var(--blanc);
+  transition: transform var(--transition);
+}
+
+.burger span::before {
+  top: -6px;
+}
+.burger span::after {
+  top: 6px;
+}
+
+.burger[aria-expanded="true"] span {
+  background: transparent;
+}
+
+.burger[aria-expanded="true"] span::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.burger[aria-expanded="true"] span::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 940px) {
+  .nav,
+  .entete__tel {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .entete__actions .btn {
+    display: none;
+  }
+}
+
+/* Menu mobile ------------------------------------------------------------- */
+.menu-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(10, 10, 11, 0.97);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 5rem 2rem 3rem;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  visibility: hidden;
+}
+
+.menu-mobile.ouvert {
+  transform: none;
+  visibility: visible;
+}
+
+.menu-mobile a {
+  font-family: var(--police-titre);
+  font-size: 1.7rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--ligne);
+}
+
+.menu-mobile a[aria-current="page"] {
+  color: var(--or-clair);
+}
+
+.menu-mobile .btn {
+  margin-top: 1.8rem;
+  align-self: flex-start;
+  border-bottom-color: transparent;
+  font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 9rem 0 4rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__fond {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(70% 60% at 78% 30%, rgba(201, 162, 39, 0.16), transparent 65%),
+    radial-gradient(60% 70% at 12% 85%, rgba(60, 90, 150, 0.14), transparent 60%),
+    linear-gradient(180deg, #08080a, #0d0d10 55%, #0a0a0b);
+}
+
+.hero__fond::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(75% 65% at 50% 40%, #000, transparent 78%);
+}
+
+.hero__grille {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1rem 0.45rem 0.5rem;
+  border: 1px solid var(--ligne-forte);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--gris);
+  margin-bottom: 1.6rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.hero__badge b {
+  color: var(--noir);
+  background: var(--or-clair);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin-bottom: 1.2rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--or-clair);
+}
+
+.hero__texte {
+  font-size: 1.1rem;
+  max-width: 52ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.hero__preuves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  margin-top: 3.2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ligne);
+}
+
+.preuve strong {
+  display: block;
+  font-family: var(--police-titre);
+  font-size: 1.9rem;
+  color: var(--blanc);
+  line-height: 1;
+}
+
+.preuve span {
+  font-size: 0.8rem;
+  color: var(--gris-sombre);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero__visuel {
+  position: relative;
+}
+
+.hero__visuel img {
+  width: 100%;
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6));
+  animation: flotte 7s ease-in-out infinite;
+}
+
+@keyframes flotte {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.hero__etiquette {
+  position: absolute;
+  right: 0;
+  bottom: 8%;
+  background: rgba(17, 17, 20, 0.9);
+  border: 1px solid var(--ligne-forte);
+  border-radius: var(--rayon);
+  padding: 0.9rem 1.2rem;
+  backdrop-filter: blur(8px);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 220px;
+}
+
+.hero__etiquette strong {
+  display: block;
+  color: var(--or-clair);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding: 7.5rem 0 3.5rem;
+  }
+
+  .hero__grille {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero__visuel {
+    order: -1;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  .hero__etiquette {
+    display: none;
+  }
+
+  .hero__preuves {
+    gap: 1.6rem;
+    margin-top: 2.4rem;
+  }
+}
+
+/* Bandeau défilant --------------------------------------------------------- */
+.bandeau {
+  border-top: 1px solid var(--ligne);
+  border-bottom: 1px solid var(--ligne);
+  background: var(--noir-2);
+  overflow: hidden;
+  padding: 1.1rem 0;
+}
+
+.bandeau__piste {
+  display: flex;
+  gap: 3.5rem;
+  width: max-content;
+  animation: defile 32s linear infinite;
+}
+
+.bandeau span {
+  font-family: var(--police-titre);
+  font-size: 1.05rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gris-sombre);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+.bandeau span::after {
+  content: "◆";
+  color: var(--or);
+  font-size: 0.6rem;
+}
+
+@keyframes defile {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Grilles génériques
+   -------------------------------------------------------------------------- */
+.grille {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.grille--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grille--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grille--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 980px) {
+  .grille--3,
+  .grille--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .grille--2,
+  .grille--3,
+  .grille--4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Carte service ----------------------------------------------------------- */
+.service__icone {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.28);
+  margin-bottom: 1.3rem;
+  color: var(--or-clair);
+}
+
+.service__icone svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.service p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.service__liste {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.4rem;
+  font-size: 0.88rem;
+  color: var(--gris);
+}
+
+.service__liste li {
+  padding-left: 1.4rem;
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+
+.service__liste li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--or);
+}
+
+.service__prix {
+  font-size: 0.85rem;
+  color: var(--or-clair);
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--ligne);
+  padding-top: 1rem;
+  margin-top: auto;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   6. Avant / après
+   -------------------------------------------------------------------------- */
+.comparateur {
+  position: relative;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  border: 1px solid var(--ligne);
+  aspect-ratio: 16 / 10;
+  user-select: none;
+  touch-action: none;
+  cursor: ew-resize;
+  background: var(--noir-3);
+}
+
+.comparateur img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.comparateur__apres {
+  clip-path: inset(0 0 0 var(--position, 50%));
+}
+
+.comparateur__poignee {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--position, 50%);
+  width: 2px;
+  background: var(--or-clair);
+  pointer-events: none;
+  box-shadow: 0 0 18px rgba(231, 200, 115, 0.5);
+}
+
+.comparateur__poignee::after {
+  content: "⟷";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--or-clair);
+  color: var(--noir);
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.comparateur__etiq {
+  position: absolute;
+  bottom: 1rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgba(10, 10, 11, 0.75);
+  border: 1px solid var(--ligne-forte);
+  pointer-events: none;
+}
+
+.comparateur__etiq--g {
+  left: 1rem;
+}
+.comparateur__etiq--d {
+  right: 1rem;
+  color: var(--or-clair);
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (max-width: 880px) {
+  .duo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Étapes du process
+   -------------------------------------------------------------------------- */
+.etapes {
+  counter-reset: etape;
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.etape {
+  border-top: 1px solid var(--ligne);
+  padding-top: 1.6rem;
+  position: relative;
+}
+
+.etape::before {
+  counter-increment: etape;
+  content: "0" counter(etape);
+  font-family: var(--police-titre);
+  font-size: 2.4rem;
+  color: rgba(201, 162, 39, 0.28);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.7rem;
+}
+
+.etape::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 38px;
+  height: 2px;
+  background: var(--or);
+}
+
+.etape h3 {
+  font-size: 1.1rem;
+}
+
+.etape p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+@media (max-width: 980px) {
+  .etapes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .etapes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Tarifs
+   -------------------------------------------------------------------------- */
+.tarifs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  align-items: stretch;
+}
+
+@media (max-width: 980px) {
+  .tarifs {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+
+.formule {
+  display: flex;
+  flex-direction: column;
+  padding: 2.2rem 1.9rem;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  position: relative;
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.formule:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 162, 39, 0.4);
+}
+
+.formule--vedette {
+  border-color: rgba(201, 162, 39, 0.5);
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.1), rgba(255, 255, 255, 0.015));
+  box-shadow: var(--ombre);
+}
+
+.formule__ruban {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--or-clair), var(--or));
+  color: #17130a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.formule__nom {
+  font-family: var(--police-titre);
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.formule__desc {
+  font-size: 0.88rem;
+  color: var(--gris-sombre);
+  margin-bottom: 1.4rem;
+}
+
+.formule__prix {
+  font-family: var(--police-titre);
+  font-size: 2.7rem;
+  line-height: 1;
+  color: var(--blanc);
+}
+
+.formule__prix small {
+  font-family: var(--police-texte);
+  font-size: 0.8rem;
+  color: var(--gris-sombre);
+  display: block;
+  margin-top: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.formule__liste {
+  list-style: none;
+  padding: 1.6rem 0 0;
+  margin: 1.6rem 0 2rem;
+  border-top: 1px solid var(--ligne);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.formule__liste li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  margin-bottom: 0.7rem;
+  color: var(--gris);
+}
+
+.formule__liste li::before {
+  content: "✓";
+  color: var(--or-clair);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.formule__liste li.absent {
+  color: var(--gris-sombre);
+  opacity: 0.55;
+}
+
+.formule__liste li.absent::before {
+  content: "—";
+  color: var(--gris-sombre);
+}
+
+/* Tableau d'options -------------------------------------------------------- */
+.tableau-enveloppe {
+  overflow-x: auto;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+}
+
+table.options {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+  font-size: 0.93rem;
+}
+
+table.options th,
+table.options td {
+  text-align: left;
+  padding: 1rem 1.3rem;
+  border-bottom: 1px solid var(--ligne);
+}
+
+table.options thead th {
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+  font-weight: 600;
+}
+
+table.options tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table.options tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+table.options td:last-child {
+  text-align: right;
+  white-space: nowrap;
+  color: var(--blanc);
+  font-weight: 600;
+}
+
+table.options td small {
+  display: block;
+  color: var(--gris-sombre);
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. Galerie
+   -------------------------------------------------------------------------- */
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.filtre {
+  background: none;
+  border: 1px solid var(--ligne-forte);
+  color: var(--gris);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  transition: all var(--transition);
+}
+
+.filtre:hover {
+  color: var(--blanc);
+  border-color: var(--or);
+}
+
+.filtre.actif {
+  background: var(--or);
+  border-color: var(--or);
+  color: #17130a;
+  font-weight: 600;
+}
+
+.galerie {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .galerie {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .galerie {
+    grid-template-columns: 1fr;
+  }
+}
+
+.galerie figure {
+  margin: 0;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  border: 1px solid var(--ligne);
+  position: relative;
+  aspect-ratio: 4 / 3;
+  cursor: zoom-in;
+  background: var(--noir-3);
+}
+
+.galerie figure.masque {
+  display: none;
+}
+
+.galerie img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.galerie figure:hover img {
+  transform: scale(1.06);
+}
+
+.galerie figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.4rem 1.1rem 1rem;
+  background: linear-gradient(to top, rgba(8, 8, 10, 0.92), transparent);
+  font-size: 0.87rem;
+}
+
+.galerie figcaption b {
+  display: block;
+  font-weight: 600;
+}
+
+.galerie figcaption span {
+  color: var(--or-clair);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Visionneuse -------------------------------------------------------------- */
+.visionneuse {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(6, 6, 8, 0.94);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  backdrop-filter: blur(6px);
+}
+
+.visionneuse.ouverte {
+  display: flex;
+}
+
+.visionneuse img {
+  max-width: min(1000px, 92vw);
+  max-height: 82vh;
+  border-radius: var(--rayon);
+  border: 1px solid var(--ligne-forte);
+}
+
+.visionneuse__fermer {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--ligne-forte);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--blanc);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.visionneuse__legende {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: var(--gris);
+}
+
+/* --------------------------------------------------------------------------
+   10. Avis clients
+   -------------------------------------------------------------------------- */
+.avis {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  padding: 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.avis__etoiles {
+  color: var(--or-clair);
+  letter-spacing: 0.18em;
+  font-size: 0.95rem;
+  margin-bottom: 0.9rem;
+}
+
+.avis blockquote {
+  margin: 0 0 1.4rem;
+  font-size: 0.98rem;
+  color: var(--blanc);
+  flex: 1;
+  font-style: italic;
+  line-height: 1.65;
+}
+
+.avis__auteur {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-top: 1px solid var(--ligne);
+  padding-top: 1.1rem;
+}
+
+.avis__initiales {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(201, 162, 39, 0.14);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  color: var(--or-clair);
+  font-size: 0.82rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.avis__auteur b {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.avis__auteur span {
+  font-size: 0.78rem;
+  color: var(--gris-sombre);
+}
+
+/* --------------------------------------------------------------------------
+   11. FAQ
+   -------------------------------------------------------------------------- */
+.faq {
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+.faq details {
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-sm);
+  padding: 0 1.4rem;
+  margin-bottom: 0.8rem;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color var(--transition);
+}
+
+.faq details[open] {
+  border-color: rgba(201, 162, 39, 0.35);
+}
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.2rem 2rem 1.2rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+  position: relative;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--or-clair);
+  font-size: 1.4rem;
+  font-weight: 300;
+  transition: transform var(--transition);
+}
+
+.faq details[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.faq details p {
+  margin: 0 0 1.2rem;
+  font-size: 0.94rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. Appel à l'action
+   -------------------------------------------------------------------------- */
+.cta {
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 20px;
+  padding: clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+  background:
+    radial-gradient(80% 120% at 50% 0%, rgba(201, 162, 39, 0.16), transparent 70%),
+    var(--noir-2);
+}
+
+.cta h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+}
+
+.cta p {
+  max-width: 56ch;
+  margin-inline: auto;
+}
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. Page intérieure — bandeau titre
+   -------------------------------------------------------------------------- */
+.entete-page {
+  padding: 11rem 0 4.5rem;
+  position: relative;
+  border-bottom: 1px solid var(--ligne);
+  background:
+    radial-gradient(60% 100% at 70% 0%, rgba(201, 162, 39, 0.13), transparent 70%),
+    linear-gradient(180deg, #08080a, var(--noir));
+}
+
+.entete-page h1 {
+  max-width: 16ch;
+}
+
+.fil {
+  font-size: 0.8rem;
+  color: var(--gris-sombre);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+}
+
+.fil a:hover {
+  color: var(--or-clair);
+}
+
+/* --------------------------------------------------------------------------
+   14. Formulaire
+   -------------------------------------------------------------------------- */
+.formulaire {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.champ--duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+@media (max-width: 560px) {
+  .champ--duo {
+    grid-template-columns: 1fr;
+  }
+}
+
+label {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--ligne-forte);
+  border-radius: var(--rayon-sm);
+  color: var(--blanc);
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--gris-sombre);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--or);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+select option {
+  background: var(--noir-2);
+  color: var(--blanc);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.champ--case {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.champ--case input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  accent-color: var(--or);
+}
+
+.champ--case label {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.message-formulaire {
+  border-radius: var(--rayon-sm);
+  padding: 1rem 1.2rem;
+  font-size: 0.92rem;
+  display: none;
+}
+
+.message-formulaire.visible {
+  display: block;
+}
+
+.message-formulaire.succes {
+  background: rgba(201, 162, 39, 0.12);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  color: var(--or-clair);
+}
+
+/* Coordonnées ------------------------------------------------------------- */
+.coord {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--ligne);
+}
+
+.coord:last-child {
+  border-bottom: none;
+}
+
+.coord__icone {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.26);
+  color: var(--or-clair);
+  flex-shrink: 0;
+}
+
+.coord__icone svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.coord b {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gris-sombre);
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.coord a,
+.coord p {
+  color: var(--blanc);
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+.coord a:hover {
+  color: var(--or-clair);
+}
+
+.horaires {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.horaires li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--ligne);
+  color: var(--gris);
+}
+
+.horaires li:last-child {
+  border-bottom: none;
+}
+
+.horaires li b {
+  color: var(--blanc);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   15. À propos
+   -------------------------------------------------------------------------- */
+.valeurs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+@media (max-width: 880px) {
+  .valeurs {
+    grid-template-columns: 1fr;
+  }
+}
+
+.encadre {
+  border-left: 2px solid var(--or);
+  padding: 0.4rem 0 0.4rem 1.4rem;
+  margin: 2rem 0;
+  font-family: var(--police-titre);
+  font-size: 1.3rem;
+  color: var(--blanc);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.liste-check {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.liste-check li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  margin-bottom: 0.8rem;
+  color: var(--gris);
+  font-size: 0.96rem;
+}
+
+.liste-check li::before {
+  content: "✓";
+  color: var(--or-clair);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   16. Pied de page
+   -------------------------------------------------------------------------- */
+.pied {
+  background: #08080a;
+  border-top: 1px solid var(--ligne);
+  padding: 4.5rem 0 2rem;
+}
+
+.pied__grille {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--ligne);
+}
+
+@media (max-width: 900px) {
+  .pied__grille {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .pied__grille {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pied h4 {
+  font-family: var(--police-texte);
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+  margin-bottom: 1.2rem;
+}
+
+.pied ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.pied li {
+  margin-bottom: 0.6rem;
+}
+
+.pied a {
+  color: var(--gris);
+  transition: color var(--transition);
+}
+
+.pied a:hover {
+  color: var(--or-clair);
+}
+
+.pied__intro {
+  font-size: 0.92rem;
+  max-width: 34ch;
+  margin-top: 1.2rem;
+}
+
+.reseaux {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.reseaux a {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--ligne-forte);
+  display: grid;
+  place-items: center;
+  color: var(--gris);
+  transition: all var(--transition);
+}
+
+.reseaux a:hover {
+  border-color: var(--or);
+  color: var(--or-clair);
+  transform: translateY(-2px);
+}
+
+.reseaux svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.pied__bas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.8rem;
+  font-size: 0.82rem;
+  color: var(--gris-sombre);
+}
+
+.pied__bas nav {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+/* Bouton flottant --------------------------------------------------------- */
+.flottant {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 90;
+  display: none;
+}
+
+@media (max-width: 940px) {
+  .flottant {
+    display: block;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  /* évite que le bouton flottant ne masque la fin du pied de page */
+  .pied {
+    padding-bottom: 5.5rem;
+  }
+}
+
+/* Contenu légal ----------------------------------------------------------- */
+.texte-legal {
+  max-width: 780px;
+}
+
+.texte-legal h2 {
+  font-size: 1.5rem;
+  margin-top: 2.6rem;
+}
+
+.texte-legal ul {
+  color: var(--gris);
+  font-size: 0.96rem;
+  padding-left: 1.2rem;
+}
+
+.texte-legal li {
+  margin-bottom: 0.4rem;
+}
+
+/* Préférences de mouvement réduit ----------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js .apparait {
+    opacity: 1;
+    transform: none;
+  }
+}

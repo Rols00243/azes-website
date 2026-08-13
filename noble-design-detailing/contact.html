@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!--
+  Noble Design Detailing — contact & devis.
+  ⚠️ Le formulaire ouvre par défaut le logiciel de messagerie du visiteur (mailto).
+  Pour recevoir les demandes par e-mail sans dépendre du client mail, branchez un
+  service de formulaire (Formspree, Web3Forms, Netlify Forms…) — voir README.md.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact &amp; devis gratuit — Noble Design Detailing</title>
+<meta name="description" content="Demandez un devis gratuit sous 24 h : décrivez votre véhicule et la prestation souhaitée, à l'atelier ou à domicile.">
+<meta name="theme-color" content="#0a0a0b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact & devis gratuit — Noble Design Detailing">
+<meta property="og:description" content="Devis gratuit sous 24 h pour votre véhicule, à l'atelier ou à domicile.">
+<meta property="og:image" content="assets/img/hero-voiture.svg">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<a href="#principal" class="sr-only">Aller au contenu principal</a>
+
+<header class="entete">
+  <div class="contenu entete__barre">
+    <a class="logo" href="index.html" aria-label="Noble Design Detailing, accueil">
+      <img src="assets/img/logo.svg" alt="" width="42" height="42">
+      <span class="logo__texte">
+        <span class="logo__nom">Noble Design</span>
+        <span class="logo__sous">Detailing</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="services.html">Prestations</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="galerie.html">Réalisations</a>
+      <a href="a-propos.html">L'atelier</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+    <div class="entete__actions">
+      <a class="entete__tel" href="tel:+33612345678">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        06 12 34 56 78
+      </a>
+      <a class="btn btn--or" href="#devis">Devis gratuit</a>
+      <button class="burger" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-mobile" id="menu-mobile">
+  <a href="index.html">Accueil</a>
+  <a href="services.html">Prestations</a>
+  <a href="tarifs.html">Tarifs</a>
+  <a href="galerie.html">Réalisations</a>
+  <a href="a-propos.html">L'atelier</a>
+  <a href="contact.html" aria-current="page">Contact</a>
+  <a class="btn btn--or" href="#devis">Demander un devis</a>
+</div>
+
+<main id="principal">
+
+<section class="entete-page">
+  <div class="contenu">
+    <p class="fil"><a href="index.html">Accueil</a> — Contact</p>
+    <h1>Parlons de votre véhicule</h1>
+    <p class="chapeau">
+      Réponse sous 24 h ouvrées. Plus votre demande est précise (photos, état actuel,
+      résultat souhaité), plus le devis sera juste.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="devis">
+  <div class="contenu duo" style="align-items:start">
+
+    <!-- ---------- Formulaire ---------- -->
+    <div class="apparait">
+      <span class="surtitre">Demande de devis</span>
+      <h2>Décrivez votre besoin</h2>
+
+      <!-- ⚠️ Remplacez l'adresse de data-devis par la vôtre -->
+      <form class="formulaire" data-devis="contact@nobledesigndetailing.fr" novalidate>
+        <div class="champ--duo">
+          <div class="champ">
+            <label for="nom">Nom et prénom *</label>
+            <input type="text" id="nom" name="nom" placeholder="Jean Dupont" required autocomplete="name">
+          </div>
+          <div class="champ">
+            <label for="telephone">Téléphone *</label>
+            <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" required autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="email">Adresse e-mail *</label>
+          <input type="email" id="email" name="email" placeholder="jean.dupont@exemple.fr" required autocomplete="email">
+        </div>
+
+        <div class="champ--duo">
+          <div class="champ">
+            <label for="vehicule">Véhicule</label>
+            <input type="text" id="vehicule" name="vehicule" placeholder="Marque, modèle, année">
+          </div>
+          <div class="champ">
+            <label for="prestation">Prestation souhaitée</label>
+            <select id="prestation" name="prestation">
+              <option>Je ne sais pas encore, je veux un conseil</option>
+              <option>Forfait Essentiel — lavage premium</option>
+              <option>Forfait Prestige — intérieur + extérieur</option>
+              <option>Forfait Signature — correction + céramique</option>
+              <option>Correction de vernis</option>
+              <option>Protection céramique</option>
+              <option>Rénovation intérieure</option>
+              <option>Traitement du cuir</option>
+              <option>Rénovation des optiques</option>
+              <option>Préparation vente / restitution LOA</option>
+              <option>Demande professionnelle (flotte, garage)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="lieu">Lieu d'intervention</label>
+          <select id="lieu" name="lieu">
+            <option>À l'atelier</option>
+            <option>À mon domicile</option>
+            <option>Sur mon lieu de travail</option>
+            <option>À définir ensemble</option>
+          </select>
+        </div>
+
+        <div class="champ">
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" placeholder="État actuel du véhicule, résultat attendu, disponibilités…"></textarea>
+        </div>
+
+        <div class="champ champ--case">
+          <input type="checkbox" id="rgpd" name="rgpd" required>
+          <label for="rgpd">
+            J'accepte que mes informations soient utilisées pour être recontacté au sujet de
+            ma demande. Elles ne sont ni revendues ni transmises à des tiers.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn--or btn--large" style="justify-self:start">
+          Envoyer ma demande
+        </button>
+
+        <p class="message-formulaire" role="status" aria-live="polite"></p>
+
+        <p style="font-size:.82rem;color:var(--gris-sombre);margin:0">
+          * champs obligatoires — Réponse sous 24 h ouvrées.
+        </p>
+      </form>
+    </div>
+
+    <!-- ---------- Coordonnées ---------- -->
+    <div class="apparait">
+      <span class="surtitre">Coordonnées</span>
+      <h2>Nous joindre directement</h2>
+
+      <!-- ⚠️ COORDONNÉES À REMPLACER -->
+      <div class="coord">
+        <span class="coord__icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        </span>
+        <div>
+          <b>Téléphone</b>
+          <a href="tel:+33612345678">06 12 34 56 78</a>
+        </div>
+      </div>
+
+      <div class="coord">
+        <span class="coord__icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg>
+        </span>
+        <div>
+          <b>E-mail</b>
+          <a href="mailto:contact@nobledesigndetailing.fr">contact@nobledesigndetailing.fr</a>
+        </div>
+      </div>
+
+      <div class="coord">
+        <span class="coord__icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 10.5c0 5.4-8 11.5-8 11.5s-8-6.1-8-11.5a8 8 0 0 1 16 0z"/><circle cx="12" cy="10.3" r="2.8"/></svg>
+        </span>
+        <div>
+          <b>Atelier</b>
+          <p>12 rue des Artisans<br>69100 Villeurbanne</p>
+        </div>
+      </div>
+
+      <div class="coord">
+        <span class="coord__icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+        </span>
+        <div>
+          <b>WhatsApp</b>
+          <a href="https://wa.me/33612345678" rel="noopener" target="_blank">Envoyer vos photos directement</a>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2.6rem">Horaires d'ouverture</h3>
+      <ul class="horaires">
+        <li><b>Lundi</b><span>Fermé</span></li>
+        <li><b>Mardi – Vendredi</b><span>8 h – 19 h</span></li>
+        <li><b>Samedi</b><span>9 h – 17 h</span></li>
+        <li><b>Dimanche</b><span>Sur rendez-vous</span></li>
+      </ul>
+
+      <div class="carte" style="margin-top:2rem">
+        <h3 style="font-size:1.1rem">Envoyez-nous des photos</h3>
+        <p style="font-size:.93rem;margin:0">
+          Trois clichés suffisent : une vue d'ensemble, un gros plan du vernis en lumière
+          rasante et une photo de l'habitacle. Nous pouvons alors chiffrer précisément votre
+          demande, souvent dès le premier échange.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ RAPIDE ============================ -->
+<section class="section section--alt">
+  <div class="contenu">
+    <div class="entete-section entete-section--centre apparait">
+      <span class="surtitre">Avant de nous écrire</span>
+      <h2>Les réponses rapides</h2>
+    </div>
+    <div class="faq apparait">
+      <details>
+        <summary>Sous combien de temps puis-je avoir un rendez-vous ?</summary>
+        <p>Comptez généralement une à deux semaines pour un forfait Essentiel ou Prestige, et trois semaines pour une prestation Signature. Nous gardons quelques créneaux pour les urgences (vente, restitution de leasing).</p>
+      </details>
+      <details>
+        <summary>Puis-je assister à la prestation ?</summary>
+        <p>Bien sûr, sur rendez-vous et pour un moment précis (le test panel de polissage, par exemple). Pour des raisons de sécurité, l'accès permanent à la zone de travail n'est pas possible.</p>
+      </details>
+      <details>
+        <summary>Un véhicule de prêt est-il disponible ?</summary>
+        <p>Non, mais pour les prestations longues nous organisons volontiers la prise en charge et la restitution du véhicule à votre domicile dans notre zone d'intervention.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pied">
+  <div class="contenu">
+    <div class="pied__grille">
+      <div>
+        <a class="logo" href="index.html">
+          <img src="assets/img/logo.svg" alt="" width="42" height="42">
+          <span class="logo__texte">
+            <span class="logo__nom">Noble Design</span>
+            <span class="logo__sous">Detailing</span>
+          </span>
+        </a>
+        <p class="pied__intro">
+          Detailing automobile haut de gamme : préparation, correction de vernis,
+          protection céramique et rénovation intérieure.
+        </p>
+      </div>
+      <div>
+        <h4>Prestations</h4>
+        <ul>
+          <li><a href="services.html#lavage">Lavage premium</a></li>
+          <li><a href="services.html#correction">Correction de vernis</a></li>
+          <li><a href="services.html#ceramique">Protection céramique</a></li>
+          <li><a href="services.html#interieur">Rénovation intérieure</a></li>
+          <li><a href="services.html#cuir">Traitement du cuir</a></li>
+          <li><a href="services.html#optiques">Rénovation des optiques</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="tarifs.html">Tarifs &amp; forfaits</a></li>
+          <li><a href="galerie.html">Réalisations</a></li>
+          <li><a href="a-propos.html">L'atelier</a></li>
+          <li><a href="contact.html">Contact &amp; devis</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Nous joindre</h4>
+        <ul>
+          <li><a href="tel:+33612345678">06 12 34 56 78</a></li>
+          <li><a href="mailto:contact@nobledesigndetailing.fr">contact@nobledesigndetailing.fr</a></li>
+          <li>12 rue des Artisans<br>69100 Villeurbanne</li>
+          <li>Du mardi au samedi, 8 h – 19 h</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© <span data-annee>2026</span> Noble Design Detailing — Tous droits réservés.</span>
+      <nav aria-label="Liens secondaires">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="mentions-legales.html#donnees">Données personnelles</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

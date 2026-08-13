@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Cabriolet après traitement du cuir">
+  <defs>
+    <linearGradient id="fond" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141019"/><stop offset="1" stop-color="#06040a"/>
+    </linearGradient>
+    <radialGradient id="lueur" cx="0.62" cy="0.3" r="0.72">
+      <stop offset="0" stop-color="#e7c873" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#e7c873" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="trainee" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    
+  </defs>
+  <rect width="1200" height="900" fill="url(#fond)"/>
+  <rect width="1200" height="900" fill="url(#lueur)"/>
+  <g >
+    <g opacity="1">
+      <path d="M-100 700 L520 120 L640 120 L20 700z" fill="url(#trainee)"/>
+      <path d="M240 780 L860 200 L920 200 L300 780z" fill="url(#trainee)" opacity="0.7"/>
+    </g>
+    <g transform="translate(70,180) scale(1.06)" fill="#1c1722" opacity="0.9">
+      <path d="M62 322c-6-30 2-56 34-66l128-26c40-42 96-66 176-66 78 0 136 22 178 62l138 24c40 8 52 32 48 72z"/>
+<path d="M244 232c34-38 84-58 154-58 66 0 118 20 156 58z" opacity=".55"/>
+    </g>
+    <g transform="translate(70,180) scale(1.06)" fill="none" stroke="#e7c873" stroke-width="2.6" opacity="0.75">
+      <path d="M92 300c150-30 320-40 520-26l232 18"/>
+      <circle cx="258" cy="322" r="60"/><circle cx="650" cy="322" r="60"/>
+    </g>
+  </g>
+  <rect width="1200" height="900" fill="#000" opacity="0.12"/>
+</svg>

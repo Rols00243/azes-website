@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="Silhouette d'une berline sportive après traitement céramique">
+  <defs>
+    <linearGradient id="carrosserie" x1="0.1" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#3a3f4a"/>
+      <stop offset="0.35" stop-color="#1b1d23"/>
+      <stop offset="0.62" stop-color="#2a2e37"/>
+      <stop offset="1" stop-color="#0e0f13"/>
+    </linearGradient>
+    <linearGradient id="vitres" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7f93b3" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#171b22" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="brillance" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="liseret" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8a6f18"/>
+      <stop offset="0.5" stop-color="#f2dc9c"/>
+      <stop offset="1" stop-color="#8a6f18"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c9a227" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#c9a227" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ombre" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#000000" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="silhouette">
+      <path d="M62 322c-6-30 2-56 34-66l128-26c40-42 96-66 176-66 78 0 136 22 178 62l138 24c40 8 52 32 48 72z"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="450" cy="398" rx="360" ry="42" fill="url(#ombre)"/>
+  <ellipse cx="450" cy="230" rx="330" ry="180" fill="url(#halo)" opacity="0.55"/>
+
+  <!-- carrosserie -->
+  <path d="M62 322c-6-30 2-56 34-66l128-26c40-42 96-66 176-66 78 0 136 22 178 62l138 24c40 8 52 32 48 72z" fill="url(#carrosserie)"/>
+
+  <!-- reflets de vernis -->
+  <g clip-path="url(#silhouette)">
+    <path d="M-40 300 L340 60 L420 60 L40 300z" fill="url(#brillance)" opacity="0.28"/>
+    <path d="M120 330 L520 70 L556 70 L156 330z" fill="url(#brillance)" opacity="0.16"/>
+    <path d="M60 296c140-34 300-46 500-30l280 22v14L60 306z" fill="#ffffff" opacity="0.07"/>
+  </g>
+
+  <!-- vitrage -->
+  <path d="M244 232c34-38 84-58 154-58 66 0 118 20 156 58z" fill="url(#vitres)"/>
+  <path d="M396 176v56" stroke="#0d0f13" stroke-width="6" opacity="0.75"/>
+  <path d="M250 228c34-34 80-52 146-52" fill="none" stroke="#e7c873" stroke-width="2" opacity="0.5"/>
+
+  <!-- liseré or -->
+  <path d="M92 300c150-30 320-40 520-26l232 18" fill="none" stroke="url(#liseret)" stroke-width="2.4" opacity="0.85"/>
+
+  <!-- optiques -->
+  <path d="M792 274c22 2 36 8 40 20h-52z" fill="#f2dc9c" opacity="0.9"/>
+  <path d="M64 292c14-10 34-14 58-14l-4 22H62z" fill="#d95a4a" opacity="0.75"/>
+
+  <!-- passages de roue -->
+  <path d="M186 322a72 72 0 0 1 144 0z" fill="#08090b"/>
+  <path d="M578 322a72 72 0 0 1 144 0z" fill="#08090b"/>
+
+  <!-- roues -->
+  <g>
+    <circle cx="258" cy="322" r="66" fill="#0b0c0f"/>
+    <circle cx="258" cy="322" r="38" fill="#1c1f26" stroke="#e7c873" stroke-width="2" opacity="0.95"/>
+    <circle cx="258" cy="322" r="12" fill="#c9a227"/>
+    <g stroke="#8f96a5" stroke-width="4" stroke-linecap="round">
+      <path d="M258 292v-12M258 364v-12M228 322h-12M300 322h-12M237 301l-8-8M287 351l-8-8M279 301l8-8M229 351l8-8"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="650" cy="322" r="66" fill="#0b0c0f"/>
+    <circle cx="650" cy="322" r="38" fill="#1c1f26" stroke="#e7c873" stroke-width="2" opacity="0.95"/>
+    <circle cx="650" cy="322" r="12" fill="#c9a227"/>
+    <g stroke="#8f96a5" stroke-width="4" stroke-linecap="round">
+      <path d="M650 292v-12M650 364v-12M620 322h-12M692 322h-12M629 301l-8-8M679 351l-8-8M671 301l8-8M621 351l8-8"/>
+    </g>
+  </g>
+
+  <!-- sol -->
+  <path d="M40 388h820" stroke="#c9a227" stroke-width="1" opacity="0.28"/>
+</svg>
