@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Jost:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -21,6 +22,21 @@
   /* Background images */
   --background-image-hero-gradient: linear-gradient(135deg, #0A2342 0%, #1B4F8C 100%);
   --background-image-cta-gradient: linear-gradient(135deg, #0A2342 0%, #8B5E3C 100%);
+
+  /* ── Genius Design Pro — meubles MDF ─────────────────────────────────── */
+  --color-mdf-ink: #14100C;
+  --color-mdf-espresso: #221912;
+  --color-mdf-bark: #38291E;
+  --color-mdf-clay: #6B5341;
+  --color-mdf-oak: #C9995F;
+  --color-mdf-brass: #B8873F;
+  --color-mdf-sand: #E5DACA;
+  --color-mdf-cream: #FAF6EF;
+  --color-mdf-paper: #F3ECE1;
+  --color-mdf-sage: #6E7A63;
+
+  --font-fraunces: "Fraunces", ui-serif, Georgia, serif;
+  --font-jost: "Jost", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -70,4 +86,126 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Genius Design Pro — atelier de meubles MDF
+   Univers visuel isolé : tout est préfixé .mdf-* et activé par .mdf-scope
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.mdf-scope {
+  font-family: "Jost", ui-sans-serif, system-ui, sans-serif;
+  background-color: #14100c;
+  color: #f3ece1;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+}
+
+.mdf-scope h1,
+.mdf-scope h2,
+.mdf-scope h3,
+.mdf-scope .mdf-display {
+  font-family: "Fraunces", ui-serif, Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* Petite capitale d'accompagnement (sur-titres de sections) */
+.mdf-eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Grain de papier : donne de la matière aux aplats sombres */
+.mdf-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* Veinage bois : fines stries chaudes, utilisé sur les panneaux */
+.mdf-wood {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(255, 255, 255, 0.035) 5px,
+      rgba(0, 0, 0, 0) 9px,
+      rgba(0, 0, 0, 0.1) 13px
+    ),
+    linear-gradient(160deg, #4a3626 0%, #2c2017 55%, #3b2a1e 100%);
+}
+
+/* Tranche de panneau MDF vue de profil (coeur clair entre deux faces) */
+.mdf-edge {
+  background-image: linear-gradient(
+    180deg,
+    #2b2018 0%,
+    #2b2018 14%,
+    #b98f5c 15%,
+    #d8b183 50%,
+    #b98f5c 85%,
+    #2b2018 86%,
+    #2b2018 100%
+  );
+}
+
+/* Filet lumineux séparateur */
+.mdf-hairline {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 153, 95, 0.45),
+    transparent
+  );
+}
+
+/* Cartouche vitrée pour les cartes sur fond sombre */
+.mdf-glass {
+  background-color: rgba(56, 41, 30, 0.34);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(229, 218, 202, 0.12);
+}
+
+/* Lien souligné à l'animation progressive */
+.mdf-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mdf-link:hover,
+.mdf-link:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* Bandeau défilant (savoir-faire) */
+@keyframes mdf-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.mdf-marquee {
+  animation: mdf-marquee 38s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mdf-marquee { animation: none; }
+}
+
+/* Barre de titre en dégradé chaud */
+.mdf-rule {
+  height: 1px;
+  background-image: linear-gradient(90deg, #c9995f, rgba(201, 153, 95, 0));
+}
+
+.mdf-scope ::selection {
+  background: #c9995f;
+  color: #14100c;
 }

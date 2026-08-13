@@ -23,7 +23,7 @@ async function getRedis() {
 
 // ── Core I/O ──────────────────────────────────────────────────────────────────
 
-async function readJSON<T>(filename: string, fallback: T): Promise<T> {
+export async function readJSON<T>(filename: string, fallback: T): Promise<T> {
   if (USE_REDIS) {
     try {
       const redis = await getRedis()
