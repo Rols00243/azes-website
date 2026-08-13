@@ -19,6 +19,9 @@ contreplaqué, clous, blocs de soubassement, dallage et tuyaux d'attente de plom
 | `lib/fondations/format.ts` | Formatage des nombres, montants et dates (fr-FR) |
 | `lib/fondations/storage.ts` | Brouillon et devis enregistrés (localStorage) |
 | `lib/fondations/export.ts` | Exports CSV et JSON |
+| `lib/fondations/plans/dxf.ts` | Lecture d'un plan DXF : longueurs par calque, blocs, emprise |
+| `lib/fondations/plans/mesure.ts` | Mesure à l'échelle sur un plan matriciel, report dans la saisie |
+| `lib/fondations/plans/pdf.ts` | Extraction des images d'un PDF scanné |
 | `app/(site)/devis-fondations/` | Interface : 8 onglets de saisie + résultats + document imprimé |
 | `public/sw.js`, `public/devis-fondations.webmanifest` | Mode application installable / hors ligne |
 | `scripts/generate-devis-icons.mjs` | Génération des icônes PNG (`node scripts/generate-devis-icons.mjs`) |
@@ -61,6 +64,34 @@ de devis. Le récapitulatif applique successivement aléas, marge puis TVA.
 
 Ces règles relèvent du métré, pas du dimensionnement : les sections et ferraillages
 saisis doivent provenir d'une note de calcul de structure.
+
+## Analyse des plans
+
+Trois formats, trois niveaux de précision.
+
+**DXF — exact et automatique.** Le fichier porte la géométrie réelle : on additionne
+les longueurs (LINE, LWPOLYLINE, POLYLINE, ARC, CIRCLE, approximation pour SPLINE)
+calque par calque, on compte les blocs insérés (poteaux) et on lit l'emprise du
+dessin. L'unité vient de `$INSUNITS`, ou est déduite de l'ordre de grandeur du
+dessin quand l'en-tête est muet. L'utilisateur affecte ensuite un rôle à chaque
+calque — périmètre, refend, autre, ignoré — car un plan superpose semelle, longrine
+et axe sur le même mur : tout additionner compterait trois fois le même linéaire.
+Un seul calque est donc retenu d'office comme périmètre.
+
+**PDF scanné — mesure à l'échelle.** Les plans qui circulent sur chantier sont
+presque toujours des scans : l'image JPEG est extraite telle quelle du flux PDF,
+sans moteur de rendu. Un PDF purement vectoriel ne contient aucune image ; il faut
+alors l'exporter en DXF ou en image.
+
+**Photo, capture d'écran — mesure à l'échelle.** L'utilisateur calibre en pointant
+les deux extrémités d'une cote connue et en saisissant sa longueur réelle, puis
+trace les axes de fondation point par point et pointe les poteaux. La calibration
+sur cote absorbe les déformations de photocopie et de prise de vue, ce que le
+couple « échelle du plan + résolution » ne fait pas.
+
+Le relevé est ensuite reporté dans la saisie : le linéaire passe en mode détaillé,
+un tronçon par rôle relevé, et les comptages alimentent les amorces, les semelles
+isolées et les fouilles en puits. Tout reste modifiable à la main après report.
 
 ## Impression
 
