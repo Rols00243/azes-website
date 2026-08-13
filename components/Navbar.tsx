@@ -21,7 +21,6 @@ const navLinks = [
   { href: '/documents', label: 'Documents' },
   { href: '/emplois', label: 'Emplois' },
   { href: '/demarches', label: 'Démarches' },
-  { href: '/devis-fondations', label: 'Devis Fondations' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -70,12 +69,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden xl:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {/* Méga-menu Projets */}
             <div className="relative" onMouseEnter={() => setMegaOpen(true)} onMouseLeave={() => setMegaOpen(false)}>
               <button
                 className={clsx(
-                  'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-semibold transition-all',
+                  'flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold transition-all',
                   scrolled ? 'text-gray-700 hover:text-azes-blue hover:bg-blue-50' : 'text-white/90 hover:text-white hover:bg-white/10'
                 )}
                 aria-expanded={megaOpen}
@@ -112,7 +111,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={clsx(
-                  'px-3 py-2 rounded-lg text-sm font-semibold transition-all',
+                  'px-4 py-2 rounded-lg text-sm font-semibold transition-all',
                   pathname === link.href
                     ? scrolled ? 'text-azes-blue bg-blue-50' : 'text-white bg-white/20'
                     : scrolled ? 'text-gray-700 hover:text-azes-blue hover:bg-blue-50' : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -132,7 +131,7 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <button
-            className={clsx('xl:hidden p-2 rounded-lg transition-colors', scrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10')}
+            className={clsx('lg:hidden p-2 rounded-lg transition-colors', scrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10')}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={mobileOpen}
@@ -150,7 +149,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="xl:hidden bg-white border-t border-gray-100 shadow-xl overflow-hidden"
+            className="lg:hidden bg-white border-t border-gray-100 shadow-xl overflow-hidden"
           >
             <div className="px-4 py-4 space-y-1">
               <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 py-2">Projets & Opportunités</div>

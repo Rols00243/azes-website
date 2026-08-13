@@ -13,7 +13,6 @@ import {
   TrashIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import LightPageHero from '@/components/ui/LightPageHero'
 import { calculerDevis } from '@/lib/fondations/calcul'
 import { inputParDefaut } from '@/lib/fondations/constants'
 import { lireFichierJSON } from '@/lib/fondations/export'
@@ -27,6 +26,7 @@ import {
   supprimerProjet,
   type ProjetEnregistre,
 } from '@/lib/fondations/storage'
+import { appliquerApport, type ApportPlan } from '@/lib/fondations/plans/mesure'
 import type { DevisInput } from '@/lib/fondations/types'
 import EtapeArmatures from './EtapeArmatures'
 import EtapeCoffrage from './EtapeCoffrage'
@@ -34,20 +34,22 @@ import EtapeGeometrie from './EtapeGeometrie'
 import EtapeOuvrages from './EtapeOuvrages'
 import EtapePlomberie from './EtapePlomberie'
 import EtapePrix from './EtapePrix'
+import EtapePlan from './EtapePlan'
 import EtapeProjet from './EtapeProjet'
 import DocumentImprime from './DocumentImprime'
 import Resultats from './Resultats'
 import type { MajFn } from './ui'
 
 const ETAPES = [
-  { cle: 'projet', label: 'Projet', court: '1' },
-  { cle: 'geometrie', label: 'Géométrie', court: '2' },
-  { cle: 'ouvrages', label: 'Ouvrages', court: '3' },
-  { cle: 'armatures', label: 'Armatures', court: '4' },
-  { cle: 'coffrage', label: 'Coffrage & maçonnerie', court: '5' },
-  { cle: 'plomberie', label: 'Plomberie', court: '6' },
-  { cle: 'prix', label: 'Prix', court: '7' },
-  { cle: 'devis', label: 'Devis', court: '8' },
+  { cle: 'projet', label: 'Projet' },
+  { cle: 'plan', label: 'Plan' },
+  { cle: 'geometrie', label: 'Géométrie' },
+  { cle: 'ouvrages', label: 'Ouvrages' },
+  { cle: 'armatures', label: 'Armatures' },
+  { cle: 'coffrage', label: 'Coffrage & maçonnerie' },
+  { cle: 'plomberie', label: 'Plomberie' },
+  { cle: 'prix', label: 'Prix' },
+  { cle: 'devis', label: 'Devis' },
 ] as const
 
 type CleEtape = (typeof ETAPES)[number]['cle']
@@ -118,6 +120,12 @@ export default function DevisFondationsClient() {
     notifier('Nouveau devis')
   }
 
+  const reporterPlan = (apport: ApportPlan) => {
+    setInput((precedent) => appliquerApport(precedent, apport))
+    notifier(`Relevé reporté (${apport.source})`)
+    allerA('geometrie')
+  }
+
   const importer = async (fichier: File) => {
     try {
       const brut = await lireFichierJSON(fichier)
@@ -134,6 +142,8 @@ export default function DevisFondationsClient() {
     switch (etape) {
       case 'projet':
         return <EtapeProjet input={input} maj={maj} />
+      case 'plan':
+        return <EtapePlan onApport={reporterPlan} />
       case 'geometrie':
         return <EtapeGeometrie input={input} maj={maj} />
       case 'ouvrages':
@@ -155,23 +165,27 @@ export default function DevisFondationsClient() {
     <div className="pb-32 devis-page">
       {/* Toujours monté : Ctrl+P imprime le devis quel que soit l'onglet affiché. */}
       <DocumentImprime input={input} resultat={resultat} />
-      <div className="devis-no-print">
-        <LightPageHero
-          eyebrow="Outil de métré"
-          title="Devis"
-          titleAccent="Fondations"
-          subtitle="Calculez les fouilles, le béton, les barres de fer, le fil d'attache, les planches, les clous, les blocs et les tuyaux d'attente — puis éditez le devis chiffré. Tout se calcule sur votre appareil, hors ligne."
-          minHeight="min-h-[40vh]"
-          accentColor="#C4894A"
-          backHref="/"
-          backLabel="Accueil"
-        />
-      </div>
+      <header className="devis-no-print bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-7 sm:py-9">
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C4894A]">
+            Outil de métré
+          </p>
+          <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-[#0A2342] leading-tight">
+            Devis <span className="text-[#C4894A]">Fondations</span>
+          </h1>
+          <p className="mt-3 text-sm text-gray-600 leading-relaxed max-w-2xl">
+            Analysez un plan (DXF, PDF, photo) ou saisissez les dimensions, puis obtenez les fouilles,
+            le béton, les barres de fer, le fil d&apos;attache, les planches, les clous, les blocs et
+            les tuyaux d&apos;attente — et le devis chiffré. Application autonome : tout se calcule
+            sur votre appareil, hors ligne, sans serveur.
+          </p>
+        </div>
+      </header>
 
       <div ref={hautRef} className="scroll-mt-24" />
 
       {/* Barre d'onglets */}
-      <div className="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-y border-gray-200 devis-no-print">
+      <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-y border-gray-200 devis-no-print">
         <div className="max-w-5xl mx-auto px-3 sm:px-6">
           <div className="flex gap-1 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {ETAPES.map((e, i) => (

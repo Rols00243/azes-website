@@ -4,7 +4,8 @@ import dynamicImport from 'next/dynamic'
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Devis Fondations — calculateur de métré',
+  // Application autonome : le titre échappe au gabarit du site.
+  title: { absolute: 'Devis Fondations — calculateur de métré et de devis' },
   description:
     "Calculez les fouilles, le béton, les barres de fer, le fil d'attache, les planches, les clous, les blocs et les tuyaux d'attente de vos fondations, puis éditez le devis chiffré.",
   manifest: '/devis-fondations.webmanifest',

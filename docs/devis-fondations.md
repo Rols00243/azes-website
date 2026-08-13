@@ -4,7 +4,9 @@ Application web (et application mobile installable) qui calcule le métré et le
 d'une fondation : fouilles, bétons, barres de fer, fil d'attache, planches ou
 contreplaqué, clous, blocs de soubassement, dallage et tuyaux d'attente de plomberie.
 
-- Route : `/devis-fondations`
+- Route : `/devis-fondations` — **application autonome** : elle vit hors du groupe
+  `(site)`, sans la navigation ni le pied de page AZES, et ne dépend d'aucune donnée
+  du site. Elle peut donc être déployée séparément telle quelle.
 - Tout le calcul s'exécute dans le navigateur : aucune donnée n'est envoyée au serveur.
 - Les devis sont enregistrés dans le `localStorage` de l'appareil, exportables en
   JSON (dossier rechargeable) et en CSV (tableur).
@@ -22,7 +24,7 @@ contreplaqué, clous, blocs de soubassement, dallage et tuyaux d'attente de plom
 | `lib/fondations/plans/dxf.ts` | Lecture d'un plan DXF : longueurs par calque, blocs, emprise |
 | `lib/fondations/plans/mesure.ts` | Mesure à l'échelle sur un plan matriciel, report dans la saisie |
 | `lib/fondations/plans/pdf.ts` | Extraction des images d'un PDF scanné |
-| `app/(site)/devis-fondations/` | Interface : 8 onglets de saisie + résultats + document imprimé |
+| `app/devis-fondations/` | Interface autonome : 9 onglets (dont l'analyse de plan), résultats et document imprimé |
 | `public/sw.js`, `public/devis-fondations.webmanifest` | Mode application installable / hors ligne |
 | `scripts/generate-devis-icons.mjs` | Génération des icônes PNG (`node scripts/generate-devis-icons.mjs`) |
 

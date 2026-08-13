@@ -38,7 +38,7 @@ export default function EtapeProjet({ input, maj }: EtapeProps) {
             label="Localisation"
             valeur={projet.localisation}
             onChange={(v) => maj('projet', { localisation: v })}
-            placeholder="Commune, ville / ZES"
+            placeholder="Commune, ville"
           />
           <ChampTexte
             label="Référence du devis"

@@ -2,9 +2,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Outils
 
-- **Devis Fondations** (`/devis-fondations`) — calculateur de métré et de devis pour les
-  fondations : fouilles, bétons, aciers, coffrage, maçonnerie, dallage et tuyaux
-  d'attente. Installable comme application mobile et utilisable hors ligne.
+- **Devis Fondations** (`/devis-fondations`) — application autonome, indépendante du
+  site : elle analyse un plan (DXF, PDF, photo) puis calcule les fouilles, les bétons,
+  les aciers, le coffrage, la maçonnerie, le dallage et les tuyaux d'attente, et en tire
+  le devis. Installable comme application mobile, utilisable hors ligne, sans serveur.
   Voir [docs/devis-fondations.md](docs/devis-fondations.md).
 
 ## Getting Started
