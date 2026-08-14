@@ -3,6 +3,12 @@
 Site vitrine statique (HTML / CSS / JavaScript, sans framework ni dépendance à installer)
 pour une activité de **detailing automobile**.
 
+> **Projet indépendant.** Ce site n'a rien à voir avec le site AZES situé à la racine du
+> dépôt : ce sont deux sites différents. Aucun fichier, aucune dépendance, aucune
+> configuration n'est partagé entre les deux. Ce dossier se déploie seul (`base` /
+> « Root Directory » = `noble-design-detailing`) et peut être déplacé tel quel dans son
+> propre dépôt à tout moment — il suffit de copier le dossier.
+
 ## Aperçu
 
 | Page | Fichier | Contenu |
@@ -14,6 +20,7 @@ pour une activité de **detailing automobile**.
 | L'atelier | `a-propos.html` | Histoire, engagements, équipement, zone d'intervention |
 | Contact | `contact.html` | Formulaire de devis, coordonnées, horaires |
 | Mentions légales | `mentions-legales.html` | Modèle à compléter (RGPD inclus) |
+| Page 404 | `404.html` | Page d'erreur aux couleurs du site |
 
 ## Lancer le site en local
 
@@ -86,10 +93,16 @@ Alternatives équivalentes : Web3Forms, Netlify Forms (`data-netlify="true"`), G
 
 ## Mise en ligne
 
-Le site étant 100 % statique, tout hébergeur convient :
+Le site étant 100 % statique, tout hébergeur convient. Les fichiers `netlify.toml` et
+`vercel.json` du dossier sont déjà configurés pour un déploiement **sans build** :
 
-- **Netlify / Vercel / Cloudflare Pages** : glisser-déposer le dossier, ou connecter le dépôt
-  en indiquant `noble-design-detailing` comme répertoire de publication.
+- **Netlify** : connecter le dépôt, le `netlify.toml` fait le reste (`base` =
+  `noble-design-detailing`). Ou glisser-déposer le dossier sur netlify.com.
+- **Vercel** : connecter le dépôt et régler « Root Directory » sur `noble-design-detailing`
+  — indispensable, sinon Vercel construit le projet Next.js de la racine (le site AZES) au
+  lieu de celui-ci.
+- **Cloudflare Pages** : répertoire de publication `noble-design-detailing`, aucune commande
+  de build.
 - **GitHub Pages** : publier le dossier depuis les réglages du dépôt.
 - **Hébergement classique (OVH, Ionos…)** : envoyer le contenu du dossier par FTP.
 

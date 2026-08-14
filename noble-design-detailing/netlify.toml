@@ -1,0 +1,13 @@
+# Déploiement Netlify du site Noble Design Detailing.
+# Ce site est totalement indépendant du site AZES présent à la racine du dépôt :
+# aucun build, aucune dépendance, on publie simplement ce dossier tel quel.
+
+[build]
+  base = "noble-design-detailing"
+  publish = "."
+  command = ""
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
