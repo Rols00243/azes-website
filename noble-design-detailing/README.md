@@ -24,14 +24,43 @@ pour une activité de **detailing automobile**.
 
 ## Lancer le site en local
 
-Aucune installation n'est nécessaire. Ouvrez simplement `index.html` dans un navigateur, ou
-servez le dossier :
+**Aucune installation n'est nécessaire** : pas de Node, pas de `npm install`, pas de build.
+Le site est fait de simples fichiers HTML.
+
+### Le plus simple : le script de démarrage
+
+| Système | Quoi faire |
+| --- | --- |
+| **Windows** | Double-cliquer sur `demarrer.bat` |
+| **macOS / Linux** | Double-cliquer sur `demarrer.sh`, ou dans un terminal : `./demarrer.sh` |
+
+Le navigateur s'ouvre tout seul sur `http://localhost:8080`. Pour arrêter : `Ctrl + C`
+(ou fermer la fenêtre). Pour changer de port : `./demarrer.sh 3000`.
+
+> Sur macOS, si le script refuse de se lancer la première fois, rendez-le exécutable :
+> `chmod +x demarrer.sh`.
+
+### En ligne de commande
 
 ```bash
 cd noble-design-detailing
-python3 -m http.server 8080
-# puis http://localhost:8080
+python3 -m http.server 8080     # puis ouvrir http://localhost:8080
 ```
+
+Équivalents si vous n'avez pas Python : `npx serve .` ou `php -S localhost:8080`.
+
+### Encore plus simple : sans serveur du tout
+
+Ouvrez directement `index.html` en double-cliquant dessus. Tout fonctionne — navigation,
+galerie, comparateur, formulaire. Seule différence : l'adresse est un chemin de fichier
+(`file:///…`) au lieu de `http://localhost`, ce qui suffit largement pour relire le site et
+valider les textes.
+
+### Modifier le site
+
+Ouvrez les fichiers `.html` avec n'importe quel éditeur de texte (VS Code, Bloc-notes,
+TextEdit…), enregistrez, puis rafraîchissez la page dans le navigateur : le changement est
+immédiat, il n'y a rien à recompiler.
 
 ## ⚠️ À personnaliser avant la mise en ligne
 
